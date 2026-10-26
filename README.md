@@ -72,10 +72,10 @@ Folders are added as each phase is completed.
 - Write descriptive commit messages.
 - Never commit `.env` or other secrets.
 
-| Member | Primary areas |
+| NAME | SRN |
 |---|---|
-| _Member A_ | _to be filled in_ |
-| _Member B_ | _to be filled in_ |
+| URAV B S  | PES1UG24CS507 |
+| UTTAM B S | PES1UG24CS508 |
 
 ## Limitations and results
 
