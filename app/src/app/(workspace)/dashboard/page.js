@@ -1,10 +1,13 @@
 import ConnectionStatus from "@/components/dashboard/ConnectionStatus";
 import EmptyPanel from "@/components/dashboard/EmptyPanel";
 import LeadNotice from "@/components/dashboard/LeadNotice";
+import { requireSession } from "@/lib/auth/server";
 
 export const metadata = { title: "Dashboard" };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // Layouts are not re-run on every navigation, so each page checks the session too.
+  await requireSession();
   return (
     <div className="flex flex-col gap-8">
       <header>

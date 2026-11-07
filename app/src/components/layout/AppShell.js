@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import BrandMark from "@/components/layout/BrandMark";
 import SidebarNav from "@/components/layout/SidebarNav";
+import SignOutButton from "@/components/auth/SignOutButton";
 
 // Application shell: fixed sidebar on large screens, slide-in drawer on small screens.
-export default function AppShell({ children }) {
+export default function AppShell({ children, user }) {
   const [open, setOpen] = useState(false);
 
   // Close the drawer with the Escape key while it is open.
@@ -81,6 +82,17 @@ export default function AppShell({ children }) {
             <BrandMark />
           </Link>
           <p className="ml-auto text-sm text-ink-soft">Development build</p>
+          {user && (
+            <div className="flex items-center gap-3">
+              <p className="text-sm">
+                <span className="font-medium">{user.fullName || user.username}</span>
+                <span className="ml-2 text-ink-soft">
+                  {user.role === "admin" ? "Administrator" : "Investigator"}
+                </span>
+              </p>
+              <SignOutButton />
+            </div>
+          )}
         </header>
 
         <main id="main" className="flex-1 px-4 py-8 lg:px-8 lg:py-10">
