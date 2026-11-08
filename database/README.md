@@ -56,4 +56,4 @@ source database/06_verify_access.sql
 
 The script reports whether all three investigator views exist, displays their columns and the investigator role grants, compares visible evidence with visible current-custody rows, and checks that `index_job` contains 130 rows (57 active evidence items + 73 findings).
 
-For a real privilege test, connect separately as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID (for example, 3), and run the three `SELECT` statements against `v_my_current_custody`, `v_my_users`, and `v_my_teammates`. A direct `SELECT` from `app_user` or `custody_event` must be denied.
+For a real privilege test, connect separately as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID (for example, 3), and run the four `SELECT` statements against `v_my_current_custody`, `v_my_users`, and `v_my_teammates`. A direct `SELECT` from `app_user` or `custody_event` must be denied.
