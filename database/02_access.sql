@@ -108,7 +108,7 @@ JOIN v_my_evidence ea ON ea.evidence_id = r.evidence_a_id
 JOIN v_my_evidence eb ON eb.evidence_id = r.evidence_b_id;
 
 -- Current custodian per evidence item (the derived attribute from the ER
--- diagram). Not filtered by user: for administrators and the worker only.
+-- diagram). This unrestricted view is for administrators only.
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_current_custody AS
 SELECT ce.evidence_id, ce.seq_no, ce.to_user_id AS current_custodian_id,
        u.full_name AS current_custodian_name, ce.transferred_at
@@ -118,6 +118,41 @@ JOIN (SELECT evidence_id, MAX(seq_no) AS last_seq
       GROUP BY evidence_id) latest
   ON latest.evidence_id = ce.evidence_id AND latest.last_seq = ce.seq_no
 JOIN app_user u ON u.user_id = ce.to_user_id;
+
+-- Current custodian for evidence in cases assigned to the logged-in
+-- investigator. Keep v_current_custody unrestricted for administrator use.
+CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_current_custody AS
+SELECT cc.evidence_id, cc.seq_no, cc.current_custodian_id,
+       cc.current_custodian_name, cc.transferred_at
+FROM v_current_custody cc
+JOIN v_my_evidence me ON me.evidence_id = cc.evidence_id;
+
+-- Users who have participated in the custody history of evidence visible
+-- to the logged-in investigator. Historical users remain visible so old
+-- provenance records retain their correct names even after access is revoked.
+CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_users AS
+SELECT u.user_id, u.username, u.full_name
+FROM app_user u
+JOIN (
+    SELECT ce.to_user_id AS user_id
+    FROM custody_event ce
+    JOIN v_my_evidence me ON me.evidence_id = ce.evidence_id
+    UNION
+    SELECT ce.from_user_id AS user_id
+    FROM custody_event ce
+    JOIN v_my_evidence me ON me.evidence_id = ce.evidence_id
+    WHERE ce.from_user_id IS NOT NULL
+) custody_users ON custody_users.user_id = u.user_id;
+
+-- Other active members of a case the current investigator can access.
+-- The current user is excluded because self-transfer is not permitted.
+-- This view is the safe data source for the custody-transfer picker.
+CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_teammates AS
+SELECT a.case_id, u.user_id, u.username, u.full_name
+FROM v_user_case_access a
+JOIN v_my_cases mc ON mc.case_id = a.case_id
+JOIN app_user u ON u.user_id = a.user_id
+WHERE a.user_id <> fn_current_user_id();
 
 -- ---------------------------------------------------------------------
 -- Roles (privilege bundles) and the accounts that use them
@@ -152,6 +187,9 @@ GRANT SELECT ON tracex.v_my_collection     TO 'tracex_investigator';
 GRANT SELECT ON tracex.v_my_analyses       TO 'tracex_investigator';
 GRANT SELECT ON tracex.v_my_findings       TO 'tracex_investigator';
 GRANT SELECT ON tracex.v_my_relationships  TO 'tracex_investigator';
+GRANT SELECT ON tracex.v_my_current_custody TO 'tracex_investigator';
+GRANT SELECT ON tracex.v_my_users           TO 'tracex_investigator';
+GRANT SELECT ON tracex.v_my_teammates       TO 'tracex_investigator';
 GRANT SELECT ON tracex.evidence_type       TO 'tracex_investigator';
 GRANT SELECT ON tracex.analysis_tool       TO 'tracex_investigator';
 
