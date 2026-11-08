@@ -39,7 +39,7 @@ Administrator account: same screens on base tables (no row filter), plus `app_us
 
 ### Investigator view contract
 
-All views below are created with `SQL SECURITY DEFINER` and are granted `SELECT` to `tracex_investigator`. They return only records associated with cases currently assigned to the logged-in investigator, except that historical people shown in provenance remain resolvable after their case access is revoked.
+All views below are created in `03_routines.sql` with `SQL SECURITY DEFINER` and are granted `SELECT` to `tracex_investigator` there (after the base filtered views from `02_access.sql` exist). They return only records associated with cases currently assigned to the logged-in investigator, except that historical people shown in provenance remain resolvable after their case access is revoked.
 
 | View | Columns | Row restriction / purpose |
 |---|---|---|
