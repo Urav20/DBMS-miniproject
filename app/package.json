@@ -1,0 +1,26 @@
+{
+  "name": "tracex-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test:db": "node --test tests/db/helper.unit.test.mjs",
+    "test:db:live": "node --env-file=.env.local --test tests/db/live.test.mjs",
+    "test:auth": "node --test tests/auth/auth.unit.test.mjs",
+    "test:auth:live": "node --env-file=.env.local --test tests/auth/live.test.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "mysql2": "^3.24.6",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "tailwindcss": "^4.3.5"
+  }
+}

@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/*
+  TRACE-X design tokens.
+  Each token becomes a Tailwind utility, e.g. --color-night -> bg-night,
+  --color-ink-soft -> text-ink-soft, --font-sans -> font-sans.
+*/
+@theme {
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Working surfaces */
+  --color-paper: #f3f5f7;
+  --color-panel: #ffffff;
+  --color-line: #d5dbe1;
+  --color-line-strong: #b4bfca;
+
+  /* Text */
+  --color-ink: #14202b;
+  --color-ink-soft: #46586a;
+
+  /* Sidebar and hero */
+  --color-night: #0e1a24;
+  --color-night-line: #223445;
+  --color-night-text: #c5d0da;
+  --color-night-dim: #8ea1b3;
+
+  /* Actions */
+  --color-accent: #0b6b75;
+  --color-accent-deep: #095861;
+
+  /* Evidence-marker amber: used only for the evidence markers and the "lead, not proof" notice */
+  --color-marker: #e8b100;
+  --color-marker-wash: #fff6db;
+  --color-marker-ink: #6b4e00;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
