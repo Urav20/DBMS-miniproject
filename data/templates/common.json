@@ -1,0 +1,145 @@
+{
+ "roles": [
+  "Administrator",
+  "Investigator"
+ ],
+ "demo_password": "TraceX#Demo1",
+ "users": [
+  {
+   "username": "dana.whitfield",
+   "full_name": "Dana Whitfield",
+   "role": "Administrator",
+   "email": "dana.whitfield@tracex.test",
+   "password_hash": "$2b$10$u2CRldZHlGRZxHiVoTciUuYyra3F02ReL1hptzuwLVXkFt3VDrPbK"
+  },
+  {
+   "username": "ravi.menon",
+   "full_name": "Ravi Menon",
+   "role": "Administrator",
+   "email": "ravi.menon@tracex.test",
+   "password_hash": "$2b$10$BHbcF0E3RPOH4yK51YPG7O5xFfhAlSgOl9uCBY5aYqyeyx9VyU83q"
+  },
+  {
+   "username": "isha.kapoor",
+   "full_name": "Isha Kapoor",
+   "role": "Investigator",
+   "email": "isha.kapoor@tracex.test",
+   "password_hash": "$2b$10$L/fqms5Ajti/.dWbS30OeO8DqTfVRx0EqLn0HPclbJNiOCG/y4OvC"
+  },
+  {
+   "username": "tomas.brandt",
+   "full_name": "Tomas Brandt",
+   "role": "Investigator",
+   "email": "tomas.brandt@tracex.test",
+   "password_hash": "$2b$10$3.K/kofG02qYI/Z1mNl/leRwl3eRobqJM8nClpoZwR.WLGgZ4T3cy"
+  },
+  {
+   "username": "lena.hoffmann",
+   "full_name": "Lena Hoffmann",
+   "role": "Investigator",
+   "email": "lena.hoffmann@tracex.test",
+   "password_hash": "$2b$10$Cz9fE/AWOKu3hkbGkzIxcOt/Us3Mj5gZxhWDMmBZZv/hJn8UwQhb2"
+  },
+  {
+   "username": "arjun.desai",
+   "full_name": "Arjun Desai",
+   "role": "Investigator",
+   "email": "arjun.desai@tracex.test",
+   "password_hash": "$2b$10$Qrp8SfYn/AvTkd0Mzvwwae6mUxwqByOgwU40NQd/DM8Nu.1QZMfC6"
+  },
+  {
+   "username": "sofia.marquez",
+   "full_name": "Sofia Marquez",
+   "role": "Investigator",
+   "email": "sofia.marquez@tracex.test",
+   "password_hash": "$2b$10$jeqTGprp07cLgOwCvDDmi.q1uQcgfu2pCcuPanF8ja/5gNv3Qb6dm"
+  },
+  {
+   "username": "kofi.mensah",
+   "full_name": "Kofi Mensah",
+   "role": "Investigator",
+   "email": "kofi.mensah@tracex.test",
+   "password_hash": "$2b$10$VbY6ekyenH5hRacK1WEG5u1Hh0bIl6wZMTXp1iq80bwn2XJT7MLe2"
+  }
+ ],
+ "tools": [
+  {
+   "key": "autopsy",
+   "name": "Autopsy",
+   "version": "4.21.0",
+   "description": "Disk image and file system analysis"
+  },
+  {
+   "key": "volatility",
+   "name": "Volatility 3",
+   "version": "2.5.2",
+   "description": "Memory dump analysis"
+  },
+  {
+   "key": "wireshark",
+   "name": "Wireshark",
+   "version": "4.2.5",
+   "description": "Network capture analysis"
+  },
+  {
+   "key": "plaso",
+   "name": "Plaso (log2timeline)",
+   "version": "20240308",
+   "description": "Timeline building from logs and artifacts"
+  },
+  {
+   "key": "yara",
+   "name": "YARA",
+   "version": "4.5.0",
+   "description": "Pattern matching on files and memory"
+  },
+  {
+   "key": "exiftool",
+   "name": "ExifTool",
+   "version": "12.76",
+   "description": "Document and file metadata extraction"
+  }
+ ],
+ "evidence_types": [
+  {
+   "name": "Disk image",
+   "description": "Forensic image of a drive or volume"
+  },
+  {
+   "name": "System log",
+   "description": "Operating system, application, network device or audit log export"
+  },
+  {
+   "name": "Email message",
+   "description": "Raw email message with headers"
+  },
+  {
+   "name": "Memory dump",
+   "description": "Capture of a computer's running memory"
+  },
+  {
+   "name": "Network capture",
+   "description": "Packet capture or flow export"
+  },
+  {
+   "name": "Document",
+   "description": "Office document, report, note or ticket"
+  },
+  {
+   "name": "Chat export",
+   "description": "Export of chat or messaging conversation"
+  },
+  {
+   "name": "Screenshot",
+   "description": "Image of a screen"
+  },
+  {
+   "name": "Registry export",
+   "description": "Export of Windows registry keys or similar configuration artifacts"
+  },
+  {
+   "name": "Browser history",
+   "description": "Browser history, downloads or cache records"
+  }
+ ]
+}
