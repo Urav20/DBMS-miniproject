@@ -4,6 +4,7 @@
 |---|---|
 | `01_schema.sql` | Drops and recreates the `tracex` database: 15 tables, constraints, indexes |
 | `02_access.sql` | Session function, investigator-filtered views, MySQL roles, grants and three application accounts |
+| `03_routines.sql` | Triggers, procedures, and three additional investigator views with their SELECT grants |
 | `06_verify_access.sql` | Post-load checks for the three investigator views, grants and the expected 130 indexing jobs |
 
 ## Run (MySQL 8.0.16 or newer)
@@ -19,7 +20,7 @@ mysql -u root -p < database/02_access.sql
 
 ```sql
 USE tracex;
-SHOW TABLES;                        -- 15 tables plus 12 views
+SHOW TABLES;                        -- 15 tables + 9 views after 02; +3 investigator views after 03
 SELECT TABLE_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME
 FROM information_schema.KEY_COLUMN_USAGE
 WHERE TABLE_SCHEMA = 'tracex' AND REFERENCED_TABLE_NAME IS NOT NULL;   -- 25 foreign keys
