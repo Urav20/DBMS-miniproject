@@ -19,6 +19,8 @@ __pycache__/
 node_modules/
 .next/
 out/
+!data/out/
+!data/out/seed_demo.sql
 build/
 dist/
 .vercel/
