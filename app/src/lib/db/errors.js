@@ -58,6 +58,44 @@ const BY_ERRNO = {
     message: "The database rejected this action.",
     expose: true,
   },
+  // Person A's procedures and triggers use SIGNAL ... SET MYSQL_ERRNO = 450xx
+  // (docs/api-contract.md section 2). Their messages are written for users.
+  45001: {
+    code: "DB_ACCESS_DENIED",
+    status: 403,
+    message: "You do not have access to this record.",
+    expose: true,
+  },
+  45002: {
+    code: "DB_CASE_CLOSED",
+    status: 409,
+    message: "This case is closed.",
+    expose: true,
+  },
+  45003: {
+    code: "DB_RULE_VIOLATION",
+    status: 422,
+    message: "The database rejected this action.",
+    expose: true,
+  },
+  45010: {
+    code: "DB_APPEND_ONLY",
+    status: 405,
+    message: "This table is append-only.",
+    expose: true,
+  },
+  45011: {
+    code: "DB_NOT_AUTHENTICATED",
+    status: 401,
+    message: "You are not signed in, or your account is deactivated.",
+    expose: true,
+  },
+  4025: {
+    code: "DB_CONSTRAINT",
+    status: 422,
+    message: "The data breaks a rule enforced by the database.",
+    expose: true,
+  },
   3819: {
     code: "DB_CONSTRAINT",
     status: 422,
@@ -193,6 +231,10 @@ export function isExpectedRejection(err) {
       "DB_INVALID_DATA",
       "DB_PERMISSION_DENIED",
       "DB_CONFLICT",
+      "DB_ACCESS_DENIED",
+      "DB_CASE_CLOSED",
+      "DB_APPEND_ONLY",
+      "DB_NOT_AUTHENTICATED",
     ].includes(err.code)
   );
 }

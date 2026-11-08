@@ -10,9 +10,15 @@
     "test:db": "node --test tests/db/helper.unit.test.mjs",
     "test:db:live": "node --env-file=.env.local --test tests/db/live.test.mjs",
     "test:auth": "node --test tests/auth/auth.unit.test.mjs",
-    "test:auth:live": "node --env-file=.env.local --test tests/auth/live.test.mjs"
+    "test:auth:live": "node --env-file=.env.local --test tests/auth/live.test.mjs",
+    "vector:setup": "node --env-file=.env.local ../vector/scripts/setup-collection.mjs",
+    "vector:health": "node --env-file=.env.local ../vector/scripts/health.mjs",
+    "test:vector": "node --test tests/vector/vector.unit.test.mjs",
+    "test:vector:live": "node --env-file=.env.local --test tests/vector/live.test.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
+    "@qdrant/js-client-rest": "^1.20.0",
     "bcryptjs": "^3.0.3",
     "mysql2": "^3.24.6",
     "next": "16.4.5",
@@ -22,5 +28,10 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.5",
     "tailwindcss": "^4.3.5"
+  },
+  "overrides": {
+    "@qdrant/js-client-rest": {
+      "undici": "7.30.1"
+    }
   }
 }
