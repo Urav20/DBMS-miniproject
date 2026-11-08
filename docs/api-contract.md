@@ -30,12 +30,24 @@ Show `error.sqlMessage` to the user for 45xxx errors; show a generic message for
 | Case list | `SELECT * FROM v_my_cases ORDER BY opened_at DESC` |
 | Case evidence | `SELECT e.*, c.current_custodian_name FROM v_my_evidence e JOIN v_my_current_custody c USING (evidence_id) WHERE e.case_id = ?` |
 | Evidence detail | `v_my_evidence` (one row) + `v_my_collection` + `v_my_analyses` + `v_my_findings` (join analyses by `analysis_id`) |
-| Provenance timeline | `v_my_custody WHERE evidence_id = ? ORDER BY seq_no` (+ `v_my_users` for names) |
+| Provenance timeline | `v_my_custody WHERE evidence_id = ? ORDER BY seq_no`; resolve `from_user_id` and `to_user_id` through `v_my_users` |
 | Links | `v_my_relationships WHERE evidence_a_id = ? OR evidence_b_id = ?` |
 | Link graph | `CALL sp_linked_evidence(?, ?)` (start id, max depth) |
-| Transfer picker | `SELECT * FROM v_my_teammates WHERE case_id = ?` |
+| Transfer picker | `SELECT case_id, user_id, username, full_name FROM v_my_teammates WHERE case_id = ? ORDER BY full_name` |
 | Lookups | `evidence_type`, `analysis_tool` (readable by investigators) |
-Administrator account: same screens on base tables (no row filter), plus `app_user`, `case_assignment`, `audit_log`, `index_job`.
+Administrator account: same screens on base tables (no row filter), plus `app_user`, `case_assignment`, `audit_log`, `index_job`, and the unrestricted `v_current_custody` view.
+
+### Investigator view contract
+
+All views below are created with `SQL SECURITY DEFINER` and are granted `SELECT` to `tracex_investigator`. They return only records associated with cases currently assigned to the logged-in investigator, except that historical people shown in provenance remain resolvable after their case access is revoked.
+
+| View | Columns | Row restriction / purpose |
+|---|---|---|
+| `v_my_current_custody` | `evidence_id, seq_no, current_custodian_id, current_custodian_name, transferred_at` | Current custodian only for evidence visible through `v_my_evidence`. |
+| `v_my_users` | `user_id, username, full_name` | Distinct users who appear as sender or receiver in custody history for visible evidence. Historical names remain available. |
+| `v_my_teammates` | `case_id, user_id, username, full_name` | Other active users with non-revoked assignments to a case visible to the current investigator. The current user is excluded because self-transfer is not allowed. |
+
+The unrestricted `v_current_custody` view is granted only to `tracex_admin`; investigators must use `v_my_current_custody`. The worker does not need either view because it reads the evidence/finding base tables and the indexing outbox under its own restricted grants.
 
 ## 4. Writes (procedures; the actor is always `@tracex_user_id`)
 | UI action | Call | Returns |
