@@ -3,7 +3,9 @@
 | File | What it does |
 |---|---|
 | `01_schema.sql` | Drops and recreates the `tracex` database: 15 tables, constraints, indexes |
-| `02_access.sql` | Session function, filtered views, MySQL roles, grants and three application accounts |
+| `02_access.sql` | Session function, investigator-filtered views, MySQL roles, grants and three application accounts |
+| `03_routines.sql` | Triggers, procedures, and three additional investigator views with their SELECT grants |
+| `06_verify_access.sql` | Post-load checks for the three investigator views, grants and the expected 130 indexing jobs |
 
 ## Run (MySQL 8.0.16 or newer)
 
@@ -18,11 +20,12 @@ mysql -u root -p < database/02_access.sql
 
 ```sql
 USE tracex;
-SHOW TABLES;                        -- 15 tables plus 9 views
+SHOW TABLES;                        -- 15 tables + 9 views after 02; +3 investigator views after 03
 SELECT TABLE_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME
 FROM information_schema.KEY_COLUMN_USAGE
 WHERE TABLE_SCHEMA = 'tracex' AND REFERENCED_TABLE_NAME IS NOT NULL;   -- 25 foreign keys
 SHOW GRANTS FOR 'tracex_investigator_app'@'localhost' USING 'tracex_investigator';
+SHOW GRANTS FOR 'tracex_investigator'@'%';
 ```
 
 ## Account passwords
@@ -31,7 +34,7 @@ SHOW GRANTS FOR 'tracex_investigator_app'@'localhost' USING 'tracex_investigator
 
 ## Status
 
-Written and statically cross-checked (all 25 foreign keys reference existing columns of matching type and a unique key; no foreign key breaks MySQL's CHECK rule). **Not yet run on a real MySQL server**: report any error message so it can be fixed.
+Written and statically cross-checked (all 25 foreign keys reference existing columns of matching type and a unique key; no foreign key breaks MySQL's CHECK rule). Run `06_verify_access.sql` after loading the schema, routines and seed to check the investigator views and the expected 130 `index_job` rows. The SQL has not yet been executed on a live MySQL server in this environment.
 
 
 ## Step 4 files
@@ -42,3 +45,16 @@ Written and statically cross-checked (all 25 foreign keys reference existing col
 Full load order: `source database/01_schema.sql`, `02_access.sql`, `03_routines.sql`, `source data/out/seed_demo.sql`.
 The seed loaded after 03 also fills `index_job` (one upsert per active evidence and per finding).
 If you loaded the seed first, run as admin: `SET @tracex_user_id = 1; CALL sp_backfill_index_jobs();`
+
+
+## Verify the merged database/API contract
+
+After loading the schema, access views, routines and generated seed in that order, run:
+
+```sql
+source database/06_verify_access.sql
+```
+
+The script reports whether all three investigator views exist, displays their columns and the investigator role grants, compares visible evidence with visible current-custody rows, and checks that `index_job` contains 130 rows (57 active evidence items + 73 findings).
+
+For a real privilege test, connect separately as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID (for example, 3), and run the four `SELECT` statements against `v_my_current_custody`, `v_my_users`, and `v_my_teammates`. A direct `SELECT` from `app_user` or `custody_event` must be denied.

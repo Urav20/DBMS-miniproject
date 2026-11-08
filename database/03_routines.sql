@@ -264,22 +264,30 @@ DELIMITER ;
 -- ---------------------------------------------------------------------
 -- 3. Extra views for the investigator UI
 -- ---------------------------------------------------------------------
--- People who share at least one active case with the current user
--- (for the "transfer custody to ..." picker).
+-- Other active users who share a currently assigned case with the
+-- logged-in investigator. The current user is excluded because the custody
+-- transfer procedure does not permit self-transfer. Column order is part of
+-- the API contract: case_id, user_id, username, full_name.
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_teammates AS
-SELECT DISTINCT u.user_id, u.username, u.full_name, a2.case_id
+SELECT DISTINCT a2.case_id, u.user_id, u.username, u.full_name
 FROM v_user_case_access a1
 JOIN v_user_case_access a2 ON a2.case_id = a1.case_id
 JOIN app_user u ON u.user_id = a2.user_id
-WHERE a1.user_id = fn_current_user_id();
+WHERE a1.user_id = fn_current_user_id()
+  AND a2.user_id <> fn_current_user_id();
 
--- Visible evidence together with its current custodian.
+-- Visible evidence together with its current custodian. This is the
+-- investigator-filtered counterpart to the administrator-only v_current_custody.
+-- Column order is part of the API contract.
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_current_custody AS
-SELECT me.evidence_id, cc.current_custodian_id, cc.current_custodian_name, cc.transferred_at
+SELECT me.evidence_id, cc.seq_no, cc.current_custodian_id,
+       cc.current_custodian_name, cc.transferred_at
 FROM v_my_evidence me
 JOIN v_current_custody cc ON cc.evidence_id = me.evidence_id;
 
--- Names for every user id the investigator can see in custody/audit rows.
+-- Names for every user id the investigator can see in custody, collection,
+-- analysis, or teammate records. Historical people remain resolvable after
+-- their case assignment is revoked, preserving the provenance timeline.
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_users AS
 SELECT DISTINCT u.user_id, u.username, u.full_name
 FROM app_user u
