@@ -44,7 +44,7 @@ All views below are created in `03_routines.sql` with `SQL SECURITY DEFINER` and
 | View | Columns | Row restriction / purpose |
 |---|---|---|
 | `v_my_current_custody` | `evidence_id, seq_no, current_custodian_id, current_custodian_name, transferred_at` | Current custodian only for evidence visible through `v_my_evidence`. |
-| `v_my_users` | `user_id, username, full_name` | Distinct users who appear as sender or receiver in custody history for visible evidence. Historical names remain available. |
+| `v_my_users` | `user_id, username, full_name` | Active teammates plus users referenced as custody senders/receivers, collectors, or analysts for visible evidence. Historical names remain available after assignment revocation. |
 | `v_my_teammates` | `case_id, user_id, username, full_name` | Other active users with non-revoked assignments to a case visible to the current investigator. The current user is excluded because self-transfer is not allowed. |
 
 The unrestricted `v_current_custody` view is granted only to `tracex_admin`; investigators must use `v_my_current_custody`. The worker does not need either view because it reads the evidence/finding base tables and the indexing outbox under its own restricted grants.
