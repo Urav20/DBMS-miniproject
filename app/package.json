@@ -18,7 +18,9 @@
     "worker": "node --env-file=.env.local ../worker/run.mjs",
     "worker:once": "node --env-file=.env.local ../worker/run.mjs --once",
     "test:indexing": "node --test tests/indexing/indexing.unit.test.mjs tests/indexing/sql-contract.unit.test.mjs",
-    "test:indexing:live": "node --env-file=.env.local --test tests/indexing/live.test.mjs"
+    "test:indexing:live": "node --env-file=.env.local --test tests/indexing/live.test.mjs",
+    "test:retrieval": "node --test tests/retrieval/retrieval.unit.test.mjs tests/retrieval/retrieval-sql-contract.unit.test.mjs",
+    "test:retrieval:live": "node --env-file=.env.local --test tests/retrieval/live.test.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "^4.3.2",
