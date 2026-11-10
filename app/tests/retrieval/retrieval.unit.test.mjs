@@ -283,7 +283,7 @@ test("investigators: stale evidence and finding vectors are discarded using MySQ
   const { service } = build({
     vector: { hits: [
       hit("evidence", 11, { caseId: 1, version: 1, score: 0.99 }),
-      hit("finding", 1000, { caseId: 1, evidenceId: 10, version: 2, score: 0.98 }),
+      hit("finding", 1004, { caseId: 1, evidenceId: 10, version: 1, score: 0.98 }),
       hit("evidence", 10, { caseId: 1, version: 1, score: 0.8 }),
       hit("finding", 1000, { caseId: 1, evidenceId: 10, version: 1, score: 0.7 }),
     ] },
