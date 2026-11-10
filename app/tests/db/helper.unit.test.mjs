@@ -389,3 +389,38 @@ test("a role whose settings are missing fails alone; other roles still work", as
   await db.query({ role: "admin", userId: 1 }, "SELECT 1");
   await assert.rejects(db.query({ role: "worker", userId: null }, "SELECT 1"), (e) => e.code === "DB_CONFIG");
 });
+
+// ---- Person A's custom SIGNAL errnos (docs/api-contract.md section 2) --------
+function signalError(errno, sqlMessage) {
+  return Object.assign(new Error(sqlMessage), {
+    errno,
+    sqlState: "45000",
+    code: "ER_SIGNAL_EXCEPTION",
+    sqlMessage,
+  });
+}
+
+test("custom SIGNAL errnos 45001-45011 map to the HTTP status in the API contract", () => {
+  const expected = [
+    [45001, 403, "DB_ACCESS_DENIED"],
+    [45002, 409, "DB_CASE_CLOSED"],
+    [45003, 422, "DB_RULE_VIOLATION"],
+    [45010, 405, "DB_APPEND_ONLY"],
+    [45011, 401, "DB_NOT_AUTHENTICATED"],
+  ];
+  for (const [errno, status, code] of expected) {
+    const text = `readable message for ${errno}`;
+    const mapped = toDatabaseError(signalError(errno, text));
+    assert.ok(mapped instanceof DatabaseError);
+    assert.equal(mapped.status, status, `errno ${errno}`);
+    assert.equal(mapped.code, code, `errno ${errno}`);
+    // The database's own user-readable message is passed through as `detail`.
+    assert.equal(mapped.detail, text);
+  }
+});
+
+test("an unknown SQLSTATE 45000 errno is not exposed to the user", () => {
+  const mapped = toDatabaseError(signalError(45099, "internal detail"));
+  assert.equal(mapped.code, "DB_QUERY_ERROR");
+  assert.equal(mapped.detail, undefined);
+});
