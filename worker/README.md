@@ -46,7 +46,7 @@ npm run worker:once    # drains the queue once, then exits (0 ok, 1 some jobs fa
 ```
 
 **Run exactly one worker process.** `index_job` has no claim token or lease column (see
-"Concurrency"). On start the worker warns if its MySQL account cannot read `analysis` (see B1).
+"Concurrency"). The worker requires `SELECT` on `analysis` so it can resolve finding records to their evidence and case.
 
 ## What a job does
 
@@ -62,7 +62,7 @@ A job is a *hint to reconcile one record*. The decision comes from the record's 
 | `delete`, but MySQL says evidence is active | ignored, job `done` with a `skipped:` note (MySQL wins) |
 | several jobs for one record in a batch | only the newest does the work; the older ones are closed as duplicates **after** the newest one succeeded, otherwise handed back to `pending` without using an attempt |
 | source row missing, no text, job names 0 or 2 targets | job `failed` immediately |
-| finding upsert while the worker cannot read `analysis` | job `failed` (`INDEX_FINDING_ACCESS_MISSING`), see B1 |
+| finding upsert while the worker cannot read `analysis` | job `failed` (`INDEX_FINDING_ACCESS_MISSING`); grant is now included in `database/02_access.sql` |
 
 Idempotency: the point ID is deterministic, so repeating a job overwrites the same point; deleting a
 missing point is a no-op. Write order is Qdrant, then `indexed_version`, then job `done`: a job is
@@ -134,7 +134,7 @@ Checked by reading `01_schema.sql`, `02_access.sql`, `03_routines.sql`, and enfo
 | `attempts` | `TINYINT UNSIGNED` (max 255); `WORKER_MAX_ATTEMPTS` is capped at 20 |
 | `tracex_worker` on `index_job` | SELECT, INSERT, UPDATE: enough |
 | `tracex_worker` on `evidence`, `finding` | SELECT + UPDATE(indexed_version, indexed_at) only: enough for `markIndexed` |
-| `tracex_worker` on `analysis` | **no privilege** → B1 |
+| `tracex_worker` on `analysis` | SELECT: required by `fetchFindings` and granted in updated `database/02_access.sql` |
 | `indexed_version` update vs triggers | `trg_*_bu` bump `content_version` only when title/description(/extracted_text) change; `trg_*_au` queue a job only when `content_version` changes. `markIndexed` sets only `indexed_version, indexed_at`: no version bump, no new job |
 | `ck_*_indexed_version` (`indexed_version <= content_version`) | holds: the worker writes the version it read and never moves backwards |
 | Withdrawal | `trg_evidence_au` queues `delete` for the evidence and for each of its findings; withdrawn evidence cannot be reactivated (`trg_evidence_bu`) |
@@ -152,16 +152,17 @@ npm run test:indexing:live   # needs Qdrant (part 1) and MySQL + schema (part 2)
 
 - `indexing.unit.test.mjs`: processor, runner, repository SQL text, config, errors. All fakes.
 - `sql-contract.unit.test.mjs`: reads `<repo>/database/*.sql` (or `TRACEX_DATABASE_DIR`) as text; **skipped,
-  not passed,** if they are missing. One test is `todo` on purpose: "worker can SELECT analysis" fails
-  until Person A adds the grant; a `todo` failure is reported but does not fail the run.
+  not passed,** if they are missing. The test checks the worker SELECT grant on `analysis` against the current SQL.
 - `live.test.mjs`: part 1 runs the processor against real Qdrant in a throwaway collection; part 2 sends
   statements that change nothing (`... WHERE 1 = 0`) to prove, on the real MySQL, that each table, column
   and privilege exists for `tracex_worker_app`, and that least privilege holds (no other tables, no DELETE,
-  no UPDATE of content columns). The `analysis` probe is also `todo`.
+  no UPDATE of content columns). The `analysis` probe verifies the SELECT permission.
 
 Neither of these has been run against a live MySQL, Qdrant or the real BGE model yet; see "Not verified".
 
 ## Blockers and limitations (nothing is invented around them)
+
+**B1. Finding indexing permission — addressed in Person-A.** The updated `database/02_access.sql` grants `SELECT` on `analysis` to `tracex_worker`. After applying the SQL to an existing database, run `CALL sp_backfill_index_jobs();` as administrator to queue finding upserts that previously failed.
 
 **B1. The worker cannot resolve a finding's evidence and case (needs a SQL change by Person A).**
 `02_access.sql` gives `tracex_worker` no privilege on `analysis`, but `finding` only holds `analysis_id`.
