@@ -17,10 +17,9 @@
 //                 is stateless and cannot be revoked, so this check is what makes a
 //                 deactivated or demoted administrator lose access immediately.
 //
-// KNOWN GAP (docs/api-contract.md / README "Required Person A changes"): v_my_evidence and
-// v_my_findings do not expose content_version, so for investigators the "stale hit" check
-// (payload content_version vs MySQL content_version) cannot be done. The admin path can do it.
-// No view or column is invented here: the investigator SQL uses only existing view columns.
+// Both investigator views expose content_version (database/02_access.sql), so stale-vector
+// checks run for investigators and administrators. Investigator reads remain restricted to
+// filtered v_my_* views; no base-table access is introduced.
 //
 // Withdrawn evidence is NOT filtered by the views (v_my_evidence shows it, and v_my_findings
 // shows findings of withdrawn evidence). This file returns the status and the service
@@ -150,7 +149,7 @@ export function createRetrievalRepository({ db } = {}) {
       const caseMarks = idList(caseIds, "case ids");
       const evMarks = evidenceIds.length ? idList(evidenceIds, "evidence ids") : null;
       const fiMarks = findingIds.length ? idList(findingIds, "finding ids") : null;
-      const withVersion = role === "admin";
+      const withVersion = true;
 
       return db.withSession(session, async (q) => {
         if (role === "admin") await assertActiveAdministrator(q);
@@ -164,7 +163,7 @@ export function createRetrievalRepository({ db } = {}) {
                    FROM evidence e
                   WHERE e.evidence_id IN (${evMarks}) AND e.case_id IN (${caseMarks})`
               : `SELECT e.evidence_id, e.evidence_no, e.case_id, e.type_id, e.title, e.status,
-                        e.registered_at
+                        e.registered_at, e.content_version
                    FROM v_my_evidence e
                   WHERE e.evidence_id IN (${evMarks}) AND e.case_id IN (${caseMarks})`;
           const rows = await q.query(sql, [...evidenceIds, ...caseIds]);
@@ -183,7 +182,7 @@ export function createRetrievalRepository({ db } = {}) {
                    JOIN evidence e ON e.evidence_id = a.evidence_id
                   WHERE f.finding_id IN (${fiMarks}) AND e.case_id IN (${caseMarks})`
               : `SELECT f.finding_id, f.analysis_id, f.title, f.severity, f.created_at,
-                        a.evidence_id, e.evidence_no, e.case_id, e.status AS evidence_status
+                        f.content_version, a.evidence_id, e.evidence_no, e.case_id, e.status AS evidence_status
                    FROM v_my_findings f
                    JOIN v_my_analyses a ON a.analysis_id = f.analysis_id
                    JOIN v_my_evidence e ON e.evidence_id = a.evidence_id
