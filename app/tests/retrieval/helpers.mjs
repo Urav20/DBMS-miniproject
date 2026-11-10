@@ -53,6 +53,7 @@ export function sampleData() {
       { finding_id: 1001, analysis_id: 101, title: "Finding on withdrawn item", severity: "low", created_at: "2026-04-02", content_version: 1 },
       { finding_id: 1002, analysis_id: 102, title: "Contacts exfiltrated", severity: "medium", created_at: "2026-04-03", content_version: 1 },
       { finding_id: 1003, analysis_id: 103, title: "Privilege escalation", severity: "critical", created_at: "2026-04-04", content_version: 1 },
+      { finding_id: 1004, analysis_id: 100, title: "Stale test finding", severity: "low", created_at: "2026-04-05", content_version: 2 },
     ],
   };
 }
