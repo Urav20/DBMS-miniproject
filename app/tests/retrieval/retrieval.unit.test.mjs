@@ -279,13 +279,20 @@ test("admin: stale-version candidates ARE discarded (MySQL content_version diffe
   assert.equal(out.meta.verification.stale_version_check, true);
 });
 
-test("KNOWN LIMITATION: investigators cannot get the stale-version check (v_my_evidence has no content_version)", async () => {
-  const { service } = build({ vector: { hits: [hit("evidence", 11, { caseId: 1, version: 1, score: 0.9 })] } });
+test("investigators: stale evidence and finding vectors are discarded using MySQL content_version", async () => {
+  const { service } = build({
+    vector: { hits: [
+      hit("evidence", 11, { caseId: 1, version: 1, score: 0.99 }),
+      hit("finding", 1004, { caseId: 1, evidenceId: 10, version: 1, score: 0.98 }),
+      hit("evidence", 10, { caseId: 1, version: 1, score: 0.8 }),
+      hit("finding", 1000, { caseId: 1, evidenceId: 10, version: 1, score: 0.7 }),
+    ] },
+  });
   const out = await service.search(INV(3), params());
-  // The record is returned (it is accessible and active) but the response says plainly that
-  // the stale check was not possible. Fixed by Person A change #1 (README).
-  assert.deepEqual(keys(out.results), ["evidence:11"]);
-  assert.equal(out.meta.verification.stale_version_check, false);
+  assert.deepEqual(keys(out.results), ["evidence:10", "finding:1000"]);
+  assert.equal(out.meta.verification.access_path, "investigator_views");
+  assert.equal(out.meta.verification.stale_version_check, true);
+  assert.equal(out.meta.discarded, 2);
 });
 
 test("deactivated investigator and investigator with no cases get nothing, without embedding or searching", async () => {

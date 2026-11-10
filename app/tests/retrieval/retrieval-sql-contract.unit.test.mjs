@@ -217,24 +217,24 @@ test("DOCUMENTED MISMATCH: the admin account has no grant on any v_my_* view or 
   assert.ok(!/GRANT\s+EXECUTE\s+ON\s+FUNCTION/i.test(allViewSql), "no EXECUTE grant on functions to anyone");
 });
 
-test("DOCUMENTED MISMATCH: api-contract.md names resolve to real views, but §5's v_my_evidence query cannot do the stale check", { skip }, () => {
+test("api-contract.md names resolve to real views and investigator evidence exposes the stale-check version", { skip }, () => {
   const contractPath = join(dbDir, "..", "docs", "api-contract.md");
-  if (!existsSync(contractPath)) return; // contract file not supplied: nothing to compare
+  if (!existsSync(contractPath)) return;
   const contract = readFileSync(contractPath, "utf8");
   const named = [...new Set(contract.match(/\bv_[a-z_]+\b/g))];
   for (const v of named) assert.ok(views.has(v), `api-contract.md mentions ${v}: defined in the SQL`);
-  assert.ok(!views.get("v_my_evidence").columns.has("content_version"));
-});
-
-// ---- Person A changes retrieval needs. `todo`: reported, and they do not fail the run. ---------
-test("PERSON A CHANGE 1: v_my_evidence exposes content_version (stale-hit check for investigators)", { skip, todo: "needs Person A: add e.content_version to v_my_evidence" }, () => {
   assert.ok(views.get("v_my_evidence").columns.has("content_version"));
 });
 
-test("PERSON A CHANGE 1b: v_my_findings exposes content_version (stale-hit check for findings)", { skip, todo: "needs Person A: add f.content_version to v_my_findings" }, () => {
+// Person A retrieval requirements are mandatory checks.
+test("PERSON A CHANGE 1: v_my_evidence exposes content_version (stale-hit check for investigators)", { skip }, () => {
+  assert.ok(views.get("v_my_evidence").columns.has("content_version"));
+});
+
+test("PERSON A CHANGE 1b: v_my_findings exposes content_version (stale-hit check for findings)", { skip }, () => {
   assert.ok(views.get("v_my_findings").columns.has("content_version"));
 });
 
-test("PERSON A CHANGE 2 (worker B1): tracex_worker can SELECT analysis, so finding points carry case_id/evidence_id", { skip, todo: "needs Person A: GRANT SELECT ON tracex.analysis TO 'tracex_worker'" }, () => {
+test("PERSON A CHANGE 2 (worker B1): tracex_worker can SELECT analysis, so finding points carry case_id/evidence_id", { skip }, () => {
   assert.ok(parseGrants(allViewSql, "tracex_worker").has("analysis"));
 });

@@ -1,33 +1,38 @@
-# Required Person A SQL changes (proposals only, NOT applied)
+# Person A SQL changes — implemented on Person-A
 
-Nothing in `database/` was modified. These are the changes retrieval (Phase 3) needs or would benefit from.
-Each one is already covered by a `todo` test in `app/tests/retrieval/` that starts passing when it is done.
+The three SQL requirements identified during the Person B Phase 3 review are implemented in
+`database/02_access.sql`:
 
-## Required
+1. `v_my_evidence` exposes `e.content_version`.
+2. `v_my_findings` exposes `f.content_version`.
+3. `tracex_worker` has `SELECT` on `tracex.analysis`, needed to resolve
+   `finding.analysis_id -> analysis.evidence_id -> evidence.case_id` while building finding vectors.
 
-**1. Expose `content_version` in the investigator views** (stale-hit check).
-`v_my_evidence` and `v_my_findings` (02_access.sql) do not select `content_version`, and investigators
-have no base-table access, so retrieval cannot compare Qdrant's payload version with MySQL's. The design doc
-(section 5.3) says retrieval "drops stale hits (`content_version` mismatch)". Until this is done the
-investigator path cannot do that (the response says so: `meta.verification.stale_version_check: false`).
-Proposal: add `e.content_version` to the SELECT list of `v_my_evidence` and `f.content_version` to `v_my_findings`
-(append at the end; existing `SELECT *` users just get one more column). Tests: "PERSON A CHANGE 1 / 1b".
+The semantic retrieval repository now selects the version columns from the investigator views.
+It uses MySQL's authoritative versions to discard stale Qdrant evidence and finding candidates.
+The investigator continues to read only filtered `v_my_*` views; no base-table permission was added.
 
-**2. `GRANT SELECT ON tracex.analysis TO 'tracex_worker';`** (worker blocker B1, already documented in `worker/README.md`).
-Without it finding points are never indexed (finding upserts fail), so findings will not appear in search
-results at all. Afterwards an administrator runs `sp_backfill_index_jobs()`. Test: "PERSON A CHANGE 2".
+## Applying to an existing database
 
-## Optional
+After deploying the updated access/views SQL, an administrator should run:
 
-**3. Audit of searches.** Investigators cannot INSERT into `audit_log`; only procedures write it. If searches
-must be audited, a procedure such as `sp_log_search(case_ids, result_count)` (EXECUTE for both roles) would be needed.
-Retrieval does not log search text anywhere.
+```sql
+CALL sp_backfill_index_jobs();
+```
 
-**4. Convenience columns on `v_my_findings`** (`evidence_id`, `case_id`, evidence status). Retrieval currently
-gets them with a three-view join, which works; this would only simplify the SQL.
+This queues fresh upsert jobs for active records whose indexed version is missing or stale,
+including finding jobs that previously failed because the worker could not read `analysis`.
 
-## Not requested (documented behaviour, no change needed)
+## Verification commands
 
-- `v_my_evidence` / `v_my_findings` do not hide withdrawn evidence. Do not change this: evidence detail screens need it. Retrieval filters on `status`.
-- `tracex_admin_app` has no grant on `v_my_*` views or `fn_*` functions. Retrieval reads base tables for admins and checks "active Administrator" itself.
-- `docs/api-contract.md` section 5 (`SELECT ... FROM v_my_evidence WHERE evidence_id IN (...)`) is incomplete for search: it covers evidence only, not findings, withdrawn status, or versions.
+```sh
+cd app
+npm run test:retrieval
+npm run test:indexing
+npm run test:retrieval:live
+npm run test:indexing:live
+```
+
+Unit and SQL-contract tests do not require live services. Live tests require the configured
+MySQL schema/accounts and Qdrant service. Do not report live integration as passed until run
+successfully in that environment.

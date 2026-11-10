@@ -58,3 +58,19 @@ source database/06_verify_access.sql
 The script reports whether all three investigator views exist, displays their columns and the investigator role grants, compares visible evidence with visible current-custody rows, and checks that `index_job` contains 130 rows (57 active evidence items + 73 findings).
 
 For a real privilege test, connect separately as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID (for example, 3), and run the four `SELECT` statements against `v_my_current_custody`, `v_my_users`, and `v_my_teammates`. A direct `SELECT` from `app_user` or `custody_event` must be denied.
+
+## Classroom demonstration package (Person A)
+
+After loading the schema, access rules, routines and demo seed in the order above:
+
+```sql
+source database/08_verify_database.sql
+source database/07_demo.sql
+```
+
+- `08_verify_database.sql` is a read-only verification report. It checks the expected table, foreign-key, view, routine, trigger and seed counts, confirms the investigator content-version columns, and prints the indexing outbox breakdown and investigator role grants. A failed count is reported as `passed = 0`; the script does not claim the installation is valid automatically.
+- `07_demo.sql` is a read-only classroom walkthrough showing joined relational data, custody provenance, analysis/findings, audit history, index-job state, stored-program inventory and investigator-filtered views.
+- `04_dml.sql` is the separate state-changing DML demonstration. It intentionally creates and updates demo records and includes rejected operations.
+- `05_queries.sql` is the separate query showcase, including joins, nested/correlated subqueries, window functions, recursive CTEs and FULLTEXT search.
+
+The verification and demo scripts have been added to the Person-A branch. They have **not** been executed against a live MySQL instance as part of this commit. Record the actual output and resolve any failures before marking the database rubric items as demonstrated.

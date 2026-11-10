@@ -32,3 +32,20 @@ Every implementation step is checked against this table. Status values: Designed
 ## Scope reminder
 
 The research evaluation (keyword vs vector vs hybrid) supports the originality mark but is not scored on its own, so it stays small and honest, and it must never block the scored items above.
+
+## Person A classroom-readiness work (added Nov 10, 2026)
+
+The Person-A branch now includes two additional database demonstration files:
+
+- `database/07_demo.sql`: read-only classroom walkthrough of relational joins, custody provenance, analysis/findings, audit history, indexing outbox state, stored-program inventory and investigator-filtered views.
+- `database/08_verify_database.sql`: post-install checks for expected schema objects, demo seed row counts, investigator `content_version` view columns and role grants.
+
+These files improve repeatability and make it easier to present the MySQL implementation. They are **written but not live-verified** until executed against the team's MySQL environment. Do not change a rubric status to demonstrated merely because the script exists. Record successful execution and retain the output/screenshots as evidence.
+
+Recommended verification order:
+1. Load `01_schema.sql`, `02_access.sql`, `03_routines.sql`, then `data/out/seed_demo.sql`.
+2. Run `08_verify_database.sql` and resolve any failed checks.
+3. Run `07_demo.sql` for the read-only walkthrough.
+4. Run `05_queries.sql` for the query showcase.
+5. Run `04_dml.sql` separately for state-changing DML demonstrations.
+6. Reconnect as `tracex_investigator_app` and confirm direct base-table reads are denied while permitted filtered-view reads work.

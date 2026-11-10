@@ -67,7 +67,7 @@ WHERE a.user_id = fn_current_user_id();
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_evidence AS
 SELECT e.evidence_id, e.evidence_no, e.case_id, e.source_id, e.type_id,
        e.title, e.description, e.extracted_text, e.sha256, e.file_size_bytes,
-       e.status, e.registered_by, e.registered_at
+       e.status, e.registered_by, e.registered_at, e.content_version
 FROM evidence e
 JOIN v_user_case_access a ON a.case_id = e.case_id
 WHERE a.user_id = fn_current_user_id();
@@ -95,7 +95,7 @@ JOIN v_my_evidence me ON me.evidence_id = an.evidence_id;
 
 CREATE OR REPLACE SQL SECURITY DEFINER VIEW v_my_findings AS
 SELECT f.finding_id, f.analysis_id, f.title, f.description,
-       f.severity, f.created_at
+       f.severity, f.created_at, f.content_version
 FROM finding f
 JOIN v_my_analyses ma ON ma.analysis_id = f.analysis_id;
 
@@ -158,6 +158,8 @@ GRANT SELECT ON tracex.analysis_tool       TO 'tracex_investigator';
 -- Worker: reads the text to embed, updates only the indexing bookkeeping.
 GRANT SELECT ON tracex.evidence TO 'tracex_worker';
 GRANT SELECT ON tracex.finding  TO 'tracex_worker';
+-- Finding indexing resolves finding.analysis_id -> analysis.evidence_id -> evidence.case_id.
+GRANT SELECT ON tracex.analysis TO 'tracex_worker';
 GRANT SELECT, INSERT, UPDATE ON tracex.index_job TO 'tracex_worker';
 GRANT UPDATE (indexed_version, indexed_at) ON tracex.evidence TO 'tracex_worker';
 GRANT UPDATE (indexed_version, indexed_at) ON tracex.finding  TO 'tracex_worker';
