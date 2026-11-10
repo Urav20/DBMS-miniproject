@@ -164,15 +164,6 @@ Neither of these has been run against a live MySQL, Qdrant or the real BGE model
 
 **B1. Finding indexing permission — addressed in Person-A.** The updated `database/02_access.sql` grants `SELECT` on `analysis` to `tracex_worker`. After applying the SQL to an existing database, run `CALL sp_backfill_index_jobs();` as administrator to queue finding upserts that previously failed.
 
-**B1. The worker cannot resolve a finding's evidence and case (needs a SQL change by Person A).**
-`02_access.sql` gives `tracex_worker` no privilege on `analysis`, but `finding` only holds `analysis_id`.
-Without it the worker cannot build the Qdrant payload (`evidence_id`, `case_id`) of a finding, nor see
-that a finding's evidence is withdrawn. Until fixed: finding **upsert** jobs end as `failed`
-(`INDEX_FINDING_ACCESS_MISSING`) without affecting anything else; evidence jobs and finding **delete**
-jobs work. Fix (Person A, one line): `GRANT SELECT ON tracex.analysis TO 'tracex_worker';`. Afterwards an
-administrator runs `sp_backfill_index_jobs()` to requeue the failed finding upserts. No view or procedure
-was invented, and the worker does not borrow the admin account.
-
 **B2. Single worker only.** See "Concurrency". Needs a lease column to change.
 
 **B3. `failed` is terminal for the worker.** Failed upserts can be requeued with `sp_backfill_index_jobs()`;
