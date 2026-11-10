@@ -8,7 +8,7 @@
 //   - the admin pool may read only base tables; v_my_* views raise error 1142 (no grant)
 //   - v_my_* views return rows only for the connection's @tracex_user_id: active assignment,
 //     active user, as in 02_access.sql. They include withdrawn evidence, as the real views do.
-//   - v_my_evidence / v_my_findings have NO content_version column (as in 02_access.sql)
+//   - v_my_evidence / v_my_findings expose content_version, as required by retrieval
 
 import { createDb } from "../../src/lib/db/client.js";
 import { pointId, buildPayload } from "../../src/lib/vector/ids.js";
@@ -134,7 +134,6 @@ export function createFakeMysql(data = sampleData(), { failOn } = {}) {
           return [
             rows.map((e) => {
               const out = { ...e };
-              if (isViewEvidence) delete out.content_version; // the real view has no such column
               return out;
             }),
           ];
@@ -161,7 +160,7 @@ export function createFakeMysql(data = sampleData(), { failOn } = {}) {
               evidence_id: e.evidence_id, evidence_no: e.evidence_no, case_id: e.case_id,
               evidence_status: e.status,
             };
-            if (isBaseFinding) out.content_version = f.content_version;
+            out.content_version = f.content_version;
             rows.push(out);
           }
           return [rows];
