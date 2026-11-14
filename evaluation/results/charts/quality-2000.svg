@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" font-family="Segoe UI, Arial, sans-serif" font-size="12">
+<rect width="900" height="360" fill="#ffffff"/>
+<text x="450" y="24" text-anchor="middle" font-size="15" font-weight="600">Ranking quality, 2000 records (K=10)</text>
+<line x1="60" x2="880" y1="290" y2="290" stroke="#e3e3e3"/>
+<text x="54" y="294" text-anchor="end" fill="#555">0.0</text>
+<line x1="60" x2="880" y1="242" y2="242" stroke="#e3e3e3"/>
+<text x="54" y="246" text-anchor="end" fill="#555">0.2</text>
+<line x1="60" x2="880" y1="194" y2="194" stroke="#e3e3e3"/>
+<text x="54" y="198" text-anchor="end" fill="#555">0.4</text>
+<line x1="60" x2="880" y1="146" y2="146" stroke="#e3e3e3"/>
+<text x="54" y="150" text-anchor="end" fill="#555">0.6</text>
+<line x1="60" x2="880" y1="98" y2="98" stroke="#e3e3e3"/>
+<text x="54" y="102" text-anchor="end" fill="#555">0.8</text>
+<line x1="60" x2="880" y1="50" y2="50" stroke="#e3e3e3"/>
+<text x="54" y="54" text-anchor="end" fill="#555">1.0</text>
+<rect x="77.33333333333333" y="225.76470588235293" width="31" height="64.23529411764707" fill="#2f6f9f"/>
+<text x="92.83333333333333" y="221.76470588235293" text-anchor="middle" font-size="10" fill="#333">0.27</text>
+<rect x="111.33333333333333" y="180.58823529411768" width="31" height="109.41176470588232" fill="#d98a1f"/>
+<text x="126.83333333333333" y="176.58823529411768" text-anchor="middle" font-size="10" fill="#333">0.46</text>
+<rect x="145.33333333333331" y="198.94117647058823" width="31" height="91.05882352941177" fill="#3f9a5a"/>
+<text x="160.83333333333331" y="194.94117647058823" text-anchor="middle" font-size="10" fill="#333">0.38</text>
+<text x="128.33333333333331" y="308" text-anchor="middle" fill="#333">P@K</text>
+<rect x="214" y="209.7058823529412" width="31" height="80.29411764705881" fill="#2f6f9f"/>
+<text x="229.5" y="205.7058823529412" text-anchor="middle" font-size="10" fill="#333">0.33</text>
+<rect x="248" y="153.23529411764707" width="31" height="136.76470588235293" fill="#d98a1f"/>
+<text x="263.5" y="149.23529411764707" text-anchor="middle" font-size="10" fill="#333">0.57</text>
+<rect x="282" y="176.1764705882353" width="31" height="113.8235294117647" fill="#3f9a5a"/>
+<text x="297.5" y="172.1764705882353" text-anchor="middle" font-size="10" fill="#333">0.47</text>
+<text x="265" y="308" text-anchor="middle" fill="#333">R@K</text>
+<rect x="350.66666666666663" y="218.62745098039215" width="31" height="71.37254901960785" fill="#2f6f9f"/>
+<text x="366.16666666666663" y="214.62745098039215" text-anchor="middle" font-size="10" fill="#333">0.30</text>
+<rect x="384.66666666666663" y="168.43137254901964" width="31" height="121.56862745098036" fill="#d98a1f"/>
+<text x="400.16666666666663" y="164.43137254901964" text-anchor="middle" font-size="10" fill="#333">0.51</text>
+<rect x="418.66666666666663" y="188.82352941176475" width="31" height="101.17647058823525" fill="#3f9a5a"/>
+<text x="434.16666666666663" y="184.82352941176475" text-anchor="middle" font-size="10" fill="#333">0.42</text>
+<text x="401.66666666666663" y="308" text-anchor="middle" fill="#333">F1@K</text>
+<rect x="487.3333333333333" y="135.19607843137257" width="31" height="154.80392156862743" fill="#2f6f9f"/>
+<text x="502.8333333333333" y="131.19607843137257" text-anchor="middle" font-size="10" fill="#333">0.65</text>
+<rect x="521.3333333333333" y="86.63865546218489" width="31" height="203.3613445378151" fill="#d98a1f"/>
+<text x="536.8333333333333" y="82.63865546218489" text-anchor="middle" font-size="10" fill="#333">0.85</text>
+<rect x="555.3333333333333" y="94.921568627451" width="31" height="195.078431372549" fill="#3f9a5a"/>
+<text x="570.8333333333333" y="90.921568627451" text-anchor="middle" font-size="10" fill="#333">0.81</text>
+<text x="538.3333333333334" y="308" text-anchor="middle" fill="#333">MRR</text>
+<rect x="624" y="219.98214285714286" width="31" height="70.01785714285714" fill="#2f6f9f"/>
+<text x="639.5" y="215.98214285714286" text-anchor="middle" font-size="10" fill="#333">0.29</text>
+<rect x="658" y="166.41806722689074" width="31" height="123.58193277310926" fill="#d98a1f"/>
+<text x="673.5" y="162.41806722689074" text-anchor="middle" font-size="10" fill="#333">0.51</text>
+<rect x="692" y="189.60574229691878" width="31" height="100.39425770308122" fill="#3f9a5a"/>
+<text x="707.5" y="185.60574229691878" text-anchor="middle" font-size="10" fill="#333">0.42</text>
+<text x="675" y="308" text-anchor="middle" fill="#333">MAP</text>
+<rect x="760.6666666666666" y="189.6154610754541" width="31" height="100.3845389245459" fill="#2f6f9f"/>
+<text x="776.1666666666666" y="185.6154610754541" text-anchor="middle" font-size="10" fill="#333">0.42</text>
+<rect x="794.6666666666666" y="132.69953313853733" width="31" height="157.30046686146267" fill="#d98a1f"/>
+<text x="810.1666666666666" y="128.69953313853733" text-anchor="middle" font-size="10" fill="#333">0.66</text>
+<rect x="828.6666666666666" y="155.10171040889747" width="31" height="134.89828959110253" fill="#3f9a5a"/>
+<text x="844.1666666666666" y="151.10171040889747" text-anchor="middle" font-size="10" fill="#333">0.56</text>
+<text x="811.6666666666666" y="308" text-anchor="middle" fill="#333">NDCG@K</text>
+<rect x="60" y="338" width="12" height="12" fill="#2f6f9f"/><text x="77" y="348" fill="#333">keyword</text>
+<rect x="180" y="338" width="12" height="12" fill="#d98a1f"/><text x="197" y="348" fill="#333">vector</text>
+<rect x="300" y="338" width="12" height="12" fill="#3f9a5a"/><text x="317" y="348" fill="#333">hybrid</text>
+</svg>

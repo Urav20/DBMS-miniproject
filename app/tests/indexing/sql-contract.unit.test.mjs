@@ -191,7 +191,7 @@ test("SQL contract: every statement is covered by a tracex_worker grant in 02_ac
     }
     for (const t of reads) if (!grants[t]?.select) unmet.push(`SELECT on ${t}`);
   }
-  assert.deepEqual([...new Set(unmet)], ["SELECT on analysis"]);
+  assert.deepEqual([...new Set(unmet)], []);
 });
 
 test("SQL contract: the worker may only UPDATE indexed_version/indexed_at on evidence and finding, and has no DELETE anywhere", { skip }, () => {
@@ -258,3 +258,4 @@ test("SQL contract: the indexed_version CHECK allows the worker's value (never a
   // so a record whose job ended as 'failed' (or 'done' but still stale) gets a fresh job.
   assert.match(routinesSql, /j\.status IN \('pending','processing'\)/);
 });
+

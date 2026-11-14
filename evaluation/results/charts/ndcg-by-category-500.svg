@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="Segoe UI, Arial, sans-serif" font-size="12">
+<rect width="640" height="360" fill="#ffffff"/>
+<text x="320" y="24" text-anchor="middle" font-size="15" font-weight="600">NDCG@10 by category, 500 records</text>
+<line x1="60" x2="620" y1="290" y2="290" stroke="#e3e3e3"/>
+<text x="54" y="294" text-anchor="end" fill="#555">0.0</text>
+<line x1="60" x2="620" y1="242" y2="242" stroke="#e3e3e3"/>
+<text x="54" y="246" text-anchor="end" fill="#555">0.2</text>
+<line x1="60" x2="620" y1="194" y2="194" stroke="#e3e3e3"/>
+<text x="54" y="198" text-anchor="end" fill="#555">0.4</text>
+<line x1="60" x2="620" y1="146" y2="146" stroke="#e3e3e3"/>
+<text x="54" y="150" text-anchor="end" fill="#555">0.6</text>
+<line x1="60" x2="620" y1="98" y2="98" stroke="#e3e3e3"/>
+<text x="54" y="102" text-anchor="end" fill="#555">0.8</text>
+<line x1="60" x2="620" y1="50" y2="50" stroke="#e3e3e3"/>
+<text x="54" y="54" text-anchor="end" fill="#555">1.0</text>
+<rect x="79" y="165.43146872217935" width="31" height="124.56853127782065" fill="#2f6f9f"/>
+<text x="94.5" y="161.43146872217935" text-anchor="middle" font-size="10" fill="#333">0.52</text>
+<rect x="113" y="137.04527983222397" width="31" height="152.95472016777603" fill="#d98a1f"/>
+<text x="128.5" y="133.04527983222397" text-anchor="middle" font-size="10" fill="#333">0.64</text>
+<rect x="147" y="139.70547385975235" width="31" height="150.29452614024765" fill="#3f9a5a"/>
+<text x="162.5" y="135.70547385975235" text-anchor="middle" font-size="10" fill="#333">0.63</text>
+<text x="130" y="308" text-anchor="middle" fill="#333">exact_keyword</text>
+<rect x="219" y="137.76258504393957" width="31" height="152.23741495606043" fill="#2f6f9f"/>
+<text x="234.5" y="133.76258504393957" text-anchor="middle" font-size="10" fill="#333">0.63</text>
+<rect x="253" y="95.77304594406249" width="31" height="194.2269540559375" fill="#d98a1f"/>
+<text x="268.5" y="91.77304594406249" text-anchor="middle" font-size="10" fill="#333">0.81</text>
+<rect x="287" y="115.9608627895646" width="31" height="174.0391372104354" fill="#3f9a5a"/>
+<text x="302.5" y="111.9608627895646" text-anchor="middle" font-size="10" fill="#333">0.73</text>
+<text x="270" y="308" text-anchor="middle" fill="#333">partial_match</text>
+<rect x="359" y="202.65299338255255" width="31" height="87.34700661744745" fill="#2f6f9f"/>
+<text x="374.5" y="198.65299338255255" text-anchor="middle" font-size="10" fill="#333">0.36</text>
+<rect x="393" y="113.19433988051054" width="31" height="176.80566011948946" fill="#d98a1f"/>
+<text x="408.5" y="109.19433988051054" text-anchor="middle" font-size="10" fill="#333">0.74</text>
+<rect x="427" y="137.38367626855242" width="31" height="152.61632373144758" fill="#3f9a5a"/>
+<text x="442.5" y="133.38367626855242" text-anchor="middle" font-size="10" fill="#333">0.64</text>
+<text x="410" y="308" text-anchor="middle" fill="#333">semantic</text>
+<rect x="499" y="216.31222690893554" width="31" height="73.68777309106446" fill="#2f6f9f"/>
+<text x="514.5" y="212.31222690893554" text-anchor="middle" font-size="10" fill="#333">0.31</text>
+<rect x="533" y="167.00693812708718" width="31" height="122.99306187291282" fill="#d98a1f"/>
+<text x="548.5" y="163.00693812708718" text-anchor="middle" font-size="10" fill="#333">0.51</text>
+<rect x="567" y="183.305014889212" width="31" height="106.694985110788" fill="#3f9a5a"/>
+<text x="582.5" y="179.305014889212" text-anchor="middle" font-size="10" fill="#333">0.44</text>
+<text x="550" y="308" text-anchor="middle" fill="#333">related_concept</text>
+<rect x="60" y="338" width="12" height="12" fill="#2f6f9f"/><text x="77" y="348" fill="#333">keyword</text>
+<rect x="180" y="338" width="12" height="12" fill="#d98a1f"/><text x="197" y="348" fill="#333">vector</text>
+<rect x="300" y="338" width="12" height="12" fill="#3f9a5a"/><text x="317" y="348" fill="#333">hybrid</text>
+</svg>

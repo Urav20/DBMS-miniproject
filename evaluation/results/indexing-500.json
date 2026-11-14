@@ -1,0 +1,18 @@
+{
+ "database": "tracex_eval_500",
+ "collection": "tracex_eval_500",
+ "records": 500,
+ "points": 500,
+ "seconds": 73.7482081,
+ "records_per_second": 6.779825746030567,
+ "worker": {
+  "claimed": 500,
+  "upserted": 500,
+  "deleted": 0,
+  "skipped": 0,
+  "retried": 0,
+  "failed": 0,
+  "outage": false
+ },
+ "finished_at": "2026-11-14T15:27:23.666Z"
+}

@@ -443,7 +443,7 @@ test("Qdrant returning no candidates, or only malformed ones, is an empty result
 
 test("over-fetch: Qdrant is asked for more than the limit (capped), results are cut to the limit", async () => {
   const ids = [10, 11];
-  const { service, v } = build({ vector: { hits: ids.map((id, i) => hit("evidence", id, { caseId: 1, score: 0.9 - i / 10 })) } });
+  const { service, v } = build({ vector: { hits: ids.map((id, i) => hit("evidence", id, { caseId: 1, version: id === 11 ? 2 : 1, score: 0.9 - i / 10 })) } });
   const out = await service.search(INV(3), params({ limit: 1 }));
   assert.equal(v.calls.search[0].limit, 11, "max(1 x 3, 1 + 10)");
   assert.equal(out.results.length, 1);
@@ -468,7 +468,7 @@ test("kind 'all' sends no kind filter; a specific kind is passed through", async
 test("AUTHORIZATION ORACLE: even if Qdrant returns EVERY point, no user gets a record they may not see", async () => {
   const data = sampleData();
   const allHits = [
-    ...data.evidence.map((e, i) => hit("evidence", e.evidence_id, { caseId: e.case_id, version: 1, score: 0.99 - i / 100 })),
+    ...data.evidence.map((e, i) => hit("evidence", e.evidence_id, { caseId: e.case_id, version: e.content_version, score: 0.99 - i / 100 })),
     ...data.findings.map((f, i) => {
       const e = data.evidence.find((x) => x.evidence_id === data.analyses.find((a) => a.analysis_id === f.analysis_id).evidence_id);
       return hit("finding", f.finding_id, { caseId: e.case_id, evidenceId: e.evidence_id, score: 0.8 - i / 100 });
