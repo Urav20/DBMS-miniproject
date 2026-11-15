@@ -29,15 +29,19 @@ export function cleanText(value, max, { required = false } = {}) {
 
 export function mysqlDateTimeLocal(value) {
   if (typeof value !== "string") return null;
-  // Preserve the wall-clock value sent by datetime-local; DATETIME has no timezone.
+  // Preserve the wall-clock value sent by datetime-local; MySQL DATETIME has no timezone.
+  // Validate calendar fields directly so the server's timezone/DST settings cannot alter it.
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
   if (!match) return null;
-  const [, year, month, day, hour, minute, second = "00"] = match;
-  const date = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
-  if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 ||
-      date.getDate() !== Number(day) || date.getHours() !== Number(hour) ||
-      date.getMinutes() !== Number(minute) || date.getSeconds() !== Number(second)) return null;
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  const [, yearText, monthText, dayText, hourText, minuteText, secondText = "00"] = match;
+  const year = Number(yearText), month = Number(monthText), day = Number(dayText);
+  const hour = Number(hourText), minute = Number(minuteText), second = Number(secondText);
+  if (year < 1000 || year > 9999 || month < 1 || month > 12 ||
+      hour > 23 || minute > 59 || second > 59) return null;
+  const leapYear = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+  const daysPerMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (day < 1 || day > daysPerMonth[month - 1]) return null;
+  return `${yearText}-${monthText}-${dayText} ${hourText}:${minuteText}:${secondText}`;
 }
 
 export function parsePositiveId(value) {
