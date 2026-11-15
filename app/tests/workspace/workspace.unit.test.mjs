@@ -82,6 +82,12 @@ test("workflow API routes call the project's stored procedures, not direct evide
   }
 });
 
+test("admin re-index endpoint only queues work and never starts a second worker", () => {
+  const route = read("app/src/app/api/admin/vector/reindex/route.js");
+  assert.ok(route.includes("sp_backfill_index_jobs"));
+  assert.doesNotMatch(route, /createDefaultWorker|worker\\.drain/);
+});
+
 test("workspace repository uses filtered investigator views and the actual append-only audit timestamp", () => {
   const source = read("app/src/lib/workspace/repository.js");
   for (const view of ["v_my_cases", "v_my_evidence", "v_my_custody", "v_my_analyses", "v_my_findings", "v_my_relationships"]) {
