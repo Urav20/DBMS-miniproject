@@ -28,13 +28,14 @@ mysql -u root -p < data/out/seed_demo.sql
 
 ### Upgrade an existing database after pulling code changes
 
-For the current workspace, `database/03_routines.sql` includes the stored procedures used by case, evidence, custody, analysis, finding and relationship forms. After pulling a version that adds or changes a procedure, re-run only:
+If your local database predates the latest retrieval/workspace SQL, re-apply both the access/view/grant definitions and the stored routines:
 
 ```bash
+mysql -u root -p < database/02_access.sql
 mysql -u root -p < database/03_routines.sql
 ```
 
-This file drops/recreates stored routines and recreates its trigger/view definitions; it does not drop the `tracex` database or its tables/data. Do **not** re-run `01_schema.sql` for an ordinary application update. Back up your database before any schema-maintenance work.
+`02_access.sql` refreshes the investigator-filtered views (including `content_version`) and worker permissions (including `SELECT ON analysis`). `03_routines.sql` recreates the current procedures, triggers, extra views and grants, including `sp_update_evidence_metadata`. These scripts do not drop the `tracex` database or its tables/data. Afterward, use the Administrator workspace's **Queue missing or stale records** action if the existing vector index needs backfilling, and keep one standalone worker running. Do **not** re-run `01_schema.sql` for an ordinary application update. Back up your database before any schema-maintenance work.
 
 ## Demonstration sequence
 
