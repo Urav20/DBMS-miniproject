@@ -64,3 +64,22 @@ export async function listAudit(session, limit = 100) {
        FROM audit_log al LEFT JOIN app_user u ON u.user_id = al.user_id
       ORDER BY al.occurred_at DESC, al.audit_id DESC LIMIT ?`, [limit]);
 }
+
+export async function listCaseCustody(session, caseId) {
+  const admin = session.role === "admin";
+  const events = admin ? "custody_event" : "v_my_custody";
+  const evidence = admin ? "evidence" : "v_my_evidence";
+  const people = admin ? "app_user" : "v_my_users";
+  const cases = admin ? "investigation_case" : "v_my_cases";
+  return query(session,
+    `SELECT ce.evidence_id, e.evidence_no, e.title, ce.seq_no, ce.from_user_id,
+            ce.to_user_id, ce.transferred_at, ce.reason,
+            fu.full_name AS from_user, tu.full_name AS to_user
+       FROM ${events} ce
+       JOIN ${evidence} e ON e.evidence_id = ce.evidence_id
+       JOIN ${cases} c ON c.case_id = e.case_id
+       LEFT JOIN ${people} fu ON fu.user_id = ce.from_user_id
+       JOIN ${people} tu ON tu.user_id = ce.to_user_id
+      WHERE e.case_id = ?
+      ORDER BY e.evidence_no, ce.seq_no`, [caseId]);
+}
