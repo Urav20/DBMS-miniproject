@@ -67,6 +67,7 @@ test("workflow API routes call the project's stored procedures, not direct evide
     ["app/src/app/api/workspace/cases/[id]/route.js", "sp_set_case_status"],
     ["app/src/app/api/workspace/cases/[id]/access/route.js", "sp_grant_access"],
     ["app/src/app/api/workspace/evidence/route.js", "sp_register_evidence"],
+    ["app/src/app/api/workspace/evidence/[id]/route.js", "sp_update_evidence_metadata"],
     ["app/src/app/api/workspace/evidence/[id]/custody/route.js", "sp_transfer_custody"],
     ["app/src/app/api/workspace/evidence/[id]/analysis/route.js", "sp_record_analysis"],
     ["app/src/app/api/workspace/analysis/[id]/complete/route.js", "sp_complete_analysis"],
