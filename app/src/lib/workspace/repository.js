@@ -105,7 +105,7 @@ export async function listActiveUsers(session) {
   if (session.role !== "admin") throw new Error("Administrator access required.");
   return query(session,
     `SELECT u.user_id, u.username, u.full_name, r.role_name
-       FROM app_user u JOIN `role` r ON r.role_id = u.role_id
+       FROM app_user u JOIN \\`role\\` r ON r.role_id = u.role_id
       WHERE u.is_active = 1
       ORDER BY u.full_name`);
 }
@@ -197,4 +197,15 @@ export async function getEvidenceDetail(session, evidenceId) {
     })),
     relationships: relationshipRows,
   };
+}
+
+
+export async function listCaseAssignments(session, caseId) {
+  if (session.role !== "admin") throw new Error("Administrator access required.");
+  return query(session,
+    `SELECT ca.user_id, u.username, u.full_name, ca.granted_at, ca.revoked_at
+       FROM case_assignment ca
+       JOIN app_user u ON u.user_id = ca.user_id
+      WHERE ca.case_id = ?
+      ORDER BY ca.revoked_at IS NULL DESC, u.full_name`, [caseId]);
 }
