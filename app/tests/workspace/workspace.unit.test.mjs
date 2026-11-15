@@ -54,6 +54,9 @@ test("datetime-local validation preserves wall-clock time and rejects impossible
   assert.equal(mysqlDateTimeLocal("2026-11-15T11:24"), "2026-11-15 11:24:00");
   assert.equal(mysqlDateTimeLocal("2024-02-29T09:05:07"), "2024-02-29 09:05:07");
   assert.equal(mysqlDateTimeLocal("2024-02-30T09:05"), null);
+  assert.equal(mysqlDateTimeLocal("2026-11-15T24:00"), null);
+  assert.equal(mysqlDateTimeLocal("2026-11-15T23:60"), null);
+  assert.equal(mysqlDateTimeLocal("0999-12-31T23:59"), null);
   assert.equal(mysqlDateTimeLocal("not-a-date"), null);
   assert.equal(mysqlDateTimeLocal(null), null);
 });
