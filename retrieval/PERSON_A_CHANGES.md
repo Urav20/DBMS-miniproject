@@ -1,38 +1,38 @@
-# Person A SQL changes — implemented on Person-A
+# Retrieval SQL prerequisites — current status on main
 
-The three SQL requirements identified during the Person B Phase 3 review are implemented in
-`database/02_access.sql`:
+The three SQL changes identified during the Person B Phase 3 review are present in the current `main` branch in `database/02_access.sql`:
 
 1. `v_my_evidence` exposes `e.content_version`.
 2. `v_my_findings` exposes `f.content_version`.
-3. `tracex_worker` has `SELECT` on `tracex.analysis`, needed to resolve
-   `finding.analysis_id -> analysis.evidence_id -> evidence.case_id` while building finding vectors.
+3. `tracex_worker` has `SELECT` on `tracex.analysis`, required to resolve `finding.analysis_id -> analysis.evidence_id -> evidence.case_id` while indexing findings.
 
-The semantic retrieval repository now selects the version columns from the investigator views.
-It uses MySQL's authoritative versions to discard stale Qdrant evidence and finding candidates.
-The investigator continues to read only filtered `v_my_*` views; no base-table permission was added.
+The retrieval repository reads the investigator version columns through the filtered views and discards stale Qdrant candidates for both investigator and administrator searches. The worker can resolve finding-to-case relationships when the updated grant is installed.
 
 ## Applying to an existing database
 
-After deploying the updated access/views SQL, an administrator should run:
+If your local database was created before these SQL changes, apply the updated access/view/grant definitions from the repository:
+
+```bash
+mysql -u root -p < database/02_access.sql
+```
+
+Then queue fresh upserts for active evidence/findings whose indexed version is missing or stale:
 
 ```sql
 CALL sp_backfill_index_jobs();
 ```
 
-This queues fresh upsert jobs for active records whose indexed version is missing or stale,
-including finding jobs that previously failed because the worker could not read `analysis`.
+The backfill procedure is administrator-only. It queues work; it does not run the worker. Keep exactly one standalone indexing worker process running to drain the queue.
 
 ## Verification commands
 
+From `app/`:
+
 ```sh
-cd app
 npm run test:retrieval
 npm run test:indexing
 npm run test:retrieval:live
 npm run test:indexing:live
 ```
 
-Unit and SQL-contract tests do not require live services. Live tests require the configured
-MySQL schema/accounts and Qdrant service. Do not report live integration as passed until run
-successfully in that environment.
+Unit and SQL-contract tests do not require live services. Live tests require the configured MySQL schema/accounts and Qdrant service. Do not report live integration as passed until those commands complete successfully in the target environment.
