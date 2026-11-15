@@ -39,3 +39,11 @@ export function mysqlDateTimeLocal(value) {
       date.getMinutes() !== Number(minute) || date.getSeconds() !== Number(second)) return null;
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+
+export function parsePositiveId(value) {
+  const validType = typeof value === "number" ||
+    (typeof value === "string" && /^\d+$/.test(value));
+  if (!validType) return null;
+  const id = Number(value);
+  return Number.isSafeInteger(id) && id > 0 && id <= 4294967295 ? id : null;
+}
