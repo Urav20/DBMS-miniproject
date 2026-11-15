@@ -4,7 +4,7 @@
 
 A two-member DBMS semester project. TRACE-X stores authoritative case, evidence and provenance records in MySQL and uses Qdrant for semantic retrieval. Similarity results are investigative leads only: MySQL re-checks access, status and content version before any result is returned.
 
-> **Project status (November 2026):** The relational schema, database roles/views, stored procedures/triggers, Qdrant integration, indexing worker, authentication, semantic retrieval API and Phase 4 evaluation are implemented. The live workspace pages in this branch connect the dashboard, case list/detail, evidence list, semantic search, administrator index controls and audit report to those existing modules. The complete operational workflow is still narrower than the full database model: case creation, new evidence registration/upload, custody transfer, analysis/finding entry and human-recorded relationship entry are not all exposed as UI workflows yet. Run the application checks in [SETUP.md](docs/SETUP.md) before treating the UI changes as verified.
+> **Project status (November 2026):** The relational schema, database roles/views, stored procedures/triggers, Qdrant integration, indexing worker, authentication, semantic retrieval API and Phase 4 evaluation are implemented. Case creation/status and assignment management, evidence metadata registration, custody transfer, analysis/finding entry and human-recorded relationship entry are now exposed through the workspace and call the existing MySQL stored procedures. Evidence update preserves the existing extracted text and queues re-indexing. The database stores metadata/hash/file size/extracted text; original binary file upload/storage is not implemented. Run the application checks in [SETUP.md](docs/SETUP.md) before treating the UI changes as verified.
 
 ## Architecture
 
@@ -30,7 +30,7 @@ Investigators read through case-filtered `v_my_*` views and use stored procedure
 
 See **[docs/SETUP.md](docs/SETUP.md)** for complete macOS/Linux and Windows-oriented setup, database initialization, Qdrant, environment variables, worker and test commands.
 
-The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials.
+The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials. When upgrading an existing database to the latest procedures, re-run only `database/03_routines.sql`; do not re-run `01_schema.sql` on a database you need to preserve.
 
 ## Run the application
 
