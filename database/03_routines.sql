@@ -547,7 +547,7 @@ BEGIN
   COMMIT;
 
   SELECT p_evidence_id AS evidence_id, v_version AS content_version;
-END$
+END$$
 
 -- Withdraw (soft-delete) evidence: the row stays for the record, its
 -- vectors are removed by the queued delete jobs. Registrant or admin only.
