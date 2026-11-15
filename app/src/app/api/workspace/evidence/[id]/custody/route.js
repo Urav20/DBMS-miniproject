@@ -1,6 +1,6 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, readPositiveId, cleanText } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, readPositiveId, cleanText, parsePositiveId } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +12,9 @@ export async function POST(request, context) {
   if (!evidenceId) return jsonResponse(400, { error: { message: "A valid evidence ID is required." } });
   const parsed = await readJson(request);
   if (!parsed.ok) return jsonResponse(400, { error: { message: "The request must contain valid JSON." } });
-  const toUserId = Number(parsed.value?.to_user_id);
+  const toUserId = parsePositiveId(parsed.value?.to_user_id);
   const reason = cleanText(parsed.value?.reason, 255, { required: true });
-  if (!Number.isSafeInteger(toUserId) || toUserId < 1 || toUserId > 4294967295 || !reason) {
+  if (!toUserId || !reason) {
     return jsonResponse(400, { error: { message: "Choose a valid receiving teammate and provide a reason (up to 255 characters)." } });
   }
   try {
