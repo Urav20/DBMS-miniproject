@@ -147,11 +147,13 @@ Two different "first query" numbers exist and are labelled differently:
 
 ## Verification status
 
-What has and has not been run (update this section with your own run):
+The November 2026 benchmarks were run on Windows with Node.js v22.19.0, MySQL 8.0.46 in Docker, Qdrant, and isolated evaluation datasets of 500 and 2000 records. The committed result metadata records live execution (mock=false) and the BAAI/bge-small-en-v1.5 embedding model. The earlier stand-in-embedder note describes a previous environment, not these benchmark results.
 
-- Unit tests (`node evaluation/scripts/test.mjs`) run without services and include contract tests against the real `database/01..03_*.sql` files and the real Phase 1-3 modules. They fail, not skip, if the full project is missing.
-- The generated setup SQL, the loader (stored procedures), the FULLTEXT keyword query, the Phase 2 worker, the Phase 3 search service, the runner, the cleanup and the safety guards were exercised against a real MySQL 8.0 and a real Qdrant 1.x, with a **stand-in embedder** (the BGE model could not be downloaded in that environment).
-- **Not verified:** anything involving the real BAAI/bge-small-en-v1.5 model (indexing time, vector ranking quality, vector/hybrid latency, `cold.mjs` for vector and hybrid) and every number a real run will produce. No experiment results are included in this package.
+Unit tests and three live integration tests per dataset were run. Exact test output is retained under evaluation/results/verification/. The benchmark does not establish complete UI/API integration or vector RUD demonstration.
+
+### macOS / Linux instructions (not independently tested)
+
+From the repository root, install dependencies using cd app, npm ci, then cd back. Generate setup SQL using node evaluation/scripts/sql.mjs --size 500 and import with the MySQL CLI using input redirection. Configure app/.env.local, then run evaluation/scripts/load.mjs, index.mjs and run.mjs with Node.js --env-file=app/.env.local and --size 500. Repeat for --size 2000. Run node evaluation/scripts/report.mjs to generate evaluation/results/REPORT.md, JSON/CSV results and SVG charts.
 
 ## Limitations
 

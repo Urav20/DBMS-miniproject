@@ -49,3 +49,7 @@ Recommended verification order:
 4. Run `05_queries.sql` for the query showcase.
 5. Run `04_dml.sql` separately for state-changing DML demonstrations.
 6. Reconnect as `tracex_investigator_app` and confirm direct base-table reads are denied while permitted filtered-view reads work.
+
+## Phase 4 evaluation and remaining integration work
+
+The November 2026 benchmark verifies isolated MySQL/Qdrant indexing and retrieval on synthetic data. It does not complete the Next.js UI, backend/API integration, or UI-demonstrable vector Read/Update/Delete requirements. These rubric items retain their existing statuses until separately verified.
