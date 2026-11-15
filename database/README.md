@@ -26,6 +26,16 @@ mysql -u root -p < data/out/seed_demo.sql
 
 `02_access.sql` creates role-specific accounts using placeholder passwords. Change the passwords in MySQL and configure the same values in `app/.env.local`; do not put real credentials in Git.
 
+### Upgrade an existing database after pulling code changes
+
+For the current workspace, `database/03_routines.sql` includes the stored procedures used by case, evidence, custody, analysis, finding and relationship forms. After pulling a version that adds or changes a procedure, re-run only:
+
+```bash
+mysql -u root -p < database/03_routines.sql
+```
+
+This file drops/recreates stored routines and recreates its trigger/view definitions; it does not drop the `tracex` database or its tables/data. Do **not** re-run `01_schema.sql` for an ordinary application update. Back up your database before any schema-maintenance work.
+
 ## Demonstration sequence
 
 Open a MySQL CLI session and run:
