@@ -13,7 +13,7 @@ export async function readJson(request) {
 export async function readPositiveId(context, key = "id") {
   const params = await context.params;
   const raw = params?.[key];
-  if (typeof raw !== "string" || !/^\\d+$/.test(raw)) return null;
+  if (typeof raw !== "string" || !/^\d+$/.test(raw)) return null;
   const id = Number(raw);
   return Number.isSafeInteger(id) && id > 0 && id <= 4294967295 ? id : null;
 }
