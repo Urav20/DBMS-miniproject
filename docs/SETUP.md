@@ -61,6 +61,16 @@ For the broader query demonstration, run `source database/05_queries.sql`. For s
 
 The expected demo row counts are documented in [data/README.md](../data/README.md). The verification SQL reports any mismatch; retain actual terminal output rather than claiming a check passed based only on the file existing.
 
+### Updating an existing local database
+
+When you pull a code update that adds or changes a stored procedure, re-apply the routines/access definitions without resetting your tables or seed data:
+
+```bash
+mysql -u root -p < database/03_routines.sql
+```
+
+For the current workspace this creates `sp_update_evidence_metadata`, which preserves the extracted text while updating the title/description and queueing a new vector version. This command does not run `01_schema.sql`. Do not run the destructive schema file just to update routines.
+
 ## 4. Start Qdrant
 
 ```bash
@@ -101,7 +111,7 @@ Terminal 2 — Next.js development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Sign in with one of the demo accounts in [data/README.md](../data/README.md). Keep the worker running while testing evidence edits, withdrawals and vector re-indexing.
+Open [http://localhost:3000](http://localhost:3000). Sign in with one of the demo accounts in [data/README.md](../data/README.md). Keep exactly one worker process running while testing evidence registration, edits, withdrawals and vector re-indexing. The administrator re-index button queues missing/stale work only; the background worker drains the queue.
 
 ## 7. Useful checks
 
