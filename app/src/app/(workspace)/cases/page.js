@@ -30,7 +30,7 @@ export default async function CasesPage() {
               <span><strong className="text-ink">{item.evidence_count}</strong> evidence records</span>
               <span><strong className="text-ink">{item.finding_count}</strong> findings</span>
             </div>
-            <Link href={`/evidence?case_id=${item.case_id}`} className="mt-5 inline-flex rounded-sm border border-line px-3 py-2 text-sm font-medium hover:bg-paper focus-visible:outline-accent">View evidence</Link>
+            <div className="mt-5 flex flex-wrap gap-2"><Link href={`/cases/${item.case_id}`} className="inline-flex rounded-sm bg-night px-3 py-2 text-sm font-medium text-white hover:opacity-90">Open case and custody history</Link><Link href={`/evidence?case_id=${item.case_id}`} className="inline-flex rounded-sm border border-line px-3 py-2 text-sm font-medium hover:bg-paper focus-visible:outline-accent">View evidence</Link></div>
           </article>
         ))}
       </div>
