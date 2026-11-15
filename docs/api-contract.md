@@ -1,7 +1,6 @@
 # TRACE-X API contract: database side (for the Next.js app)
 
-Everything the MySQL command line can do is a stored procedure, a view or a plain query,
-so every UI action maps to exactly one of the items below (CLI/UI parity).
+Every database-facing workspace action maps to a documented stored procedure, view or parameterized query. The UI must not bypass the role-specific database access layer or write directly to provenance tables.
 
 ## 1. Connection rules
 - Three MySQL accounts (`02_access.sql`): `tracex_admin_app`, `tracex_investigator_app`, `tracex_worker_app`.
