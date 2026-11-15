@@ -303,6 +303,7 @@ WHERE u.user_id IN (SELECT user_id FROM v_my_teammates)
 DROP PROCEDURE IF EXISTS sp_register_evidence;
 DROP PROCEDURE IF EXISTS sp_transfer_custody;
 DROP PROCEDURE IF EXISTS sp_update_evidence_text;
+DROP PROCEDURE IF EXISTS sp_update_evidence_metadata;
 DROP PROCEDURE IF EXISTS sp_withdraw_evidence;
 DROP PROCEDURE IF EXISTS sp_record_analysis;
 DROP PROCEDURE IF EXISTS sp_complete_analysis;
@@ -498,6 +499,55 @@ BEGIN
 
   SELECT p_evidence_id AS evidence_id, v_version AS content_version;
 END$$
+
+-- Update searchable metadata without round-tripping extracted_text through the browser.
+-- The row lock keeps the existing extracted text intact while the version trigger
+-- queues a fresh vector using the current database value.
+CREATE PROCEDURE sp_update_evidence_metadata(
+  IN p_evidence_id INT UNSIGNED,
+  IN p_title       VARCHAR(200),
+  IN p_description TEXT)
+SQL SECURITY DEFINER
+BEGIN
+  DECLARE v_actor   INT UNSIGNED;
+  DECLARE v_case    INT UNSIGNED;
+  DECLARE v_status  VARCHAR(20);
+  DECLARE v_version INT UNSIGNED;
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    RESIGNAL;
+  END;
+
+  SET v_actor = fn_actor();
+  START TRANSACTION;
+  SELECT case_id, status INTO v_case, v_status
+  FROM evidence WHERE evidence_id = p_evidence_id FOR UPDATE;
+  IF v_case IS NULL OR NOT fn_can_access_case(v_actor, v_case) THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 45001, MESSAGE_TEXT = 'Evidence not found or access denied';
+  END IF;
+  IF fn_case_closed(v_case) THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 45002, MESSAGE_TEXT = 'Case is closed: no changes allowed';
+  END IF;
+  IF v_status <> 'active' THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 45003, MESSAGE_TEXT = 'Withdrawn evidence cannot be edited';
+  END IF;
+  IF p_title IS NULL OR TRIM(p_title) = '' OR p_description IS NULL OR TRIM(p_description) = '' THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 45003, MESSAGE_TEXT = 'Title and description are required';
+  END IF;
+
+  UPDATE evidence
+  SET title = TRIM(p_title), description = p_description
+  WHERE evidence_id = p_evidence_id;
+
+  SELECT content_version INTO v_version FROM evidence WHERE evidence_id = p_evidence_id;
+  INSERT INTO audit_log (user_id, case_id, action, entity_type, entity_id, details)
+  VALUES (v_actor, v_case, 'evidence.update', 'evidence', p_evidence_id,
+          JSON_OBJECT('content_version', v_version));
+  COMMIT;
+
+  SELECT p_evidence_id AS evidence_id, v_version AS content_version;
+END$
 
 -- Withdraw (soft-delete) evidence: the row stays for the record, its
 -- vectors are removed by the queued delete jobs. Registrant or admin only.
@@ -984,6 +1034,7 @@ GRANT SELECT ON tracex.v_my_users           TO 'tracex_investigator';
 GRANT EXECUTE ON PROCEDURE tracex.sp_register_evidence    TO 'tracex_investigator', 'tracex_admin';
 GRANT EXECUTE ON PROCEDURE tracex.sp_transfer_custody     TO 'tracex_investigator', 'tracex_admin';
 GRANT EXECUTE ON PROCEDURE tracex.sp_update_evidence_text TO 'tracex_investigator', 'tracex_admin';
+GRANT EXECUTE ON PROCEDURE tracex.sp_update_evidence_metadata TO 'tracex_investigator', 'tracex_admin';
 GRANT EXECUTE ON PROCEDURE tracex.sp_withdraw_evidence    TO 'tracex_investigator', 'tracex_admin';
 GRANT EXECUTE ON PROCEDURE tracex.sp_record_analysis      TO 'tracex_investigator', 'tracex_admin';
 GRANT EXECUTE ON PROCEDURE tracex.sp_complete_analysis    TO 'tracex_investigator', 'tracex_admin';
