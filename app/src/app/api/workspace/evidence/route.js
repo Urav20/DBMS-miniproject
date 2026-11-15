@@ -1,14 +1,8 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, cleanText, mysqlDateTimeLocal } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, cleanText, mysqlDateTimeLocal, parsePositiveId } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
-
-function positiveId(value) {
-  const id = Number(value);
-  return Number.isSafeInteger(id) && id > 0 && id <= 4294967295 ? id : null;
-}
-
 
 export async function POST(request) {
   if (!isSameOrigin(request)) return jsonResponse(403, { error: { message: "This request was not sent from this site." } });
@@ -17,8 +11,8 @@ export async function POST(request) {
   const parsed = await readJson(request);
   if (!parsed.ok) return jsonResponse(400, { error: { message: "The request must contain valid JSON." } });
   const body = parsed.value ?? {};
-  const caseId = positiveId(body.case_id);
-  const typeId = positiveId(body.type_id);
+  const caseId = parsePositiveId(body.case_id);
+  const typeId = parsePositiveId(body.type_id);
   const title = cleanText(body.title, 200, { required: true });
   const description = cleanText(body.description, 60000, { required: true });
   const extractedText = body.extracted_text == null ? null : cleanText(body.extracted_text, 500000);
@@ -27,7 +21,10 @@ export async function POST(request) {
   const location = body.location == null || body.location === "" ? null : cleanText(body.location, 150);
   const notes = body.notes == null || body.notes === "" ? null : cleanText(body.notes, 60000);
   const sha256 = body.sha256 == null || body.sha256 === "" ? null : String(body.sha256).trim().toLowerCase();
-  const fileSize = body.file_size_bytes == null || body.file_size_bytes === "" ? null : Number(body.file_size_bytes);
+  const fileSize = body.file_size_bytes == null || body.file_size_bytes === "" ? null :
+    (typeof body.file_size_bytes === "number" ||
+      (typeof body.file_size_bytes === "string" && /^\d+$/.test(body.file_size_bytes)))
+      ? Number(body.file_size_bytes) : NaN;
   if (!caseId || !typeId || !title || !description || !collectedAt || !method ||
       (body.extracted_text != null && extractedText === null) ||
       (body.location != null && body.location !== "" && location === null) ||
