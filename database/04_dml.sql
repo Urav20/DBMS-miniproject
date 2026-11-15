@@ -170,3 +170,6 @@ CALL demo_try('CALL sp_register_evidence(5, NULL, 6, "Anonymous", "Not allowed",
 -- ---------------------------------------------------------------------
 SELECT operation, status, COUNT(*) AS jobs FROM index_job GROUP BY operation, status;
 SELECT action, COUNT(*) AS n FROM audit_log GROUP BY action ORDER BY n DESC;
+
+-- The helper is only needed while this demonstration is running.
+DROP PROCEDURE IF EXISTS demo_try;
