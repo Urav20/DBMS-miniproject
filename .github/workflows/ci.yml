@@ -33,3 +33,44 @@ jobs:
         run: node evaluation/scripts/test.mjs
       - name: Build Next.js app
         run: npm run build --prefix app
+
+  database-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Wait for MySQL
+        run: |
+          for attempt in $(seq 1 60); do
+            if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "MySQL did not become ready"
+          exit 1
+      - name: Initialize disposable schema and seed
+        run: |
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/01_schema.sql
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/02_access.sql
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/03_routines.sql
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < data/out/seed_demo.sql
+      - name: Verify clean seed installation
+        run: mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/08_verify_database.sql
+      - name: Run DML demo and verify its documented post-demo state
+        run: |
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/04_dml.sql
+          mysql --protocol=TCP -h 127.0.0.1 -uroot -proot < database/08_verify_database.sql
