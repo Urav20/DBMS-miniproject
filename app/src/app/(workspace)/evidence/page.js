@@ -27,7 +27,7 @@ export default async function EvidencePage({ searchParams }) {
             <th className="px-4 py-3">Evidence</th><th className="px-4 py-3">Case</th><th className="px-4 py-3">Type</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Vector version</th><th className="px-4 py-3">Custodian</th><th className="px-4 py-3">Actions</th>
           </tr></thead>
           <tbody className="divide-y divide-line">{records.map((item) => {
-            const indexed = item.status === "withdrawn" ? "Removed when queued" : item.indexed_version === item.content_version ? `Current · v${item.indexed_version}` : item.indexed_version == null ? "Pending index" : `Stale · v${item.indexed_version} → v${item.content_version}`;
+            const indexed = session.role !== "admin" ? "Index version is admin-only" : item.status === "withdrawn" ? "Removal queued / verify worker" : item.indexed_version === item.content_version ? `Current · v${item.indexed_version}` : item.indexed_version == null ? "Pending index" : `Stale · v${item.indexed_version} → v${item.content_version}`;
             return <tr key={item.evidence_id} className="align-top hover:bg-paper/60">
               <td className="px-4 py-4"><p className="font-semibold">{item.evidence_no}</p><p className="mt-1 max-w-xs text-ink-soft">{item.title}</p></td>
               <td className="px-4 py-4 font-mono text-xs">{item.case_number}</td><td className="px-4 py-4">{item.type_name}</td>
