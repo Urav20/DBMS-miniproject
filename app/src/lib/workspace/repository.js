@@ -123,6 +123,7 @@ export async function getEvidenceDetail(session, evidenceId) {
   const base = admin ? "evidence" : "v_my_evidence";
   const visibleCases = admin ? "investigation_case" : "v_my_cases";
   const people = admin ? "app_user" : "v_my_users";
+  const custody = admin ? "v_current_custody" : "v_my_current_custody";
   const collection = admin ? "collection_event" : "v_my_collection";
   const analyses = admin ? "analysis" : "v_my_analyses";
   const findings = admin ? "finding" : "v_my_findings";
@@ -133,10 +134,12 @@ export async function getEvidenceDetail(session, evidenceId) {
             c.status AS case_status, e.source_id, e.type_id, et.name AS type_name,
             e.title, e.description, e.extracted_text, e.sha256, e.file_size_bytes,
             e.status, e.registered_by, e.registered_at, e.content_version,
-            ${admin ? "e.indexed_version" : "NULL AS indexed_version"}
+            ${admin ? "e.indexed_version" : "NULL AS indexed_version"},
+            cc.current_custodian_id, cc.current_custodian_name
        FROM ${base} e
        JOIN ${visibleCases} c ON c.case_id = e.case_id
        JOIN evidence_type et ON et.type_id = e.type_id
+       LEFT JOIN ${custody} cc ON cc.evidence_id = e.evidence_id
       WHERE e.evidence_id = ?
       LIMIT 1`, [evidenceId]);
   const evidenceRow = evidenceRows[0];
