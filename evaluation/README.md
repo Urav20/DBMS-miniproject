@@ -144,6 +144,6 @@ node evaluation/scripts/test.mjs --live
 - Keyword uses MySQL InnoDB FULLTEXT natural-language mode. Vector-only uses the existing BGE-small → Qdrant → MySQL re-validation path. Hybrid fuses top-50 lists using RRF.
 - Metrics include Precision@10, Recall@10, F1@10, MRR, MAP and NDCG@10, with paired bootstrap confidence intervals. Latency includes warm mean/median/p95 and separate first-call-in-process numbers.
 - In the committed runs, vector-only led hybrid on Precision@10, Recall@10, F1@10, MAP and NDCG@10 at both sizes. Hybrid was not universally superior.
-- The benchmark uses a synthetic dataset and 40 queries written by one author; results do not generalize to real forensic casework. Keyword and hybrid are run with an evaluation administrator because FULLTEXT cannot use the filtered investigator views. Only evidence records are evaluated; findings are not indexed by the worker in this project phase.
+- The benchmark uses a synthetic dataset and 40 queries written by one author; results do not generalize to real forensic casework. Keyword and hybrid are run with an evaluation administrator because FULLTEXT cannot use the filtered investigator views. Only evidence records are included in this benchmark; the application worker supports finding indexing, but findings are outside this experiment's dataset.
 
 The report and raw artifacts are under `evaluation/results/`. Archived test evidence is under `evaluation/results/verification/`.

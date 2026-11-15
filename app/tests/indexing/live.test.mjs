@@ -150,12 +150,8 @@ for (const [name, sql] of PROBES) {
   });
 }
 
-// KNOWN GAP (see worker/README.md B1). `todo`: reported but does not fail the run. Remove the
-// option once Person A has granted SELECT on analysis.
-test("MySQL contract: worker can SELECT analysis (finding -> evidence -> case)", {
-  skip: skipDb,
-  todo: "02_access.sql gives tracex_worker no privilege on analysis; finding upserts cannot resolve evidence_id/case_id.",
-}, async () => {
+// This permission is required to resolve finding -> analysis -> evidence -> case.
+test("MySQL contract: worker can SELECT analysis (finding -> evidence -> case)", { skip: skipDb }, async () => {
   await dbLayer.query(WORKER_SESSION, "SELECT analysis_id, evidence_id FROM analysis WHERE 1 = 0");
 });
 

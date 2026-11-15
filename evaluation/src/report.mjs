@@ -134,7 +134,7 @@ export function buildReport(bySize, coldBySize = {}) {
     "- Keyword search is stock InnoDB FULLTEXT in natural-language mode (no stemming, no synonyms, default token size and stopwords). A tuned search engine could behave differently.",
     "- Keyword and hybrid run as an administrator because FULLTEXT cannot run through the investigator views. Access-control behaviour is not evaluated here.",
     "- Hybrid uses Reciprocal Rank Fusion with constants fixed before the run (not tuned on these labels). Other fusion rules were not tried.",
-    "- Findings are not indexed by the Phase 2 worker, so only evidence records are evaluated.",
+    "- The evaluation corpus contains evidence records only. The application indexing worker also supports findings, but finding records are outside this benchmark's dataset and are not included in its ranking metrics.",
     "- Forty queries give wide confidence intervals; small differences should not be over-read.",
     "- Latency is from one machine and local services. Server and operating-system caches cannot be cleared from the scripts, so even fresh-process cold probes are a lower bound on a true cold start.",
     "- Qdrant similarity is a retrieval signal only. MySQL remains the authority for every record and relationship.", "");

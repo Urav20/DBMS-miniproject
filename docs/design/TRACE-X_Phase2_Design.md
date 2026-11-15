@@ -1,6 +1,6 @@
 # TRACE-X Phase 2: Conceptual Design (Chen ER), Relational Schema, Qdrant Decisions
 
-Status: design proposal for team review. Nothing here is implemented or measured yet.
+Status: original Phase 2 design record. The relational model described here is implemented in `database/01_schema.sql`, access control and filtered views are in `database/02_access.sql`, and routines/triggers are in `database/03_routines.sql`. The vector pipeline and retrieval design are implemented under `app/src/lib/vector/`, `app/src/lib/indexing/` and `app/src/lib/retrieval/`; the synthetic retrieval evaluation is archived under `evaluation/`. Where the implementation intentionally differs from this early proposal, the current SQL and rubric map are authoritative.
 
 Files in `docs/design/er/`: `chen_er.py` (generator and editable source), `chen_0_overview`, `chen_1_access_cases`, `chen_2_evidence_provenance`, `chen_3_analysis_indexing` (each as `.dot`, `.svg`, `.png`). Edit the tables at the top of `chen_er.py`, run `python3 chen_er.py .`, and all diagrams regenerate (needs Graphviz).
 
@@ -320,21 +320,33 @@ CHECK `evidence_a_id <> evidence_b_id`. UQ `(evidence_a_id, evidence_b_id, rel_t
 
 CHECK `(evidence_id IS NULL) <> (finding_id IS NULL)` (exactly one target).
 
-### 4.16 Planned indexes (beyond PK/UQ), for Phase 3
+### 4.16 Implemented indexes (beyond PK/UQ and foreign-key indexes)
 
-`evidence(case_id, status)`; `evidence(type_id)`; `custody_event` PK already covers lookups by evidence; `analysis(evidence_id)`; `finding(analysis_id)`; `audit_log(case_id, created_at)`; `audit_log(user_id, created_at)`; `index_job(status, created_at)`; `case_assignment(user_id, revoked_at)`; `FULLTEXT(title, description, extracted_text)` on evidence (keyword baseline for the evaluation).
+`database/01_schema.sql` creates these explicit secondary indexes:
 
-### 4.17 Planned database objects (Phase 3)
+- `case_assignment(user_id, revoked_at)` for current-assignment checks.
+- `evidence(case_id, status)` for case-scoped evidence retrieval and status filtering.
+- `analysis(evidence_id, started_at)` for the evidence-to-analysis relationship.
+- `audit_log(case_id, created_at)`, `audit_log(user_id, created_at)` and `audit_log(entity_type, entity_id)` for audit filtering.
+- `index_job(status, created_at)` for oldest-pending job selection.
+- FULLTEXT on `evidence(title, description, extracted_text)` and `finding(title, description)` for the Phase 4 keyword baseline.
+
+Primary-key and foreign-key indexes also support the custody, finding and lookup joins; do not add a duplicate index merely because a foreign-key column appears in a query.
+
+### 4.17 Implemented database objects
 
 | Object | Purpose |
 |---|---|
-| View `v_current_custody` | Latest custody row per evidence (the derived `current_custodian`) |
-| View `v_user_case_access` | Active assignments (`revoked_at IS NULL`, active user) |
-| Procedure `register_evidence` | Inserts evidence, collection event, custody event 1, audit row in one transaction |
-| Procedure `transfer_custody` | Locks the evidence row, checks sender is the current custodian, appends the event, writes the audit row; rolls back on any violation |
-| Triggers on evidence and finding | Bump `content_version` on text change and insert the `index_job` row |
-| Trigger on evidence_relationship | Same-case check |
-| Trigger/permissions for append-only tables | Block UPDATE and DELETE on `custody_event` and `audit_log` |
+| Views `v_current_custody`, `v_my_current_custody` | Latest custody row per evidence for admins and case-filtered investigators respectively |
+| Views `v_user_case_access`, `v_my_cases`, `v_my_evidence`, `v_my_analyses`, `v_my_findings`, `v_my_custody`, `v_my_collection`, `v_my_relationships`, `v_my_teammates`, `v_my_users` | Active-assignment filtering and role-safe workspace reads |
+| Procedure `sp_register_evidence` | Inserts evidence, collection event, initial custody event and audit row in one transaction; trigger queues vector indexing |
+| Procedures `sp_transfer_custody`, `sp_update_evidence_metadata`, `sp_update_evidence_text`, `sp_withdraw_evidence` | Enforce custody, open-case and authorship rules; evidence text/version triggers keep Qdrant work queued |
+| Procedures `sp_record_analysis`, `sp_complete_analysis`, `sp_add_finding`, `sp_link_evidence` | Record analyst work and human-asserted evidence relationships with audit events |
+| Administrator procedures `sp_create_case`, `sp_grant_access`, `sp_revoke_access`, `sp_set_case_status`, `sp_backfill_index_jobs` | Case lifecycle, assignments, state changes and missing/stale vector backfill |
+| Procedure `sp_linked_evidence` | Recursive CTE returns linked evidence with cycle protection and a depth cap |
+| Triggers on evidence and finding | Bump `content_version` when indexed text changes and insert `index_job` records; withdrawal queues vector delete jobs |
+| Trigger on `evidence_relationship` | Rejects relationships whose evidence endpoints are in different cases |
+| Append-only triggers and grants | Block UPDATE and DELETE on `custody_event` and `audit_log` |
 
 ---
 
@@ -362,7 +374,7 @@ Two kinds of point are enough to test the research question (keyword vs vector v
 | Quality for retrieval | Designed for retrieval; generally reported as stronger than `all-MiniLM-L6-v2` on retrieval benchmarks (MTEB). We will verify this on our own evaluation data, not assume it. |
 | Longer input | 512-token limit, versus about 256 for MiniLM, so descriptions plus extracted text fit more often. |
 | Same size | 384 dimensions, so storage and speed match MiniLM. |
-| JavaScript-friendly | Loadable in Node through Transformers.js (ONNX), so the worker can stay in JavaScript like the rest of the stack. **To verify at Phase 4 setup** (exact package name and model id). Fallback: a small Python script using your venv with `sentence-transformers`. |
+| JavaScript-friendly | Implemented in Node through `@huggingface/transformers` using the `Xenova/bge-small-en-v1.5` ONNX model; the same JavaScript embedding pipeline is used by retrieval and the worker. |
 
 Usage notes: for **queries**, bge expects the prefix `Represent this sentence for searching relevant passages: `; documents get no prefix. Embeddings are normalized so cosine distance is meaningful. The 512-token limit means text beyond it is truncated; for v1, one vector per record, with the truncation limit recorded in the report. Chunking is future work.
 
@@ -384,7 +396,7 @@ Qdrant's `case_id` filter is an optimization only. MySQL decides what a user may
 
 ---
 
-## 6. Normalization (short note; full write-up comes later)
+## 6. Normalization (3NF design rationale)
 
 Representative dependencies: `evidence_id -> case_id, source_id, type_id, title, ..., registered_by`; `source_id -> case_id, label, source_kind, serial_no`; `type_id -> name`; `(evidence_id, seq_no) -> from_user_id, to_user_id, transferred_at`. A flat table with evidence, case title, device label and type name together would contain transitive dependencies such as `evidence_id -> source_id -> label` (3NF violation). That is why those attributes live in their own tables. The schema is in 3NF; the composite FK on `evidence(case_id, source_id)` stores no extra attributes.
 
@@ -396,4 +408,8 @@ The team delegated these three choices, so they are fixed unless the course requ
 2. **Vector scope:** evidence and findings are embedded; analysis notes are not (v1).
 3. **Notation and file names:** Chen notation with double lines for total participation; file names as in this folder. Revisit only if the course prescribes a different variant or naming.
 
-Next step (not started): Phase 3, MySQL DDL, constraints, indexes, views, procedures, triggers and seed data.
+## 8. Implementation status and intentional boundaries
+
+The DDL, constraints, indexes, access views, stored procedures, triggers and seed data are implemented in `database/`. The application and worker consume those objects. The evidence form registers metadata, SHA-256, file size and extracted text; it does not upload or store the original binary file. Binary evidence storage is intentionally outside this schema revision and would require a separate storage and integrity design.
+
+The current vector design uses one embedding per evidence/finding record and truncates input at the model's 512-token limit. Chunking, analysis-note embeddings and binary-file processing remain possible future extensions, not completed features.

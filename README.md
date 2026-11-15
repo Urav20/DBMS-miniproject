@@ -28,9 +28,9 @@ Investigators read through case-filtered `v_my_*` views and use stored procedure
 
 ## Quick setup
 
-See **[docs/SETUP.md](docs/SETUP.md)** for complete macOS/Linux and Windows-oriented setup, database initialization, Qdrant, environment variables, worker and test commands.
+See **[docs/SETUP.md](docs/SETUP.md)** for complete setup. The [final project report draft](docs/FINAL_PROJECT_REPORT.md), [technology justification](docs/TECHNOLOGY_JUSTIFICATION.md), [presentation evidence checklist](docs/PRESENTATION_EVIDENCE_CHECKLIST.md) and [50-mark rubric map](docs/EVALUATION_RUBRIC_MAP.md) are also maintained in `docs/`.
 
-The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials. When upgrading an existing database to the latest procedures, re-run only `database/03_routines.sql`; do not re-run `01_schema.sql` on a database you need to preserve.
+The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials. When upgrading an existing database created before the latest retrieval/workspace SQL, re-run `database/02_access.sql` and `database/03_routines.sql` to refresh the filtered views, worker grants and stored procedures. Do not re-run `01_schema.sql` on a database you need to preserve. After the SQL update, use the administrator re-index control if vectors are missing or stale.
 
 ## Run the application
 
@@ -84,7 +84,7 @@ Other limitations include synthetic single-author data and evaluation of evidenc
 
 - `database/` — schema, access control, routines, DML/query demos and verification scripts
 - `data/` — fictional case templates, generator and seed SQL
-- `docs/` — design, API contract, setup and rubric map
+- `docs/` — design, technology justification, API contract, setup, final report draft, presentation evidence checklist and rubric map
 - `app/` — Next.js application, database, authentication, retrieval, vector and indexing modules
 - `worker/` — standalone indexing worker entry point
 - `vector/` — Qdrant setup and health scripts
