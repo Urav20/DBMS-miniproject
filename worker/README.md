@@ -162,7 +162,7 @@ Neither of these has been run against a live MySQL, Qdrant or the real BGE model
 
 ## Blockers and limitations (nothing is invented around them)
 
-**B1. Finding indexing permission — addressed in Person-A.** The updated `database/02_access.sql` grants `SELECT` on `analysis` to `tracex_worker`. After applying the SQL to an existing database, run `CALL sp_backfill_index_jobs();` as administrator to queue finding upserts that previously failed.
+**Resolved prerequisite — finding indexing permission.** The current `main` version of `database/02_access.sql` grants `SELECT` on `analysis` to `tracex_worker`. Existing databases created before that grant must apply the updated access SQL, then run `CALL sp_backfill_index_jobs();` as administrator to queue finding upserts that previously failed.
 
 **B2. Single worker only.** See "Concurrency". Needs a lease column to change.
 

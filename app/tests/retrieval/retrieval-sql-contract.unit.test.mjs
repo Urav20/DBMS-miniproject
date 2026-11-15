@@ -7,11 +7,12 @@
 // 02_access.sql and 03_routines.sql are missing, every test here is SKIPPED (never "passed").
 //
 // What this proves: every view, table and column the repository names exists in the supplied
-// SQL; the investigator statements touch only views granted to tracex_investigator; the admin
-// statements touch only tables granted to tracex_admin; values are bound with `?`, never
-// concatenated; and it records, as tests, the places where the supplied SQL does NOT give
-// retrieval what it needs (tests marked `todo` fail until Person A makes the change; a `todo`
-// failure is reported but does not fail the run).
+// SQL; investigator statements use only views granted to tracex_investigator; administrator
+// statements use only tables granted to tracex_admin; values are bound with `?`, never
+// concatenated; investigator evidence/finding views expose content_version; and the worker
+// has SELECT on analysis for finding-to-case resolution. It also records intentional design
+// differences: withdrawn rows remain visible in the views for the service to filter, and the
+// administrator account uses base tables rather than investigator-filtered views.
 // What it does NOT prove: that MySQL accepts the statements at runtime (see live.test.mjs).
 
 import test from "node:test";
@@ -227,14 +228,14 @@ test("api-contract.md names resolve to real views and investigator evidence expo
 });
 
 // Person A retrieval requirements are mandatory checks.
-test("PERSON A CHANGE 1: v_my_evidence exposes content_version (stale-hit check for investigators)", { skip }, () => {
+test("investigator evidence view exposes content_version for stale-hit validation", { skip }, () => {
   assert.ok(views.get("v_my_evidence").columns.has("content_version"));
 });
 
-test("PERSON A CHANGE 1b: v_my_findings exposes content_version (stale-hit check for findings)", { skip }, () => {
+test("investigator findings view exposes content_version for stale-hit validation", { skip }, () => {
   assert.ok(views.get("v_my_findings").columns.has("content_version"));
 });
 
-test("PERSON A CHANGE 2 (worker B1): tracex_worker can SELECT analysis, so finding points carry case_id/evidence_id", { skip }, () => {
+test("worker role can SELECT analysis so finding points carry case_id and evidence_id", { skip }, () => {
   assert.ok(parseGrants(allViewSql, "tracex_worker").has("analysis"));
 });
