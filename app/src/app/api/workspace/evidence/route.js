@@ -1,6 +1,6 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, cleanText } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, cleanText, mysqlDateTimeLocal } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
 
@@ -9,19 +9,6 @@ function positiveId(value) {
   return Number.isSafeInteger(id) && id > 0 && id <= 4294967295 ? id : null;
 }
 
-function mysqlDateTime(value) {
-  if (typeof value !== "string") return null;
-  // datetime-local is already in the user's local clock; preserve that wall time
-  // instead of converting it through UTC.
-  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
-  if (!match) return null;
-  const [, year, month, day, hour, minute, second = "00"] = match;
-  const date = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
-  if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 ||
-      date.getDate() !== Number(day) || date.getHours() !== Number(hour) ||
-      date.getMinutes() !== Number(minute) || date.getSeconds() !== Number(second)) return null;
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-}
 
 export async function POST(request) {
   if (!isSameOrigin(request)) return jsonResponse(403, { error: { message: "This request was not sent from this site." } });
@@ -35,7 +22,7 @@ export async function POST(request) {
   const title = cleanText(body.title, 200, { required: true });
   const description = cleanText(body.description, 60000, { required: true });
   const extractedText = body.extracted_text == null ? null : cleanText(body.extracted_text, 500000);
-  const collectedAt = mysqlDateTime(body.collected_at);
+  const collectedAt = mysqlDateTimeLocal(body.collected_at);
   const method = cleanText(body.method, 100, { required: true });
   const location = body.location == null || body.location === "" ? null : cleanText(body.location, 150);
   const notes = body.notes == null || body.notes === "" ? null : cleanText(body.notes, 60000);
