@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { cleanText, isSameOrigin, mysqlDateTimeLocal, readJson, readPositiveId } from "../../src/lib/api/write-guards.js";
+import { cleanText, isSameOrigin, mysqlDateTimeLocal, parsePositiveId, readJson, readPositiveId } from "../../src/lib/api/write-guards.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const read = (path) => readFileSync(join(ROOT, path), "utf8");
@@ -30,6 +30,17 @@ test("write guards: route IDs must be positive unsigned INT strings", async () =
   for (const id of ["0", "-1", "1.5", "1x", "4294967296", "", null]) {
     assert.equal(await readPositiveId({ params: { id } }), null, `rejected ID ${String(id)}`);
   }
+});
+
+test("write guards: body IDs accept only positive numeric IDs, not coercible values", () => {
+  assert.equal(parsePositiveId(7), 7);
+  assert.equal(parsePositiveId("7"), 7);
+  assert.equal(parsePositiveId(true), null);
+  assert.equal(parsePositiveId(false), null);
+  assert.equal(parsePositiveId("1.5"), null);
+  assert.equal(parsePositiveId("1x"), null);
+  assert.equal(parsePositiveId(0), null);
+  assert.equal(parsePositiveId(4294967296), null);
 });
 
 test("write guards: required and optional text limits are enforced", () => {
