@@ -8,8 +8,7 @@
 //   evidence  : SELECT; UPDATE only on (indexed_version, indexed_at)
 //   finding   : SELECT; UPDATE only on (indexed_version, indexed_at)
 //   audit_log : INSERT (not used by the worker)
-//   analysis  : NO PRIVILEGE. -> fetchFindings() needs it (finding -> analysis -> evidence)
-//               and cannot succeed until Person A grants SELECT on analysis. See README B1.
+//   analysis  : SELECT (finding -> analysis -> evidence lookup for finding indexing).
 // No view and no stored procedure is granted to the worker, so none is used.
 //
 // Why indexed_version updates are safe (03_routines.sql):
@@ -147,12 +146,10 @@ export function createIndexRepository({ db, session = WORKER_SESSION } = {}) {
     // Returns Map(finding_id -> row). A finding reaches its evidence and case through its
     // analysis (finding.analysis_id -> analysis.evidence_id -> evidence.case_id).
     //
-    // !! 02_access.sql gives tracex_worker NO privilege on `analysis`, so this statement is
-    // refused by MySQL today. The query itself is correct against 01_schema.sql and starts
-    // working as soon as Person A adds   GRANT SELECT ON tracex.analysis TO 'tracex_worker';
-    // Until then the refusal is reported as a PERMANENT job failure of the finding upserts
-    // only (INDEX_FINDING_ACCESS_MISSING), so it cannot block evidence jobs or back off the
-    // whole worker. Finding DELETE jobs never call this and keep working.
+    // 02_access.sql grants the worker SELECT on `analysis` for this relationship lookup.
+    // If a separately configured environment has not applied that grant, report the finding
+    // upsert as a permanent configuration failure without blocking evidence jobs. Finding
+    // DELETE jobs never call this query and continue to work.
     async fetchFindings(ids) {
       const marks = placeholders(ids);
       let rows;

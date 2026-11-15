@@ -1,0 +1,34 @@
+name: TRACE-X CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  app-and-evaluation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Install app dependencies
+        run: npm ci --prefix app
+      - name: App unit tests
+        run: |
+          npm run test:db --prefix app
+          npm run test:auth --prefix app
+          npm run test:vector --prefix app
+          npm run test:indexing --prefix app
+          npm run test:retrieval --prefix app
+      - name: Evaluation unit and contract tests
+        run: node evaluation/scripts/test.mjs
+      - name: Build Next.js app
+        run: npm run build --prefix app

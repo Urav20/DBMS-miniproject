@@ -61,7 +61,7 @@ export default function AppShell({ children, user }) {
             </svg>
           </button>
         </div>
-        <SidebarNav onNavigate={() => setOpen(false)} />
+        <SidebarNav role={user?.role} onNavigate={() => setOpen(false)} />
       </aside>
 
       <div className="flex min-h-dvh min-w-0 flex-col">
