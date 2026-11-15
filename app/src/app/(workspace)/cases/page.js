@@ -13,11 +13,12 @@ export default async function CasesPage() {
   try {
     cases = await listCases(dbSession);
     if (session.role === "admin") {
-      [users, ...Object.values(assignments)] = await Promise.all([
+      const adminData = await Promise.all([
         listActiveUsers(dbSession),
         ...cases.map((c) => listCaseAssignments(dbSession, Number(c.case_id))),
       ]);
-      assignments = Object.fromEntries(cases.map((c, i) => [c.case_id, Object.values(assignments)[i] ?? []]));
+      users = adminData[0];
+      assignments = Object.fromEntries(cases.map((c, i) => [c.case_id, adminData[i + 1] ?? []]));
     }
   } catch { failed = true; }
   return (
