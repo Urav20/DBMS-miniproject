@@ -84,7 +84,7 @@ Other limitations include synthetic single-author data and evaluation of evidenc
 
 - `database/` — schema, access control, routines, DML/query demos and verification scripts
 - `data/` — fictional case templates, generator and seed SQL
-- `docs/` — design, API contract, setup and rubric map
+- `docs/` — design, technology justification, API contract, setup, final-report guide and rubric map
 - `app/` — Next.js application, database, authentication, retrieval, vector and indexing modules
 - `worker/` — standalone indexing worker entry point
 - `vector/` — Qdrant setup and health scripts
