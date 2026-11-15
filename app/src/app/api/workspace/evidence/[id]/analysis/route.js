@@ -1,6 +1,6 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, readPositiveId, cleanText } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, readPositiveId, cleanText, parsePositiveId } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +12,9 @@ export async function POST(request, context) {
   if (!evidenceId) return jsonResponse(400, { error: { message: "A valid evidence ID is required." } });
   const parsed = await readJson(request);
   if (!parsed.ok) return jsonResponse(400, { error: { message: "The request must contain valid JSON." } });
-  const toolId = Number(parsed.value?.tool_id);
+  const toolId = parsePositiveId(parsed.value?.tool_id);
   const notes = parsed.value?.notes == null || parsed.value.notes === "" ? null : cleanText(parsed.value.notes, 60000);
-  if (!Number.isSafeInteger(toolId) || toolId < 1 || toolId > 4294967295 || (parsed.value?.notes != null && parsed.value.notes !== "" && notes === null)) {
+  if (!toolId || (parsed.value?.notes != null && parsed.value.notes !== "" && notes === null)) {
     return jsonResponse(400, { error: { message: "Choose an analysis tool and provide optional notes up to 60,000 characters." } });
   }
   try {
