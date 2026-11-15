@@ -17,7 +17,7 @@ export default function EvidenceActions({ item, canWithdraw }) {
     try {
       const res = await fetch(`/api/workspace/evidence/${item.evidence_id}`, {
         method: "PATCH", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, extracted_text: item.extracted_text ?? null }),
+        body: JSON.stringify({ title, description }),
       });
       const body = await res.json();
       if (!res.ok) throw new Error(body.error?.message || "The evidence could not be updated.");
