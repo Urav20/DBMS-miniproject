@@ -27,8 +27,9 @@ export async function listEvidence(session, caseId = null) {
   const source = admin ? "evidence" : "v_my_evidence";
   const cases = admin ? "investigation_case" : "v_my_cases";
   const custody = admin ? "v_current_custody" : "v_my_current_custody";
-  const sql = `SELECT e.evidence_id, e.evidence_no, e.case_id, c.case_number, e.title,
-                      e.description, e.extracted_text, e.status, e.content_version, e.indexed_version,
+  const indexedVersion = admin ? "e.indexed_version" : "NULL AS indexed_version";
+  const sql = `SELECT e.evidence_id, e.evidence_no, e.case_id, c.case_number, c.status AS case_status, e.title,
+                      e.description, e.extracted_text, e.status, e.content_version, ${indexedVersion},
                       e.registered_by, e.registered_at, et.name AS type_name,
                       cc.current_custodian_name
                  FROM ${source} e
