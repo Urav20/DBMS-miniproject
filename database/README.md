@@ -5,7 +5,7 @@
 | `01_schema.sql` | Drops/recreates `tracex`; creates 15 tables, constraints and indexes |
 | `02_access.sql` | Session helper, filtered investigator views, MySQL roles/grants and three application accounts |
 | `03_routines.sql` | Functions, triggers, stored procedures, extra views and procedure grants |
-| `04_dml.sql` | Allowed and intentionally rejected state-changing DML examples |
+| `04_dml.sql` | Allowed and intentionally rejected state-changing DML examples; cleans up its temporary `demo_try` helper |
 | `05_queries.sql` | Joins, nested/correlated queries, window functions, recursive CTE and FULLTEXT |
 | `06_verify_access.sql` | Investigator view/privilege and indexing-outbox checks |
 | `07_demo.sql` | Read-only classroom walkthrough of relational data and provenance |
@@ -47,7 +47,7 @@ source database/07_demo.sql
 source database/05_queries.sql
 ```
 
-Run `database/04_dml.sql` separately because it deliberately modifies demonstration data and includes operations expected to be rejected. For the investigator privilege check, connect as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID and show that filtered-view reads work while direct reads of `app_user` and `custody_event` are denied.
+Run `database/04_dml.sql` separately because it deliberately adds one evidence item, one analysis, one finding and five index jobs, in addition to other audit/custody/assignment history changes. Its temporary `demo_try` helper is removed at the end. The verification script recognizes either the seed-only counts or the completed DML-demo counts. For the investigator privilege check, connect as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID and show that filtered-view reads work while direct reads of `app_user` and `custody_event` are denied.
 
 ## Verification evidence
 
