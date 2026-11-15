@@ -60,7 +60,7 @@ export function checkCandidate(candidate, row, scopeCaseIds) {
   if (payload.evidenceId !== null && payload.evidenceId !== row.evidenceId) {
     return { ok: false, reason: DISCARD.EVIDENCE_MISMATCH };
   }
-  // Only possible when MySQL gave us the version (admin path today). `null` = unavailable.
+  // Both investigator-filtered views and administrator base-table reads provide the version. `null` = unavailable.
   if (row.contentVersion !== null && payload.contentVersion !== row.contentVersion) {
     return { ok: false, reason: DISCARD.STALE };
   }
