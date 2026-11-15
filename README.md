@@ -2,85 +2,91 @@
 
 **TRACE-X: A Provenance-Aware Hybrid Relational–Vector Database for Digital Evidence Provenance and Semantic Correlation**
 
-A DBMS semester project by a two-member student team. TRACE-X helps authorized investigators find potentially relevant digital evidence through semantic search, while keeping the structured context that explains where evidence came from, which case it belongs to, how it was collected, and who has held it.
+A two-member DBMS semester project. TRACE-X stores authoritative case, evidence and provenance records in MySQL and uses Qdrant for semantic retrieval. Similarity results are investigative leads only: MySQL re-checks access, status and content version before any result is returned.
 
-> **Status (November 2026):** Relational schema, access controls, indexing worker, semantic retrieval, and Phase 4 evaluation have implementation artifacts. Live evaluation was run against isolated MySQL 8 and Qdrant instances. End-to-end application UI/API integration and vector RUD demonstrations remain to be verified.
+> **Project status (November 2026):** The relational schema, database roles/views, stored procedures/triggers, Qdrant integration, indexing worker, authentication, semantic retrieval API and Phase 4 evaluation are implemented. The live workspace pages in this branch connect the dashboard, case list/detail, evidence list, semantic search, administrator index controls and audit report to those existing modules. The complete operational workflow is still narrower than the full database model: case creation, new evidence registration/upload, custody transfer, analysis/finding entry and human-recorded relationship entry are not all exposed as UI workflows yet. Run the application checks in [SETUP.md](docs/SETUP.md) before treating the UI changes as verified.
 
-## Core idea
+## Architecture
 
-| Database | Responsibility |
+| Component | Responsibility |
 |---|---|
-| **MySQL** | Authoritative store: users, roles, cases, evidence, collection and custody history, analyses, findings, audit log, indexing outbox |
-| **Qdrant** | Semantic retrieval: embedding vectors plus minimal metadata for similarity search |
+| MySQL | Source of truth for users, roles, cases, evidence, collection, custody, analysis, findings, relationships, audit events and indexing jobs |
+| Qdrant | Stores 384-dimensional BGE-small vectors and minimal payload metadata for semantic candidate retrieval |
+| Next.js (JavaScript) | Authentication, role-aware workspace and Route Handlers |
+| Indexing worker | Consumes the MySQL outbox and upserts/deletes Qdrant points |
 
-Semantic similarity is a lead, never proof that two evidence items are factually related. Qdrant is never the source of truth for provenance or authorization.
+Investigators read through case-filtered `v_my_*` views and use stored procedures for permitted changes. The worker has a separate MySQL account. Qdrant metadata is never an authorization source.
 
-## Tech stack
+## Main capabilities
 
-- MySQL
-- Qdrant
-- Next.js (JavaScript) with Route Handlers as the backend API
-- BAAI/bge-small-en-v1.5 text embeddings (384 dimensions)
-- Git and GitHub
+- **Relational database:** 15 tables, keys, constraints, indexes, views, procedures, functions, triggers, recursive/query examples and a seed dataset.
+- **Security:** Administrator and Investigator roles, separate application accounts, case-scoped views, append-only custody/audit history and signed sessions.
+- **Vector pipeline:** Qdrant collection setup/health, local `BAAI/bge-small-en-v1.5` embeddings, deterministic point IDs, an outbox-driven worker, retry/recovery and stale-version validation.
+- **Retrieval:** Authenticated semantic search with case scoping, evidence/finding kinds, over-fetch and MySQL re-validation.
+- **Workspace:** Dashboard, case list and custody timeline, evidence list with text update/withdraw controls, semantic search, administrator index status/re-index and audit report. Some write workflows in the underlying schema are not yet represented in the UI; see [the rubric map](docs/EVALUATION_RUBRIC_MAP.md).
+- **Evaluation:** Keyword, vector-only and RRF-hybrid retrieval compared on synthetic 500- and 2,000-record datasets.
 
-## Planned features
+## Quick setup
 
-- Authentication with Administrator and Investigator roles, plus case-level access
-- Case and evidence management
-- Provenance timeline: collection, custody transfers, analyses, findings, recorded relationships
-- Semantic and hybrid evidence search
-- Audit log and admin views
-- MySQL-to-Qdrant synchronization through an outbox table, with retry and repair
-- Reproducible evaluation: keyword vs vector-only vs hybrid retrieval
+See **[docs/SETUP.md](docs/SETUP.md)** for complete macOS/Linux and Windows-oriented setup, database initialization, Qdrant, environment variables, worker and test commands.
 
-## Repository structure
+The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials.
 
-```
-trace-x/
-â”œâ”€â”€ docs/
-â”‚   â”œâ”€â”€ design/        # ER diagram, schema, data dictionary
-â”‚   â”œâ”€â”€ research/      # literature notes, evaluation plan
-â”‚   â””â”€â”€ report/
-â”œâ”€â”€ database/          # schema.sql, seed.sql, queries.sql
-â”œâ”€â”€ app/               # Next.js application
-â”œâ”€â”€ worker/            # indexing worker
-â”œâ”€â”€ evaluation/        # dataset, benchmarks, results
-â”œâ”€â”€ .env.example
-â””â”€â”€ README.md
+## Run the application
+
+From the repository root:
+
+```bash
+cd app
+npm ci
+npm run vector:setup
+npm run vector:health
+npm run dev
 ```
 
-Folders are added as each phase is completed.
+In a second terminal, from `app/`, run the worker:
 
-## Setup
+```bash
+npm run worker
+```
 
-> To be completed once the implementation exists. This section will cover prerequisites, installing MySQL and Qdrant, creating the database from `database/schema.sql`, seeding data, configuring `.env` from `.env.example`, and running the app and worker.
+Open `http://localhost:3000`. Demo accounts and the local demonstration password are documented in [data/README.md](data/README.md). Change placeholder MySQL account passwords to match the values in your local `app/.env.local`.
 
-## Development phases
+## Test
 
-1. Requirements and research
-2. Database design (ER diagram, relational schema, data dictionary, normalization)
-3. Relational implementation (DDL, constraints, views, procedures, triggers)
-4. Vector implementation (Qdrant, embeddings, indexing worker)
-5. Hybrid retrieval
-6. Application
-7. Testing and evaluation
-8. Finalization
+From `app/`:
 
-## Team and workflow
+```bash
+npm run test:db
+npm run test:auth
+npm run test:vector
+npm run test:indexing
+npm run test:retrieval
+npm run build
+```
 
-- Work on short-lived feature branches (for example `feature/custody-transfer`) and merge through pull requests reviewed by the other member.
-- Write descriptive commit messages.
-- Never commit `.env` or other secrets.
+Live tests require the local MySQL/Qdrant environment. Phase 4 evaluation tests and its archived evidence are under `evaluation/`; see [evaluation/README.md](evaluation/README.md).
 
-| NAME | SRN |
+## Phase 4 results and limitations
+
+The [benchmark report](evaluation/results/REPORT.md) compares keyword, vector-only and hybrid retrieval on synthetic data. In the committed runs, vector-only outperformed hybrid on Precision@10, Recall@10, F1@10, MAP and NDCG@10 at both corpus sizes. Hybrid was not universally superior. Results describe this synthetic benchmark and one local environment; they do not establish performance on real forensic evidence or prove forensic relationships.
+
+Other limitations include synthetic single-author data and evaluation of evidence records rather than findings. See the report for methodology and details.
+
+## Team
+
+| Member | SRN |
 |---|---|
-| URAV B S  | PES1UG24CS507 |
-| UTTAM B S | PES1UG24CS508 |
+| Urav B S | PES1UG24CS507 |
+| Uttam B S | PES1UG24CS508 |
 
-## Limitations and results
+## Repository map
 
-Phase 4 benchmark results are available in [the evaluation report](evaluation/results/REPORT.md). On the synthetic 500- and 2,000-record datasets, vector-only retrieval outperformed hybrid retrieval on Precision@10, Recall@10, F1@10, MAP and NDCG@10. These results do not establish performance on real forensic evidence.
+- `database/` — schema, access control, routines, DML/query demos and verification scripts
+- `data/` — fictional case templates, generator and seed SQL
+- `docs/` — design, API contract, setup and rubric map
+- `app/` — Next.js application, database, authentication, retrieval, vector and indexing modules
+- `worker/` — standalone indexing worker entry point
+- `vector/` — Qdrant setup and health scripts
+- `evaluation/` — dataset, evaluation code, tests, metrics, report, CSV/JSON and SVG outputs
 
-## License
-
-To be decided.
