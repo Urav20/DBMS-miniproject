@@ -24,7 +24,7 @@ FROM information_schema.VIEWS
 WHERE TABLE_SCHEMA = DATABASE();
 
 SELECT 'stored_procedures' AS check_name, COUNT(*) AS actual,
-       14 AS expected, COUNT(*) = 14 AS passed
+       15 AS expected, COUNT(*) = 15 AS passed
 FROM information_schema.ROUTINES
 WHERE ROUTINE_SCHEMA = DATABASE() AND ROUTINE_TYPE = 'PROCEDURE';
 
