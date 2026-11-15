@@ -12,18 +12,18 @@ Status key: **Implemented** = code/design artifact exists; **Partially implement
 | 6 | DML operations | 4 | `database/04_dml.sql` includes permitted and rejected operations | Implemented in SQL; execute and retain demonstration output |
 | 7 | Joins, nested/correlated queries and recursive CTE | 4 | `database/05_queries.sql` | Implemented in SQL; execute and retain demonstration output |
 | 8 | Procedures, functions, triggers and CTE | 6 | `database/03_routines.sql` and query showcase | Implemented in SQL; execute and retain verification output |
-| 9 | Vector Read/Update/Delete | 7 | Semantic search reads; `sp_update_evidence_text` queues re-embedding; `sp_withdraw_evidence` queues vector deletion; admin index view/re-index control | Implemented in the workspace branch; build, live-test and capture UI/Qdrant evidence before marking demonstrated |
-| 10 | Next.js interface | 3 | Login, live dashboard, cases/detail, evidence, semantic search, reports/audit and administration pages | Partially implemented; case creation, evidence registration/upload, custody transfer, analysis/finding entry and relationship entry are not yet exposed as full UI workflows |
-| 11 | Backend/API and database integration | 2 | Auth and semantic-search APIs plus evidence update/withdraw, health and admin re-index routes | Partially implemented; verify every displayed action against live MySQL/Qdrant and finish the remaining write workflows |
+| 9 | Vector Read/Update/Delete | 7 | Semantic search reads; `sp_update_evidence_metadata` / `sp_update_evidence_text` queue re-embedding; `sp_withdraw_evidence` queues vector deletion; admin point inspection and backfill queue control | Implemented in code; live-test the database procedure, worker and Qdrant changes and capture UI evidence before marking demonstrated |
+| 10 | Next.js interface | 3 | Login, live dashboard, case creation/status/assignment controls, evidence metadata registration and detail, custody timeline/transfer, analysis/findings, relationships, semantic search, reports/audit and administration pages | Partially implemented; original binary file upload/storage is not present in the schema, and final UI walkthrough/screenshots remain to be captured |
+| 11 | Backend/API and database integration | 2 | Auth/search/health APIs and stored-procedure-backed routes for case, assignment, evidence, custody, analysis, findings and relationships | Implemented in code; apply the updated `03_routines.sql` and verify every write against live MySQL/Qdrant |
 | 12 | Authentication and authorization / database RBAC | 4 | Signed sessions, role-specific pools, MySQL roles/grants and investigator-filtered views | Implemented in code; retain a fresh live test showing investigator view access and base-table denial |
 | 13 | Documentation and Git/GitHub | 2 | README, setup guide, API contract, design/rubric docs and PR history | Partially implemented; final report and reproducible presentation evidence remain |
 | 14 | Originality, individual contribution and viva | 4 | Provenance-aware relational/vector architecture, worker and Phase 4 evaluation; two-person commit/PR history | Ongoing; both members should be able to explain and modify their own contributions |
 
-## Remaining implementation scope
+## Remaining implementation and verification scope
 
-The live workspace covers the major read and vector demonstration paths, but it is not a complete case-management system. The following database procedures/workflows still need UI entry points if they are required by the final project rubric: create a case, register/upload evidence, transfer custody, record/complete analysis, add a finding, and record an evidence relationship with rationale.
+The main database-backed case/evidence workflows now have UI entry points. The schema records evidence metadata, SHA-256, file size and extracted text, but it does not store original binary files; adding true file upload would require a separately designed storage layer and a trusted file-to-record workflow. The current registration form is therefore metadata/text registration, not a binary upload.
 
-The app intentionally does not equate semantic similarity with a verified relationship. A human analyst must record a relationship through the database procedure and supply a rationale.
+The remaining work is primarily live verification and deliverables: apply the current `03_routines.sql` on the presentation database; run live MySQL/Qdrant/browser tests for each role; capture the write workflows and vector deletion/re-index behavior; and complete the final report/screenshots. The app intentionally does not equate semantic similarity with a verified relationship. A human analyst must record a relationship through the database procedure and supply a rationale.
 
 ## Database demonstration order
 
