@@ -30,7 +30,7 @@ Investigators read through case-filtered `v_my_*` views and use stored procedure
 
 See **[docs/SETUP.md](docs/SETUP.md)** for complete macOS/Linux and Windows-oriented setup, database initialization, Qdrant, environment variables, worker and test commands.
 
-The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials. When upgrading an existing database to the latest procedures, re-run only `database/03_routines.sql`; do not re-run `01_schema.sql` on a database you need to preserve.
+The usual local prerequisites are Node.js 22+, MySQL 8.0.16+, Docker, and a running Qdrant instance. Copy `.env.example` to `app/.env.local`, replace every placeholder locally, and never commit real credentials. When upgrading an existing database created before the latest retrieval/workspace SQL, re-run `database/02_access.sql` and `database/03_routines.sql` to refresh the filtered views, worker grants and stored procedures. Do not re-run `01_schema.sql` on a database you need to preserve. After the SQL update, use the administrator re-index control if vectors are missing or stale.
 
 ## Run the application
 
