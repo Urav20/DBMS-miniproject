@@ -104,12 +104,8 @@ export async function listCaseTeammates(session, caseId) {
 export async function listActiveUsers(session) {
   if (session.role !== "admin") throw new Error("Administrator access required.");
   return query(session,
-    `SELECT u.user_id, u.username, u.full_name, r.role_name
-       FROM app_user u JOIN \\`role\\` r ON r.role_id = u.role_id
-      WHERE u.is_active = 1
-      ORDER BY u.full_name`);
+    "SELECT u.user_id, u.username, u.full_name, r.role_name FROM app_user u JOIN `role` r ON r.role_id = u.role_id WHERE u.is_active = 1 ORDER BY u.full_name");
 }
-
 export async function listEvidenceTypes(session) {
   return query(session, "SELECT type_id, name FROM evidence_type ORDER BY name");
 }
