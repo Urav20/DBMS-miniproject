@@ -63,13 +63,16 @@ The expected demo row counts are documented in [data/README.md](../data/README.m
 
 ### Updating an existing local database
 
-When you pull a code update that adds or changes a stored procedure, re-apply the routines/access definitions without resetting your tables or seed data:
+When you update an existing database from an older project revision, refresh the filtered views/role grants and stored routines without resetting tables or seed data:
 
 ```bash
+mysql -u root -p < database/02_access.sql
 mysql -u root -p < database/03_routines.sql
 ```
 
-For the current workspace this creates `sp_update_evidence_metadata`, which preserves the extracted text while updating the title/description and queueing a new vector version. This command does not run `01_schema.sql`. Do not run the destructive schema file just to update routines.
+`02_access.sql` adds the investigator-visible `content_version` columns and the worker's `SELECT ON analysis` grant. `03_routines.sql` installs the current procedures and triggers, including `sp_update_evidence_metadata`, which preserves extracted text while updating title/description and queueing a new vector version. Neither command drops the database or its tables; do **not** run `01_schema.sql` for an ordinary update.
+
+After signing in as an administrator, open **Administration** and use **Queue missing or stale records** if existing records need to be indexed again. Keep exactly one standalone worker running to process the queue. The re-index control queues work; it does not start a second worker.
 
 ## 4. Start Qdrant
 
@@ -126,7 +129,7 @@ npm run test:retrieval
 npm run build
 ```
 
-The `*:live` test scripts require reachable MySQL and Qdrant services plus a loaded demo schema. They are distinct from the unit tests.
+The live tests require reachable MySQL and/or Qdrant services plus the loaded demo schema. Run `npm run test:auth:live`, `npm run test:retrieval:live`, `npm run test:indexing:live` and `npm run test:vector:live` after the SQL upgrade; unlike unit tests, these contact real services.
 
 ## 8. Safe database reset
 
