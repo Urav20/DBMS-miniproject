@@ -1,6 +1,6 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, readPositiveId } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, readPositiveId, parsePositiveId } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
 
@@ -13,11 +13,12 @@ export async function POST(request, context) {
   const parsed = await readJson(request);
   if (!parsed.ok) return jsonResponse(400, { error: { message: "The request must contain valid JSON." } });
   const { action, user_id: userId } = parsed.value ?? {};
-  if (!["grant", "revoke"].includes(action) || !Number.isSafeInteger(Number(userId)) || Number(userId) < 1 || Number(userId) > 4294967295) {
+  const targetUserId = parsePositiveId(userId);
+  if (!["grant", "revoke"].includes(action) || !targetUserId) {
     return jsonResponse(400, { error: { message: "Choose grant or revoke and provide a valid user ID." } });
   }
   try {
-    await callProcedure(toDbSession(auth.session), action === "grant" ? "sp_grant_access" : "sp_revoke_access", [caseId, Number(userId)]);
+    await callProcedure(toDbSession(auth.session), action === "grant" ? "sp_grant_access" : "sp_revoke_access", [caseId, targetUserId]);
     return jsonResponse(200, { ok: true, message: action === "grant" ? "Case access granted." : "Case access revoked." });
   } catch (error) {
     console.error("[tracex:case:access]", { code: error?.code, errno: error?.mysqlErrno });
