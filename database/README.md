@@ -1,76 +1,43 @@
 # database/
 
-| File | What it does |
+| File | Purpose |
 |---|---|
-| `01_schema.sql` | Drops and recreates the `tracex` database: 15 tables, constraints, indexes |
-| `02_access.sql` | Session function, investigator-filtered views, MySQL roles, grants and three application accounts |
-| `03_routines.sql` | Triggers, procedures, and three additional investigator views with their SELECT grants |
-| `06_verify_access.sql` | Post-load checks for the three investigator views, grants and the expected 130 indexing jobs |
+| `01_schema.sql` | Drops/recreates `tracex`; creates 15 tables, constraints and indexes |
+| `02_access.sql` | Session helper, filtered investigator views, MySQL roles/grants and three application accounts |
+| `03_routines.sql` | Functions, triggers, stored procedures, extra views and procedure grants |
+| `04_dml.sql` | Allowed and intentionally rejected state-changing DML examples |
+| `05_queries.sql` | Joins, nested/correlated queries, window functions, recursive CTE and FULLTEXT |
+| `06_verify_access.sql` | Investigator view/privilege and indexing-outbox checks |
+| `07_demo.sql` | Read-only classroom walkthrough of relational data and provenance |
+| `08_verify_database.sql` | Read-only verification of schema objects, seed counts, view columns and grants |
 
-## Run (MySQL 8.0.16 or newer)
+## Load order
+
+For a fresh, disposable MySQL 8.0.16+ database, from repository root:
 
 ```bash
 mysql -u root -p < database/01_schema.sql
 mysql -u root -p < database/02_access.sql
+mysql -u root -p < database/03_routines.sql
+mysql -u root -p < data/out/seed_demo.sql
 ```
 
-`01_schema.sql` deletes any existing `tracex` database first. Do not run it on data you want to keep.
+**Destructive warning:** `01_schema.sql` begins with `DROP DATABASE IF EXISTS tracex`. It permanently removes an existing database named `tracex`. Never run it against the user's working database unless that database is disposable and backed up.
 
-## Quick check
+`02_access.sql` creates role-specific accounts using placeholder passwords. Change the passwords in MySQL and configure the same values in `app/.env.local`; do not put real credentials in Git.
 
-```sql
-USE tracex;
-SHOW TABLES;                        -- 15 tables + 9 views after 02; +3 investigator views after 03
-SELECT TABLE_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME
-FROM information_schema.KEY_COLUMN_USAGE
-WHERE TABLE_SCHEMA = 'tracex' AND REFERENCED_TABLE_NAME IS NOT NULL;   -- 25 foreign keys
-SHOW GRANTS FOR 'tracex_investigator_app'@'localhost' USING 'tracex_investigator';
-SHOW GRANTS FOR 'tracex_investigator'@'%';
-```
+## Demonstration sequence
 
-## Account passwords
-
-`02_access.sql` creates three accounts with placeholder passwords (`change_me_*`). Change them and keep the real values only in your local `.env`.
-
-## Status
-
-Written and statically cross-checked (all 25 foreign keys reference existing columns of matching type and a unique key; no foreign key breaks MySQL's CHECK rule). Run `06_verify_access.sql` after loading the schema, routines and seed to check the investigator views and the expected 130 `index_job` rows. The SQL has not yet been executed on a live MySQL server in this environment.
-
-
-## Step 4 files
-- `03_routines.sql`: functions (`fn_actor`, `fn_is_admin`, ...), triggers (version bump and outbox, same-case links, append-only tables, immutable hash), extra views, stored procedures (`sp_*`) and EXECUTE grants. Run after 02.
-- `04_dml.sql`: INSERT/UPDATE/DELETE demo through the procedures, with a section of statements that must be rejected (uses the helper `demo_try`). Changes data; reset by re-running 01, 02, 03 and the seed.
-- `05_queries.sql`: joins, nested and correlated subqueries, window functions, recursive CTEs, full-text search.
-
-Full load order: `source database/01_schema.sql`, `02_access.sql`, `03_routines.sql`, `source data/out/seed_demo.sql`.
-The seed loaded after 03 also fills `index_job` (one upsert per active evidence and per finding).
-If you loaded the seed first, run as admin: `SET @tracex_user_id = 1; CALL sp_backfill_index_jobs();`
-
-
-## Verify the merged database/API contract
-
-After loading the schema, access views, routines and generated seed in that order, run:
-
-```sql
-source database/06_verify_access.sql
-```
-
-The script reports whether all three investigator views exist, displays their columns and the investigator role grants, compares visible evidence with visible current-custody rows, and checks that `index_job` contains 130 rows (57 active evidence items + 73 findings).
-
-For a real privilege test, connect separately as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID (for example, 3), and run the four `SELECT` statements against `v_my_current_custody`, `v_my_users`, and `v_my_teammates`. A direct `SELECT` from `app_user` or `custody_event` must be denied.
-
-## Classroom demonstration package (Person A)
-
-After loading the schema, access rules, routines and demo seed in the order above:
+Open a MySQL CLI session and run:
 
 ```sql
 source database/08_verify_database.sql
 source database/07_demo.sql
+source database/05_queries.sql
 ```
 
-- `08_verify_database.sql` is a read-only verification report. It checks the expected table, foreign-key, view, routine, trigger and seed counts, confirms the investigator content-version columns, and prints the indexing outbox breakdown and investigator role grants. A failed count is reported as `passed = 0`; the script does not claim the installation is valid automatically.
-- `07_demo.sql` is a read-only classroom walkthrough showing joined relational data, custody provenance, analysis/findings, audit history, index-job state, stored-program inventory and investigator-filtered views.
-- `04_dml.sql` is the separate state-changing DML demonstration. It intentionally creates and updates demo records and includes rejected operations.
-- `05_queries.sql` is the separate query showcase, including joins, nested/correlated subqueries, window functions, recursive CTEs and FULLTEXT search.
+Run `database/04_dml.sql` separately because it deliberately modifies demonstration data and includes operations expected to be rejected. For the investigator privilege check, connect as `tracex_investigator_app`, set `@tracex_user_id` to an active investigator ID and show that filtered-view reads work while direct reads of `app_user` and `custody_event` are denied.
 
-The verification and demo scripts have been added to the Person-A branch. They have **not** been executed against a live MySQL instance as part of this commit. Record the actual output and resolve any failures before marking the database rubric items as demonstrated.
+## Verification evidence
+
+The repository contains static SQL contracts and live integration tests for several app/database paths. The team should still run `08_verify_database.sql`, `07_demo.sql`, `05_queries.sql`, `04_dml.sql` and the separate investigator privilege check on the actual presentation database, then save the terminal output/screenshots. A verification script existing in Git does not imply that its output has been captured on the target machine.
