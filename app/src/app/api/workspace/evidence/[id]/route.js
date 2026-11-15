@@ -24,12 +24,12 @@ export async function PATCH(request, context) {
   if (!id) return jsonResponse(400, { error: { message: "A valid evidence ID is required." } });
   let body;
   try { body = await request.json(); } catch { return jsonResponse(400, { error: { message: "The request must contain valid JSON." } }); }
-  if (!body || typeof body.title !== "string" || typeof body.description !== "string" || !(body.extracted_text === null || typeof body.extracted_text === "string") || body.title.trim().length === 0 || body.title.length > 200 || body.description.trim().length === 0 || body.description.length > 60000 || (body.extracted_text?.length ?? 0) > 500000) {
-    return jsonResponse(400, { error: { message: "Provide a title (1–200 characters), description (1–60,000 characters), and optional extracted text (up to 500,000 characters)." } });
+  if (!body || typeof body.title !== "string" || typeof body.description !== "string" || body.title.trim().length === 0 || body.title.length > 200 || body.description.trim().length === 0 || body.description.length > 60000) {
+    return jsonResponse(400, { error: { message: "Provide a title (1–200 characters) and description (1–60,000 characters)." } });
   }
   try {
-    await callProcedure(toDbSession(auth.session), "sp_update_evidence_text", [id, body.title, body.description, body.extracted_text]);
-    return jsonResponse(200, { ok: true, message: "Evidence text updated. The database queued a vector refresh." });
+    await callProcedure(toDbSession(auth.session), "sp_update_evidence_metadata", [id, body.title, body.description]);
+    return jsonResponse(200, { ok: true, message: "Evidence metadata updated. Extracted text was preserved and the database queued a vector refresh." });
   } catch (error) {
     console.error("[tracex:evidence:update]", { code: error?.code, errno: error?.mysqlErrno });
     return jsonResponse(Number(error?.status) >= 400 && Number(error?.status) < 500 ? error.status : 409, { error: { message: "The update was rejected. Check your case access, case status and evidence status." } });
