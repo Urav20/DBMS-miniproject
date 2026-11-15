@@ -60,7 +60,7 @@ export async function listAudit(session, limit = 100) {
   if (session.role !== "admin") throw new Error("Administrator access required.");
   return query(session,
     `SELECT al.audit_id, al.action, al.entity_type, al.entity_id, al.case_id,
-            al.occurred_at, al.details, u.username, u.full_name
+            al.created_at, al.details, u.username, u.full_name
        FROM audit_log al LEFT JOIN app_user u ON u.user_id = al.user_id
       ORDER BY al.occurred_at DESC, al.audit_id DESC LIMIT ?`, [limit]);
 }
