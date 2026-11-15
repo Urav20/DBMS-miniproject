@@ -73,6 +73,6 @@ test("workspace repository uses filtered investigator views and the actual appen
   for (const view of ["v_my_cases", "v_my_evidence", "v_my_custody", "v_my_analyses", "v_my_findings", "v_my_relationships"]) {
     assert.ok(source.includes(view), `${view} is required for investigator reads`);
   }
-  assert.match(source, /ORDER BY al\\.created_at DESC/);
-  assert.doesNotMatch(source, /al\\.occurred_at/);
+  assert.match(source, /ORDER BY al\.created_at DESC/);
+  assert.doesNotMatch(source, /al\.occurred_at/);
 });
