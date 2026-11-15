@@ -28,6 +28,7 @@ jobs:
           npm run test:vector --prefix app
           npm run test:indexing --prefix app
           npm run test:retrieval --prefix app
+          npm run test:workspace --prefix app
       - name: Evaluation unit and contract tests
         run: node evaluation/scripts/test.mjs
       - name: Build Next.js app
