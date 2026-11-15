@@ -12,8 +12,7 @@
 //
 // User ids: the demo seed numbers users in file order (1 = dana.whitfield, an Administrator;
 // 3 = isha.kapoor, an Investigator). Override with TRACEX_LIVE_ADMIN_ID / TRACEX_LIVE_INVESTIGATOR_ID.
-// This file has NOT been run by its author (no MySQL was available); a failure here names exactly
-// what the real database does not provide.
+// These probes intentionally use nonexistent IDs and zero-row SELECTs; they verify current views and grants without changing data.
 //
 // Qdrant and the embedding model are covered by tests/vector/live.test.mjs and are not repeated here.
 
@@ -72,6 +71,7 @@ test("an Investigator id presented on the admin pool is refused (role literal ma
   await assert.rejects(() => repo.resolveCaseScope({ role: "admin", userId: INVESTIGATOR.userId }, null), (e) => e.code === "AUTH_FORBIDDEN" && e.status === 403);
 });
 
-test("v_my_evidence does not expose content_version yet (Person A change 1): stale check unavailable to investigators", { skip, todo: "flips to passing after Person A change 1" }, async () => {
+test("investigator evidence and findings views expose content_version for stale-hit validation", { skip }, async () => {
   await dbLayer.query(INVESTIGATOR, "SELECT content_version FROM v_my_evidence WHERE 1 = 0");
+  await dbLayer.query(INVESTIGATOR, "SELECT content_version FROM v_my_findings WHERE 1 = 0");
 });
