@@ -23,7 +23,7 @@ Investigators read through case-filtered `v_my_*` views and use stored procedure
 - **Security:** Administrator and Investigator roles, separate application accounts, case-scoped views, append-only custody/audit history and signed sessions.
 - **Vector pipeline:** Qdrant collection setup/health, local `BAAI/bge-small-en-v1.5` embeddings, deterministic point IDs, an outbox-driven worker, retry/recovery and stale-version validation.
 - **Retrieval:** Authenticated semantic search with case scoping, evidence/finding kinds, over-fetch and MySQL re-validation.
-- **Workspace:** Dashboard, case list and custody timeline, evidence list with text update/withdraw controls, semantic search, administrator index status/re-index and audit report. Some write workflows in the underlying schema are not yet represented in the UI; see [the rubric map](docs/EVALUATION_RUBRIC_MAP.md).
+- **Workspace:** Dashboard; case creation, status and assignment controls; evidence metadata registration and detail; custody timeline/transfer; analysis and findings; human-recorded evidence relationships; semantic search; audit report; and administrator vector inspection/re-index queue. Original binary file upload/storage is not implemented by the current schema; see [the rubric map](docs/EVALUATION_RUBRIC_MAP.md).
 - **Evaluation:** Keyword, vector-only and RRF-hybrid retrieval compared on synthetic 500- and 2,000-record datasets.
 
 ## Quick setup
