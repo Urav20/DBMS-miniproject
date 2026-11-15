@@ -8,7 +8,7 @@ Status key: **Implemented** = code/design artifact exists; **Partially implement
 | 2 | Relational schema with keys, relationships and constraints | 3 | `docs/design/TRACE-X_Phase2_Design.md`; 15-table MySQL schema | Implemented; final report walkthrough pending |
 | 3 | SQL DDL and constraints | 4 | `database/01_schema.sql` | Implemented; retain `08_verify_database.sql` output from the presentation database |
 | 4 | NoSQL/vector database creation | 4 | Qdrant collection setup, 384-dimensional cosine vectors and payload indexes | Implemented; show live collection health and point count |
-| 5 | Technology justification | 1 | MySQL/Qdrant and embedding rationale in the design document | Partially documented; consolidate the rationale into the final report |
+| 5 | Technology justification | 1 | `docs/TECHNOLOGY_JUSTIFICATION.md` and the Phase 2 design | Implemented as a written rationale; include the key MySQL/Qdrant trade-offs in the final report |
 | 6 | DML operations | 4 | `database/04_dml.sql` includes permitted and rejected operations | Implemented in SQL; execute and retain demonstration output |
 | 7 | Joins, nested/correlated queries and recursive CTE | 4 | `database/05_queries.sql` | Implemented in SQL; execute and retain demonstration output |
 | 8 | Procedures, functions, triggers and CTE | 6 | `database/03_routines.sql` and query showcase | Implemented in SQL; execute and retain verification output |
