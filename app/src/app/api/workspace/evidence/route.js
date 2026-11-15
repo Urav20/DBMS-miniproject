@@ -11,9 +11,16 @@ function positiveId(value) {
 
 function mysqlDateTime(value) {
   if (typeof value !== "string") return null;
-  const d = new Date(value);
-  if (!Number.isFinite(d.getTime())) return null;
-  return d.toISOString().slice(0, 19).replace("T", " ");
+  // datetime-local is already in the user's local clock; preserve that wall time
+  // instead of converting it through UTC.
+  const match = value.match(/^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?$/);
+  if (!match) return null;
+  const [, year, month, day, hour, minute, second = "00"] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
+  if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 ||
+      date.getDate() !== Number(day) || date.getHours() !== Number(hour) ||
+      date.getMinutes() !== Number(minute) || date.getSeconds() !== Number(second)) return null;
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 export async function POST(request) {
