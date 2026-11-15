@@ -1,0 +1,18 @@
+{
+ "database": "tracex_eval_2000",
+ "collection": "tracex_eval_2000",
+ "records": 2000,
+ "points": 2000,
+ "seconds": 163.2258711,
+ "records_per_second": 12.252959573882157,
+ "worker": {
+  "claimed": 2000,
+  "upserted": 2000,
+  "deleted": 0,
+  "skipped": 0,
+  "retried": 0,
+  "failed": 0,
+  "outage": false
+ },
+ "finished_at": "2026-11-14T15:54:54.910Z"
+}

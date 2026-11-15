@@ -4,7 +4,7 @@
 
 A DBMS semester project by a two-member student team. TRACE-X helps authorized investigators find potentially relevant digital evidence through semantic search, while keeping the structured context that explains where evidence came from, which case it belongs to, how it was collected, and who has held it.
 
-> **Status:** Phase 2 (database design) in progress. Nothing below is implemented unless marked as done.
+> **Status (November 2026):** Relational schema, access controls, indexing worker, semantic retrieval, and Phase 4 evaluation have implementation artifacts. Live evaluation was run against isolated MySQL 8 and Qdrant instances. End-to-end application UI/API integration and vector RUD demonstrations remain to be verified.
 
 ## Core idea
 
@@ -20,7 +20,7 @@ Semantic similarity is a lead, never proof that two evidence items are factually
 - MySQL
 - Qdrant
 - Next.js (JavaScript) with Route Handlers as the backend API
-- Local text-embedding model (to be finalized)
+- BAAI/bge-small-en-v1.5 text embeddings (384 dimensions)
 - Git and GitHub
 
 ## Planned features
@@ -37,16 +37,16 @@ Semantic similarity is a lead, never proof that two evidence items are factually
 
 ```
 trace-x/
-├── docs/
-│   ├── design/        # ER diagram, schema, data dictionary
-│   ├── research/      # literature notes, evaluation plan
-│   └── report/
-├── database/          # schema.sql, seed.sql, queries.sql
-├── app/               # Next.js application
-├── worker/            # indexing worker
-├── evaluation/        # dataset, benchmarks, results
-├── .env.example
-└── README.md
+â”œâ”€â”€ docs/
+â”‚   â”œâ”€â”€ design/        # ER diagram, schema, data dictionary
+â”‚   â”œâ”€â”€ research/      # literature notes, evaluation plan
+â”‚   â””â”€â”€ report/
+â”œâ”€â”€ database/          # schema.sql, seed.sql, queries.sql
+â”œâ”€â”€ app/               # Next.js application
+â”œâ”€â”€ worker/            # indexing worker
+â”œâ”€â”€ evaluation/        # dataset, benchmarks, results
+â”œâ”€â”€ .env.example
+â””â”€â”€ README.md
 ```
 
 Folders are added as each phase is completed.
@@ -79,7 +79,7 @@ Folders are added as each phase is completed.
 
 ## Limitations and results
 
-To be documented honestly after implementation and evaluation. No results are claimed yet.
+Phase 4 benchmark results are available in [the evaluation report](evaluation/results/REPORT.md). On the synthetic 500- and 2,000-record datasets, vector-only retrieval outperformed hybrid retrieval on Precision@10, Recall@10, F1@10, MAP and NDCG@10. These results do not establish performance on real forensic evidence.
 
 ## License
 

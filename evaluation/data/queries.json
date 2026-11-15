@@ -1,0 +1,49 @@
+{
+  "_comment": "Hand-authored. target_group = event group whose records are grade 2; related_groups = grade 1 (related forensic concept). no_answer = nothing in the corpus answers it. Labels are derived from group membership by src/dataset.mjs, never from search output.",
+  "queries": [
+    { "id": "Q01", "category": "exact_keyword", "text": "updater_setup.exe", "target_group": "G01", "related_groups": [] },
+    { "id": "Q02", "category": "exact_keyword", "text": "ransom note", "target_group": "G03", "related_groups": [] },
+    { "id": "Q03", "category": "exact_keyword", "text": "volume shadow copies deleted", "target_group": "G06", "related_groups": [] },
+    { "id": "Q04", "category": "exact_keyword", "text": "USB mass storage", "target_group": "G04", "related_groups": [] },
+    { "id": "Q05", "category": "exact_keyword", "text": "password spraying", "target_group": "G07", "related_groups": [] },
+    { "id": "Q06", "category": "exact_keyword", "text": "DNS tunneling", "target_group": "G12", "related_groups": [] },
+    { "id": "Q07", "category": "exact_keyword", "text": "added to administrators group", "target_group": "G10", "related_groups": [] },
+    { "id": "Q08", "category": "exact_keyword", "text": "scheduled task persistence", "target_group": "G11", "related_groups": [] },
+
+    { "id": "Q09", "category": "partial_match", "text": "cleared history", "target_group": "G05", "related_groups": [] },
+    { "id": "Q10", "category": "partial_match", "text": "lookalike login", "target_group": "G02", "related_groups": [] },
+    { "id": "Q11", "category": "partial_match", "text": "metadata backdated", "target_group": "G08", "related_groups": [] },
+    { "id": "Q12", "category": "partial_match", "text": "archive uploaded cloud", "target_group": "G09", "related_groups": [] },
+    { "id": "Q13", "category": "partial_match", "text": "unattended remote access", "target_group": "G13", "related_groups": [] },
+    { "id": "Q14", "category": "partial_match", "text": "beacon intervals", "target_group": "G01", "related_groups": [] },
+    { "id": "Q15", "category": "partial_match", "text": "encrypted .locked", "target_group": "G03", "related_groups": [] },
+    { "id": "Q16", "category": "partial_match", "text": "instruction to delete chat", "target_group": "G14", "related_groups": [] },
+
+    { "id": "Q17", "category": "semantic", "text": "worker walked out with company files on a portable storage gadget before quitting", "target_group": "G04", "related_groups": [] },
+    { "id": "Q18", "category": "semantic", "text": "someone covered their tracks so nobody could see where a user had been online", "target_group": "G05", "related_groups": [] },
+    { "id": "Q19", "category": "semantic", "text": "attacker kept trying passwords until one finally worked", "target_group": "G07", "related_groups": [] },
+    { "id": "Q20", "category": "semantic", "text": "infected computer secretly talking to its operator on a fixed schedule", "target_group": "G01", "related_groups": [] },
+    { "id": "Q21", "category": "semantic", "text": "company data became inaccessible and the victim was told to pay for a way back in", "target_group": "G03", "related_groups": [] },
+    { "id": "Q22", "category": "semantic", "text": "someone doctored a file so it seemed to have been written months before", "target_group": "G08", "related_groups": [] },
+    { "id": "Q23", "category": "semantic", "text": "staff member lured into handing over account details through a deceptive message", "target_group": "G02", "related_groups": [] },
+    { "id": "Q24", "category": "semantic", "text": "huge quantity of confidential material sent to a public storage website late at night", "target_group": "G09", "related_groups": [] },
+    { "id": "Q25", "category": "semantic", "text": "intruder made their account more powerful than it should have been", "target_group": "G10", "related_groups": [] },
+    { "id": "Q26", "category": "semantic", "text": "supervisor asked the team to make evidence disappear before the auditors came", "target_group": "G14", "related_groups": [] },
+
+    { "id": "Q27", "category": "related_concept", "text": "attacker preparing to make recovery impossible", "target_group": "G06", "related_groups": ["G03"] },
+    { "id": "Q28", "category": "related_concept", "text": "signs of an insider stealing intellectual property", "target_group": "G04", "related_groups": ["G09"] },
+    { "id": "Q29", "category": "related_concept", "text": "how did the intruder keep access after a reboot", "target_group": "G11", "related_groups": ["G13", "G01"] },
+    { "id": "Q30", "category": "related_concept", "text": "command and control communication channels", "target_group": "G01", "related_groups": ["G12", "G13"] },
+    { "id": "Q31", "category": "related_concept", "text": "account takeover chain from stolen password to full control", "target_group": "G07", "related_groups": ["G02", "G10"] },
+    { "id": "Q32", "category": "related_concept", "text": "concealment of user activity", "target_group": "G05", "related_groups": ["G14", "G08"] },
+    { "id": "Q33", "category": "related_concept", "text": "data leaving the network", "target_group": "G09", "related_groups": ["G12", "G04"] },
+    { "id": "Q34", "category": "related_concept", "text": "social engineering attack on staff", "target_group": "G02", "related_groups": ["G07"] },
+
+    { "id": "Q35", "category": "no_answer", "text": "drone flight log altitude readings", "target_group": null, "related_groups": [] },
+    { "id": "Q36", "category": "no_answer", "text": "cryptocurrency wallet recovery phrase", "target_group": null, "related_groups": [] },
+    { "id": "Q37", "category": "no_answer", "text": "printer firmware update schedule", "target_group": null, "related_groups": [] },
+    { "id": "Q38", "category": "no_answer", "text": "wildlife camera trap images", "target_group": null, "related_groups": [] },
+    { "id": "Q39", "category": "no_answer", "text": "payroll tax filing for contractors", "target_group": null, "related_groups": [] },
+    { "id": "Q40", "category": "no_answer", "text": "satellite telemetry anomalies", "target_group": null, "related_groups": [] }
+  ]
+}

@@ -1,0 +1,282 @@
+[
+ {
+  "id": "Q01",
+  "category": "exact_keyword",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q02",
+  "category": "exact_keyword",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q03",
+  "category": "exact_keyword",
+  "query_terms": 4,
+  "terms_in_relevant_records": 4,
+  "coverage": 1
+ },
+ {
+  "id": "Q04",
+  "category": "exact_keyword",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q05",
+  "category": "exact_keyword",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q06",
+  "category": "exact_keyword",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q07",
+  "category": "exact_keyword",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q08",
+  "category": "exact_keyword",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q09",
+  "category": "partial_match",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q10",
+  "category": "partial_match",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q11",
+  "category": "partial_match",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q12",
+  "category": "partial_match",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q13",
+  "category": "partial_match",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q14",
+  "category": "partial_match",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q15",
+  "category": "partial_match",
+  "query_terms": 2,
+  "terms_in_relevant_records": 2,
+  "coverage": 1
+ },
+ {
+  "id": "Q16",
+  "category": "partial_match",
+  "query_terms": 3,
+  "terms_in_relevant_records": 3,
+  "coverage": 1
+ },
+ {
+  "id": "Q17",
+  "category": "semantic",
+  "query_terms": 8,
+  "terms_in_relevant_records": 3,
+  "coverage": 0.375
+ },
+ {
+  "id": "Q18",
+  "category": "semantic",
+  "query_terms": 9,
+  "terms_in_relevant_records": 3,
+  "coverage": 0.333
+ },
+ {
+  "id": "Q19",
+  "category": "semantic",
+  "query_terms": 7,
+  "terms_in_relevant_records": 3,
+  "coverage": 0.429
+ },
+ {
+  "id": "Q20",
+  "category": "semantic",
+  "query_terms": 7,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q21",
+  "category": "semantic",
+  "query_terms": 9,
+  "terms_in_relevant_records": 3,
+  "coverage": 0.333
+ },
+ {
+  "id": "Q22",
+  "category": "semantic",
+  "query_terms": 7,
+  "terms_in_relevant_records": 2,
+  "coverage": 0.286
+ },
+ {
+  "id": "Q23",
+  "category": "semantic",
+  "query_terms": 9,
+  "terms_in_relevant_records": 4,
+  "coverage": 0.444
+ },
+ {
+  "id": "Q24",
+  "category": "semantic",
+  "query_terms": 10,
+  "terms_in_relevant_records": 4,
+  "coverage": 0.4
+ },
+ {
+  "id": "Q25",
+  "category": "semantic",
+  "query_terms": 5,
+  "terms_in_relevant_records": 1,
+  "coverage": 0.2
+ },
+ {
+  "id": "Q26",
+  "category": "semantic",
+  "query_terms": 8,
+  "terms_in_relevant_records": 3,
+  "coverage": 0.375
+ },
+ {
+  "id": "Q27",
+  "category": "related_concept",
+  "query_terms": 5,
+  "terms_in_relevant_records": 1,
+  "coverage": 0.2
+ },
+ {
+  "id": "Q28",
+  "category": "related_concept",
+  "query_terms": 5,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q29",
+  "category": "related_concept",
+  "query_terms": 4,
+  "terms_in_relevant_records": 2,
+  "coverage": 0.5
+ },
+ {
+  "id": "Q30",
+  "category": "related_concept",
+  "query_terms": 4,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q31",
+  "category": "related_concept",
+  "query_terms": 7,
+  "terms_in_relevant_records": 2,
+  "coverage": 0.286
+ },
+ {
+  "id": "Q32",
+  "category": "related_concept",
+  "query_terms": 3,
+  "terms_in_relevant_records": 2,
+  "coverage": 0.667
+ },
+ {
+  "id": "Q33",
+  "category": "related_concept",
+  "query_terms": 3,
+  "terms_in_relevant_records": 2,
+  "coverage": 0.667
+ },
+ {
+  "id": "Q34",
+  "category": "related_concept",
+  "query_terms": 4,
+  "terms_in_relevant_records": 1,
+  "coverage": 0.25
+ },
+ {
+  "id": "Q35",
+  "category": "no_answer",
+  "query_terms": 5,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q36",
+  "category": "no_answer",
+  "query_terms": 4,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q37",
+  "category": "no_answer",
+  "query_terms": 4,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q38",
+  "category": "no_answer",
+  "query_terms": 4,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q39",
+  "category": "no_answer",
+  "query_terms": 4,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ },
+ {
+  "id": "Q40",
+  "category": "no_answer",
+  "query_terms": 3,
+  "terms_in_relevant_records": 0,
+  "coverage": 0
+ }
+]

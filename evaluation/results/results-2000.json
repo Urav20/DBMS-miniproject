@@ -1,0 +1,5012 @@
+{
+ "meta": {
+  "kind": "live",
+  "mock": false,
+  "finished_at": "2026-11-14T15:55:19.711Z",
+  "size": 2000,
+  "database": "tracex_eval_2000",
+  "collection": "tracex_eval_2000",
+  "records": 2000,
+  "queries": 40,
+  "answerable_queries": 34,
+  "dataset": {
+   "dataset_version": 1,
+   "seed": 20260509,
+   "total": 2000,
+   "small": 500,
+   "large": 2000,
+   "cases": 40,
+   "records_in_small_tier": 500,
+   "event_groups": 14,
+   "trap_groups": 6,
+   "filler_templates": 12,
+   "by_kind_and_tier_max": {
+    "event_500": 112,
+    "filler_500": 340,
+    "trap_2000": 120,
+    "filler_2000": 1380,
+    "trap_500": 48
+   },
+   "content_sha256": "d6b5d2da8bd88c74ca056126c4554d3b9b15b800239601d1004174f57cf47197"
+  },
+  "config": {
+   "k": 10,
+   "depth": 50,
+   "rrf_k": 60,
+   "cases": 40,
+   "seed": 20260509,
+   "dataset_version": 1,
+   "latency": {
+    "warmupPasses": 1,
+    "timedPasses": 5
+   },
+   "bootstrap": {
+    "iterations": 10000,
+    "seed": 424242,
+    "alpha": 0.05
+   },
+   "relevance": {
+    "strict_min_grade": 2,
+    "lenient_min_grade": 1
+   }
+  },
+  "methods_run": [
+   "keyword",
+   "vector",
+   "hybrid"
+  ],
+  "qdrant_points": 2000,
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "mysql": {
+   "version": "8.0.46",
+   "innodb_ft_min_token_size": 3,
+   "innodb_ft_enable_stopword": 1
+  },
+  "node": "v22.19.0",
+  "platform": "win32",
+  "cases": 40,
+  "notes": [
+   "Keyword and hybrid run as the evaluation administrator (FULLTEXT cannot run through investigator views).",
+   "Evidence records only; findings are not indexed by the Phase 2 worker.",
+   "first_call_in_process_ms is NOT an independent cold start; see cold-<size>.json (scripts/cold.mjs)."
+  ]
+ },
+ "methods": {
+  "keyword": {
+   "per_query": [
+    {
+     "query_id": "Q01",
+     "category": "exact_keyword",
+     "text": "updater_setup.exe",
+     "ranked_keys": [
+      "R1204",
+      "R1270",
+      "R0109",
+      "R1110",
+      "R1422",
+      "R1523",
+      "R1971",
+      "R1418"
+     ],
+     "metrics": {
+      "returned": 8,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 7.184600000000046
+    },
+    {
+     "query_id": "Q02",
+     "category": "exact_keyword",
+     "text": "ransom note",
+     "ranked_keys": [
+      "R0287",
+      "R0630",
+      "R1928",
+      "R0223",
+      "R1726",
+      "R0008",
+      "R0770",
+      "R0611",
+      "R1660",
+      "R1261"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 6.583999999999833
+    },
+    {
+     "query_id": "Q03",
+     "category": "exact_keyword",
+     "text": "volume shadow copies deleted",
+     "ranked_keys": [
+      "R0557",
+      "R0058",
+      "R0841",
+      "R1881",
+      "R1732",
+      "R1415",
+      "R1738",
+      "R0819",
+      "R0062",
+      "R1743"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.41253177989255346,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      }
+     },
+     "median_ms": 6.962299999999686
+    },
+    {
+     "query_id": "Q04",
+     "category": "exact_keyword",
+     "text": "USB mass storage",
+     "ranked_keys": [
+      "R1172",
+      "R0253",
+      "R0697",
+      "R1222",
+      "R1342",
+      "R0911",
+      "R1032",
+      "R1284",
+      "R1887",
+      "R1491"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.0761433407173835,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.1111111111111111,
+       "ap": 0.013888888888888888
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.1111111111111111,
+       "ap": 0.013888888888888888
+      }
+     },
+     "median_ms": 6.685899999999947
+    },
+    {
+     "query_id": "Q05",
+     "category": "exact_keyword",
+     "text": "password spraying",
+     "ranked_keys": [
+      "R0247",
+      "R1227",
+      "R0429",
+      "R0723",
+      "R1967",
+      "R1490",
+      "R0733",
+      "R1260",
+      "R0061",
+      "R0741"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 6.822799999999916
+    },
+    {
+     "query_id": "Q06",
+     "category": "exact_keyword",
+     "text": "DNS tunneling",
+     "ranked_keys": [
+      "R1063",
+      "R0868",
+      "R1571",
+      "R1097"
+     ],
+     "metrics": {
+      "returned": 4,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 5.831699999999955
+    },
+    {
+     "query_id": "Q07",
+     "category": "exact_keyword",
+     "text": "added to administrators group",
+     "ranked_keys": [
+      "R0057",
+      "R1541",
+      "R1441",
+      "R0145",
+      "R0425",
+      "R1345",
+      "R1418",
+      "R0704",
+      "R0828",
+      "R1348"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 6.764799999999923
+    },
+    {
+     "query_id": "Q08",
+     "category": "exact_keyword",
+     "text": "scheduled task persistence",
+     "ranked_keys": [
+      "R1208",
+      "R0291",
+      "R1538",
+      "R1344",
+      "R1914",
+      "R1796",
+      "R1040",
+      "R1418",
+      "R1836",
+      "R1207"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.15593787927983166,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.125,
+       "ap": 0.043402777777777776
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.125,
+       "ap": 0.043402777777777776
+      }
+     },
+     "median_ms": 6.724099999999908
+    },
+    {
+     "query_id": "Q09",
+     "category": "partial_match",
+     "text": "cleared history",
+     "ranked_keys": [
+      "R1828",
+      "R0866",
+      "R1104",
+      "R0130",
+      "R0961",
+      "R1801",
+      "R0562",
+      "R0762",
+      "R1842",
+      "R0004"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 7.358299999999872
+    },
+    {
+     "query_id": "Q10",
+     "category": "partial_match",
+     "text": "lookalike login",
+     "ranked_keys": [
+      "R0916",
+      "R0384",
+      "R1152",
+      "R1966",
+      "R0367",
+      "R1247",
+      "R0569",
+      "R1769",
+      "R0450",
+      "R0931"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 6.055100000000039
+    },
+    {
+     "query_id": "Q11",
+     "category": "partial_match",
+     "text": "metadata backdated",
+     "ranked_keys": [
+      "R1971",
+      "R1712",
+      "R1523",
+      "R1422"
+     ],
+     "metrics": {
+      "returned": 4,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 5.5784000000001015
+    },
+    {
+     "query_id": "Q12",
+     "category": "partial_match",
+     "text": "archive uploaded cloud",
+     "ranked_keys": [
+      "R0294",
+      "R1509",
+      "R1435",
+      "R1507",
+      "R1202",
+      "R0003",
+      "R0484",
+      "R1488",
+      "R1608",
+      "R0850"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 5.9728000000000065
+    },
+    {
+     "query_id": "Q13",
+     "category": "partial_match",
+     "text": "unattended remote access",
+     "ranked_keys": [
+      "R0206",
+      "R1685",
+      "R0135",
+      "R1423",
+      "R1521",
+      "R1921",
+      "R0002",
+      "R0882",
+      "R1363",
+      "R1845"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 7.2434000000002925
+    },
+    {
+     "query_id": "Q14",
+     "category": "partial_match",
+     "text": "beacon intervals",
+     "ranked_keys": [
+      "R0109",
+      "R1270",
+      "R1110",
+      "R1204"
+     ],
+     "metrics": {
+      "returned": 4,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 5.592800000000125
+    },
+    {
+     "query_id": "Q15",
+     "category": "partial_match",
+     "text": "encrypted .locked",
+     "ranked_keys": [
+      "R1928",
+      "R0223",
+      "R0287",
+      "R0630",
+      "R1081",
+      "R1841",
+      "R1726",
+      "R0008",
+      "R0408",
+      "R0770"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 6.046100000000024
+    },
+    {
+     "query_id": "Q16",
+     "category": "partial_match",
+     "text": "instruction to delete chat",
+     "ranked_keys": [
+      "R0117",
+      "R0917",
+      "R0403",
+      "R1374",
+      "R1721",
+      "R0058",
+      "R1864",
+      "R0557"
+     ],
+     "metrics": {
+      "returned": 8,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 6.34680000000003
+    },
+    {
+     "query_id": "Q17",
+     "category": "semantic",
+     "text": "worker walked out with company files on a portable storage gadget before quitting",
+     "ranked_keys": [
+      "R1733",
+      "R1887",
+      "R1645",
+      "R0636",
+      "R1705",
+      "R1392",
+      "R0398",
+      "R1172",
+      "R0253",
+      "R0697"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.25744067176005675,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.5,
+       "ap": 0.1125
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.5,
+       "ap": 0.1125
+      }
+     },
+     "median_ms": 7.926199999999881
+    },
+    {
+     "query_id": "Q18",
+     "category": "semantic",
+     "text": "someone covered their tracks so nobody could see where a user had been online",
+     "ranked_keys": [
+      "R0457",
+      "R0301",
+      "R1552",
+      "R1253",
+      "R0990",
+      "R0498",
+      "R1733",
+      "R0636",
+      "R0059",
+      "R0909"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.41253177989255346,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      }
+     },
+     "median_ms": 8.416200000000117
+    },
+    {
+     "query_id": "Q19",
+     "category": "semantic",
+     "text": "attacker kept trying passwords until one finally worked",
+     "ranked_keys": [
+      "R1690",
+      "R0667",
+      "R0247",
+      "R1227",
+      "R1563",
+      "R0871",
+      "R0803",
+      "R1919",
+      "R1762",
+      "R0164"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 6.818700000000263
+    },
+    {
+     "query_id": "Q20",
+     "category": "semantic",
+     "text": "infected computer secretly talking to its operator on a fixed schedule",
+     "ranked_keys": [
+      "R0767",
+      "R0457",
+      "R0498",
+      "R0301",
+      "R0704",
+      "R1345",
+      "R1876",
+      "R1920",
+      "R1922",
+      "R0363"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      }
+     },
+     "median_ms": 7.428300000000036
+    },
+    {
+     "query_id": "Q21",
+     "category": "semantic",
+     "text": "company data became inaccessible and the victim was told to pay for a way back in",
+     "ranked_keys": [
+      "R0432",
+      "R0767",
+      "R1876",
+      "R1211",
+      "R1392",
+      "R0398",
+      "R0953",
+      "R1551",
+      "R0425",
+      "R1348"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5259879682037469,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.3035714285714286
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.3035714285714286
+      }
+     },
+     "median_ms": 10.712300000000141
+    },
+    {
+     "query_id": "Q22",
+     "category": "semantic",
+     "text": "someone doctored a file so it seemed to have been written months before",
+     "ranked_keys": [
+      "R1429",
+      "R0401",
+      "R1777",
+      "R0457",
+      "R0301",
+      "R0372",
+      "R1733",
+      "R1887",
+      "R0924",
+      "R1572"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.20261469210121208,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.3333333333333333,
+       "ap": 0.06944444444444445
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.3333333333333333,
+       "ap": 0.06944444444444445
+      }
+     },
+     "median_ms": 7.156700000000001
+    },
+    {
+     "query_id": "Q23",
+     "category": "semantic",
+     "text": "staff member lured into handing over account details through a deceptive message",
+     "ranked_keys": [
+      "R0401",
+      "R1392",
+      "R0803",
+      "R0398",
+      "R1919",
+      "R1572",
+      "R0001",
+      "R0025",
+      "R1429",
+      "R1563"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.49284851576164124,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 0.5,
+       "ap": 0.33958333333333335
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 0.5,
+       "ap": 0.33958333333333335
+      }
+     },
+     "median_ms": 8.81919999999991
+    },
+    {
+     "query_id": "Q24",
+     "category": "semantic",
+     "text": "huge quantity of confidential material sent to a public storage website late at night",
+     "ranked_keys": [
+      "R1733",
+      "R1705",
+      "R1645",
+      "R0316",
+      "R0803",
+      "R1919",
+      "R1172",
+      "R0253",
+      "R0697",
+      "R1222"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      }
+     },
+     "median_ms": 7.549199999999928
+    },
+    {
+     "query_id": "Q25",
+     "category": "semantic",
+     "text": "intruder made their account more powerful than it should have been",
+     "ranked_keys": [
+      "R0301",
+      "R0457",
+      "R0425",
+      "R1348",
+      "R1392",
+      "R0398",
+      "R0803",
+      "R0924",
+      "R0725",
+      "R1011"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      }
+     },
+     "median_ms": 7.816700000000083
+    },
+    {
+     "query_id": "Q26",
+     "category": "semantic",
+     "text": "supervisor asked the team to make evidence disappear before the auditors came",
+     "ranked_keys": [
+      "R1733",
+      "R1645",
+      "R0636",
+      "R0837",
+      "R0401",
+      "R1887",
+      "R1211",
+      "R0432",
+      "R1281",
+      "R0723"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 7.890300000000025
+    },
+    {
+     "query_id": "Q27",
+     "category": "related_concept",
+     "text": "attacker preparing to make recovery impossible",
+     "ranked_keys": [
+      "R1645",
+      "R0837",
+      "R0803",
+      "R1690",
+      "R0667",
+      "R1919",
+      "R1081",
+      "R1841",
+      "R0047",
+      "R0767"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.13889447225467072,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.1111111111111111,
+       "ap": 0.03888888888888889
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.2,
+       "r": 0.125,
+       "f1": 0.15384615384615385,
+       "rr": 0.1111111111111111,
+       "ap": 0.03111111111111111
+      }
+     },
+     "median_ms": 6.434499999999844
+    },
+    {
+     "query_id": "Q28",
+     "category": "related_concept",
+     "text": "signs of an insider stealing intellectual property",
+     "ranked_keys": [],
+     "metrics": {
+      "returned": 0,
+      "ndcg": 0,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      }
+     },
+     "median_ms": 5.951099999999997
+    },
+    {
+     "query_id": "Q29",
+     "category": "related_concept",
+     "text": "how did the intruder keep access after a reboot",
+     "ranked_keys": [
+      "R0425",
+      "R1348",
+      "R0457",
+      "R0206",
+      "R1563",
+      "R0372",
+      "R0733",
+      "R1378",
+      "R0059",
+      "R0061"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.46999586318787834,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.4,
+       "r": 0.16666666666666666,
+       "f1": 0.23529411764705882,
+       "rr": 1,
+       "ap": 0.3194444444444445
+      }
+     },
+     "median_ms": 9.388899999999921
+    },
+    {
+     "query_id": "Q30",
+     "category": "related_concept",
+     "text": "command and control communication channels",
+     "ranked_keys": [
+      "R1576",
+      "R0047",
+      "R1876",
+      "R1721",
+      "R0557",
+      "R0767",
+      "R0922",
+      "R0799",
+      "R0498",
+      "R1920"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.06944723612733536,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.2,
+       "r": 0.08333333333333333,
+       "f1": 0.11764705882352941,
+       "rr": 0.1111111111111111,
+       "ap": 0.03111111111111111
+      }
+     },
+     "median_ms": 10.726700000000164
+    },
+    {
+     "query_id": "Q31",
+     "category": "related_concept",
+     "text": "account takeover chain from stolen password to full control",
+     "ranked_keys": [
+      "R0922",
+      "R0799",
+      "R0990",
+      "R1253",
+      "R0723",
+      "R1967",
+      "R1490",
+      "R0733",
+      "R1260",
+      "R0061"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.3014710039186524,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.4,
+       "r": 0.16666666666666666,
+       "f1": 0.23529411764705882,
+       "rr": 1,
+       "ap": 0.4
+      }
+     },
+     "median_ms": 8.633199999999988
+    },
+    {
+     "query_id": "Q32",
+     "category": "related_concept",
+     "text": "concealment of user activity",
+     "ranked_keys": [
+      "R1814",
+      "R1378",
+      "R0130",
+      "R0301",
+      "R1104",
+      "R1253",
+      "R0121",
+      "R0161",
+      "R0441",
+      "R0641"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.693998079674401,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.5,
+       "r": 0.20833333333333334,
+       "f1": 0.29411764705882354,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 7.366999999999962
+    },
+    {
+     "query_id": "Q33",
+     "category": "related_concept",
+     "text": "data leaving the network",
+     "ranked_keys": [
+      "R0767",
+      "R1876",
+      "R0963",
+      "R1507",
+      "R1435",
+      "R0457",
+      "R0301",
+      "R0130",
+      "R0294",
+      "R1814"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.32212675507466854,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.25,
+       "ap": 0.12291666666666667
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.4,
+       "r": 0.16666666666666666,
+       "f1": 0.23529411764705882,
+       "rr": 0.3333333333333333,
+       "ap": 0.18777777777777777
+      }
+     },
+     "median_ms": 7.176999999999907
+    },
+    {
+     "query_id": "Q34",
+     "category": "related_concept",
+     "text": "social engineering attack on staff",
+     "ranked_keys": [
+      "R0321",
+      "R0401",
+      "R0561",
+      "R0761",
+      "R0202",
+      "R0482",
+      "R0802",
+      "R1002",
+      "R1602",
+      "R1802"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      }
+     },
+     "median_ms": 7.123600000000124
+    },
+    {
+     "query_id": "Q35",
+     "category": "no_answer",
+     "text": "drone flight log altitude readings",
+     "ranked_keys": [
+      "R0161",
+      "R0641",
+      "R1401",
+      "R1561",
+      "R1522",
+      "R1562",
+      "R0643",
+      "R0644",
+      "R0525",
+      "R1125"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 8.507599999999911
+    },
+    {
+     "query_id": "Q36",
+     "category": "no_answer",
+     "text": "cryptocurrency wallet recovery phrase",
+     "ranked_keys": [
+      "R0287",
+      "R1928",
+      "R0223",
+      "R0630",
+      "R1081",
+      "R1841",
+      "R0047",
+      "R0767",
+      "R0408",
+      "R1132"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 6.989100000000008
+    },
+    {
+     "query_id": "Q37",
+     "category": "no_answer",
+     "text": "printer firmware update schedule",
+     "ranked_keys": [
+      "R0961",
+      "R1801",
+      "R0562",
+      "R0762",
+      "R1842",
+      "R0004",
+      "R0684",
+      "R1084",
+      "R1725",
+      "R0606"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 10.779500000000098
+    },
+    {
+     "query_id": "Q38",
+     "category": "no_answer",
+     "text": "wildlife camera trap images",
+     "ranked_keys": [],
+     "metrics": {
+      "returned": 0,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 6.622900000000072
+    },
+    {
+     "query_id": "Q39",
+     "category": "no_answer",
+     "text": "payroll tax filing for contractors",
+     "ranked_keys": [],
+     "metrics": {
+      "returned": 0,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 6.272500000000036
+    },
+    {
+     "query_id": "Q40",
+     "category": "no_answer",
+     "text": "satellite telemetry anomalies",
+     "ranked_keys": [
+      "R1521",
+      "R1921",
+      "R0002",
+      "R0842",
+      "R0882",
+      "R1322",
+      "R0563",
+      "R1363",
+      "R1524",
+      "R1684"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 7.599199999999655
+    }
+   ],
+   "quality": {
+    "overall": {
+     "queries": 34,
+     "ndcg": 0.41826891218560797,
+     "p": 0.26764705882352946,
+     "r": 0.33455882352941174,
+     "f1": 0.2973856209150327,
+     "rr": 0.645016339869281,
+     "ap": 0.2917410714285714,
+     "lenient": {
+      "p": 0.2941176470588236,
+      "r": 0.3174019607843137,
+      "f1": 0.29556679383669,
+      "rr": 0.6801470588235293,
+      "ap": 0.30446574463118575
+     }
+    },
+    "by_category": {
+     "exact_keyword": {
+      "queries": 8,
+      "ndcg": 0.4719218283428379,
+      "p": 0.30000000000000004,
+      "r": 0.375,
+      "f1": 0.33333333333333337,
+      "rr": 0.7795138888888888,
+      "ap": 0.3352864583333333,
+      "lenient": {
+       "p": 0.30000000000000004,
+       "r": 0.375,
+       "f1": 0.33333333333333337,
+       "rr": 0.7795138888888888,
+       "ap": 0.3352864583333333
+      }
+     },
+     "partial_match": {
+      "queries": 8,
+      "ndcg": 0.6343225623169185,
+      "p": 0.38749999999999996,
+      "r": 0.484375,
+      "f1": 0.43055555555555564,
+      "rr": 1,
+      "ap": 0.484375,
+      "lenient": {
+       "p": 0.38749999999999996,
+       "r": 0.484375,
+       "f1": 0.43055555555555564,
+       "rr": 1,
+       "ap": 0.484375
+      }
+     },
+     "semantic": {
+      "queries": 10,
+      "ndcg": 0.33752544787950145,
+      "p": 0.24,
+      "r": 0.3,
+      "f1": 0.2666666666666667,
+      "rr": 0.5333333333333334,
+      "ap": 0.23250992063492065,
+      "lenient": {
+       "p": 0.24,
+       "r": 0.3,
+       "f1": 0.2666666666666667,
+       "rr": 0.5333333333333334,
+       "ap": 0.23250992063492065
+      }
+     },
+     "related_concept": {
+      "queries": 8,
+      "ndcg": 0.24949167627970079,
+      "p": 0.15,
+      "r": 0.1875,
+      "f1": 0.16666666666666666,
+      "rr": 0.2951388888888889,
+      "ap": 0.12960069444444444,
+      "lenient": {
+       "p": 0.2625,
+       "r": 0.11458333333333333,
+       "f1": 0.15893665158371043,
+       "rr": 0.4444444444444445,
+       "ap": 0.18368055555555557
+      }
+     }
+    },
+    "no_answer": {
+     "queries": 6,
+     "mean_results_returned": 6.666666666666667,
+     "queries_returning_any_result": 4
+    }
+   },
+   "latency": {
+    "first_call_in_process_ms": {
+     "ms": 15.966599999999971,
+     "query_id": "Q01"
+    },
+    "warm": {
+     "samples": 200,
+     "mean": 7.608799500000016,
+     "median": 7.343600000000151,
+     "p95": 10.782450000000107,
+     "min": 5.176300000000083,
+     "max": 12.489000000000033
+    },
+    "warm_per_query_median_mean_ms": 7.346512499999994,
+    "stages_mean_ms": {}
+   },
+   "unstable_rankings_across_passes": 0
+  },
+  "vector": {
+   "per_query": [
+    {
+     "query_id": "Q01",
+     "category": "exact_keyword",
+     "text": "updater_setup.exe",
+     "ranked_keys": [
+      "R1270",
+      "R0109",
+      "R1204",
+      "R1345",
+      "R0826",
+      "R0560",
+      "R0762",
+      "R0508",
+      "R1381",
+      "R0338"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 37.03790000000117
+    },
+    {
+     "query_id": "Q02",
+     "category": "exact_keyword",
+     "text": "ransom note",
+     "ranked_keys": [
+      "R0630",
+      "R0287",
+      "R1928",
+      "R0223",
+      "R0953",
+      "R1551",
+      "R0192",
+      "R0036",
+      "R1332",
+      "R1429"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 34.17879999999968
+    },
+    {
+     "query_id": "Q03",
+     "category": "exact_keyword",
+     "text": "volume shadow copies deleted",
+     "ranked_keys": [
+      "R0557",
+      "R0058",
+      "R1721",
+      "R1864",
+      "R1587",
+      "R0839",
+      "R1881",
+      "R0841",
+      "R1738",
+      "R0850"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 35.61459999999988
+    },
+    {
+     "query_id": "Q04",
+     "category": "exact_keyword",
+     "text": "USB mass storage",
+     "ranked_keys": [
+      "R0911",
+      "R1172",
+      "R0253",
+      "R1222",
+      "R0697",
+      "R1032",
+      "R1887",
+      "R1342",
+      "R1705",
+      "R0579"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.23357441341717916,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.14285714285714285,
+       "ap": 0.08313492063492063
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.14285714285714285,
+       "ap": 0.08313492063492063
+      }
+     },
+     "median_ms": 33.102499999999054
+    },
+    {
+     "query_id": "Q05",
+     "category": "exact_keyword",
+     "text": "password spraying",
+     "ranked_keys": [
+      "R0247",
+      "R1227",
+      "R1278",
+      "R0429",
+      "R1919",
+      "R0384",
+      "R1152",
+      "R0916",
+      "R0627",
+      "R1889"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5214682725103094,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.34375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.34375
+      }
+     },
+     "median_ms": 32.00659999999971
+    },
+    {
+     "query_id": "Q06",
+     "category": "exact_keyword",
+     "text": "DNS tunneling",
+     "ranked_keys": [
+      "R1063",
+      "R0868",
+      "R1097",
+      "R1571",
+      "R1034",
+      "R1545",
+      "R0109",
+      "R1074",
+      "R1110",
+      "R1628"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 35.53520000000026
+    },
+    {
+     "query_id": "Q07",
+     "category": "exact_keyword",
+     "text": "added to administrators group",
+     "ranked_keys": [
+      "R1541",
+      "R0057",
+      "R1441",
+      "R0145",
+      "R0451",
+      "R1399",
+      "R1170",
+      "R0791",
+      "R1253",
+      "R1021"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7240829646115214,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.5694444444444444
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.5694444444444444
+      }
+     },
+     "median_ms": 33.04789999999957
+    },
+    {
+     "query_id": "Q08",
+     "category": "exact_keyword",
+     "text": "scheduled task persistence",
+     "ranked_keys": [
+      "R1418",
+      "R1836",
+      "R1040",
+      "R1344",
+      "R1538",
+      "R1914",
+      "R1796",
+      "R1208",
+      "R0291",
+      "R1623"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.41253177989255346,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      }
+     },
+     "median_ms": 32.807700000001205
+    },
+    {
+     "query_id": "Q09",
+     "category": "partial_match",
+     "text": "cleared history",
+     "ranked_keys": [
+      "R1828",
+      "R0866",
+      "R1104",
+      "R0130",
+      "R0301",
+      "R0457",
+      "R1864",
+      "R1378",
+      "R1814",
+      "R0058"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9918291064614978,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.9704861111111112
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.9704861111111112
+      }
+     },
+     "median_ms": 31.812700000000405
+    },
+    {
+     "query_id": "Q10",
+     "category": "partial_match",
+     "text": "lookalike login",
+     "ranked_keys": [
+      "R0916",
+      "R1152",
+      "R0384",
+      "R1105",
+      "R0546",
+      "R0931",
+      "R1769",
+      "R1788",
+      "R0569",
+      "R1966"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 36.24539999999979
+    },
+    {
+     "query_id": "Q11",
+     "category": "partial_match",
+     "text": "metadata backdated",
+     "ranked_keys": [
+      "R1971",
+      "R1712",
+      "R1523",
+      "R1422",
+      "R1928",
+      "R0725",
+      "R1633",
+      "R1732",
+      "R0062",
+      "R0839"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7380396325465056,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.6041666666666666
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.6041666666666666
+      }
+     },
+     "median_ms": 34.1302999999989
+    },
+    {
+     "query_id": "Q12",
+     "category": "partial_match",
+     "text": "archive uploaded cloud",
+     "ranked_keys": [
+      "R0294",
+      "R1509",
+      "R1435",
+      "R1507",
+      "R0682",
+      "R0850",
+      "R0484",
+      "R1102",
+      "R0038",
+      "R1703"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7457912185292983,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      }
+     },
+     "median_ms": 30.654600000001665
+    },
+    {
+     "query_id": "Q13",
+     "category": "partial_match",
+     "text": "unattended remote access",
+     "ranked_keys": [
+      "R1685",
+      "R0206",
+      "R0135",
+      "R1423",
+      "R0498",
+      "R1441",
+      "R0633",
+      "R1972",
+      "R1475",
+      "R0511"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7457912185292983,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      }
+     },
+     "median_ms": 35.869300000000294
+    },
+    {
+     "query_id": "Q14",
+     "category": "partial_match",
+     "text": "beacon intervals",
+     "ranked_keys": [
+      "R0109",
+      "R1110",
+      "R1204",
+      "R1270",
+      "R0059",
+      "R1623",
+      "R1208",
+      "R1538",
+      "R1517",
+      "R1412"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7457912185292983,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      }
+     },
+     "median_ms": 36.54100000000017
+    },
+    {
+     "query_id": "Q15",
+     "category": "partial_match",
+     "text": "encrypted .locked",
+     "ranked_keys": [
+      "R0223",
+      "R1928",
+      "R0287",
+      "R0630",
+      "R1664",
+      "R0408",
+      "R1416",
+      "R1102",
+      "R1132",
+      "R0038"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 35.04860000000008
+    },
+    {
+     "query_id": "Q16",
+     "category": "partial_match",
+     "text": "instruction to delete chat",
+     "ranked_keys": [
+      "R0917",
+      "R0117",
+      "R1374",
+      "R0403",
+      "R0636",
+      "R1645",
+      "R1733",
+      "R0837",
+      "R0130",
+      "R0866"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 1,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 1
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 1
+      }
+     },
+     "median_ms": 33.94840000000113
+    },
+    {
+     "query_id": "Q17",
+     "category": "semantic",
+     "text": "worker walked out with company files on a portable storage gadget before quitting",
+     "ranked_keys": [
+      "R0316",
+      "R0579",
+      "R1429",
+      "R0372",
+      "R1705",
+      "R1887",
+      "R0301",
+      "R0401",
+      "R1374",
+      "R1814"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9156857657441143,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.859375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.859375
+      }
+     },
+     "median_ms": 37.165899999999965
+    },
+    {
+     "query_id": "Q18",
+     "category": "semantic",
+     "text": "someone covered their tracks so nobody could see where a user had been online",
+     "ranked_keys": [
+      "R0301",
+      "R1814",
+      "R0457",
+      "R1378",
+      "R0866",
+      "R1104",
+      "R0130",
+      "R0498",
+      "R1828",
+      "R1919"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9963488021549354,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.9861111111111112
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.9861111111111112
+      }
+     },
+     "median_ms": 34.90979999999945
+    },
+    {
+     "query_id": "Q19",
+     "category": "semantic",
+     "text": "attacker kept trying passwords until one finally worked",
+     "ranked_keys": [
+      "R1563",
+      "R0247",
+      "R0721",
+      "R1690",
+      "R0667",
+      "R0871",
+      "R1316",
+      "R1227",
+      "R0462",
+      "R1490"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9156857657441143,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.859375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.859375
+      }
+     },
+     "median_ms": 31.06289999999899
+    },
+    {
+     "query_id": "Q20",
+     "category": "semantic",
+     "text": "infected computer secretly talking to its operator on a fixed schedule",
+     "ranked_keys": [
+      "R1836",
+      "R0498",
+      "R0803",
+      "R0909",
+      "R0828",
+      "R1418",
+      "R1919",
+      "R0025",
+      "R1441",
+      "R0239"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.10893649261775588,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.25,
+       "ap": 0.03125
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.25,
+       "ap": 0.03125
+      }
+     },
+     "median_ms": 35.1265999999996
+    },
+    {
+     "query_id": "Q21",
+     "category": "semantic",
+     "text": "company data became inaccessible and the victim was told to pay for a way back in",
+     "ranked_keys": [
+      "R0953",
+      "R0432",
+      "R0301",
+      "R1551",
+      "R1211",
+      "R0372",
+      "R1378",
+      "R1814",
+      "R1928",
+      "R1876"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.6954632078628533,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.5131944444444444
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.5131944444444444
+      }
+     },
+     "median_ms": 36.852100000000064
+    },
+    {
+     "query_id": "Q22",
+     "category": "semantic",
+     "text": "someone doctored a file so it seemed to have been written months before",
+     "ranked_keys": [
+      "R0924",
+      "R0725",
+      "R1551",
+      "R1777",
+      "R0953",
+      "R1523",
+      "R0223",
+      "R1011",
+      "R1211",
+      "R1971"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7644796581690353,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.5802083333333332
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.5802083333333332
+      }
+     },
+     "median_ms": 33.839500000000044
+    },
+    {
+     "query_id": "Q23",
+     "category": "semantic",
+     "text": "staff member lured into handing over account details through a deceptive message",
+     "ranked_keys": [
+      "R0803",
+      "R1392",
+      "R1919",
+      "R0398",
+      "R0384",
+      "R1563",
+      "R0301",
+      "R0667",
+      "R0916",
+      "R1814"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8219345592466819,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.7083333333333334
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.7083333333333334
+      }
+     },
+     "median_ms": 37.1895999999997
+    },
+    {
+     "query_id": "Q24",
+     "category": "semantic",
+     "text": "huge quantity of confidential material sent to a public storage website late at night",
+     "ranked_keys": [
+      "R1310",
+      "R1884",
+      "R1509",
+      "R1552",
+      "R0294",
+      "R0682",
+      "R0372",
+      "R1435",
+      "R0953",
+      "R1507"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9888026041880242,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.959375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.8,
+       "r": 1,
+       "f1": 0.888888888888889,
+       "rr": 1,
+       "ap": 0.959375
+      }
+     },
+     "median_ms": 36.467499999999745
+    },
+    {
+     "query_id": "Q25",
+     "category": "semantic",
+     "text": "intruder made their account more powerful than it should have been",
+     "ranked_keys": [
+      "R1563",
+      "R0721",
+      "R0667",
+      "R0247",
+      "R0429",
+      "R0799",
+      "R0871",
+      "R1690",
+      "R0922",
+      "R1441"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.23936018781366114,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.16666666666666666,
+       "ap": 0.08611111111111111
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.16666666666666666,
+       "ap": 0.08611111111111111
+      }
+     },
+     "median_ms": 34.24409999999989
+    },
+    {
+     "query_id": "Q26",
+     "category": "semantic",
+     "text": "supervisor asked the team to make evidence disappear before the auditors came",
+     "ranked_keys": [
+      "R1733",
+      "R1645",
+      "R0636",
+      "R1374",
+      "R0837",
+      "R0917",
+      "R0725",
+      "R1638",
+      "R0866",
+      "R1937"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 35.52019999999993
+    },
+    {
+     "query_id": "Q27",
+     "category": "related_concept",
+     "text": "attacker preparing to make recovery impossible",
+     "ranked_keys": [
+      "R1928",
+      "R0145",
+      "R0223",
+      "R0429",
+      "R1638",
+      "R1937",
+      "R0287",
+      "R1411",
+      "R1945",
+      "R1441"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.21576182023170978,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.3,
+       "r": 0.1875,
+       "f1": 0.23076923076923075,
+       "rr": 1,
+       "ap": 0.2095238095238095
+      }
+     },
+     "median_ms": 33.67540000000008
+    },
+    {
+     "query_id": "Q28",
+     "category": "related_concept",
+     "text": "signs of an insider stealing intellectual property",
+     "ranked_keys": [
+      "R0372",
+      "R1551",
+      "R0287",
+      "R0223",
+      "R0803",
+      "R0953",
+      "R0725",
+      "R1392",
+      "R1211",
+      "R0924"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.23537653116186522,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 1,
+       "ap": 0.125
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.1,
+       "r": 0.0625,
+       "f1": 0.07692307692307693,
+       "rr": 1,
+       "ap": 0.1
+      }
+     },
+     "median_ms": 32.52429999999913
+    },
+    {
+     "query_id": "Q29",
+     "category": "related_concept",
+     "text": "how did the intruder keep access after a reboot",
+     "ranked_keys": [
+      "R0425",
+      "R1348",
+      "R0704",
+      "R1345",
+      "R0871",
+      "R1690",
+      "R0239",
+      "R0579",
+      "R1429",
+      "R1418"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7494399276575381,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6642857142857143
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.6,
+       "r": 0.25,
+       "f1": 0.35294117647058826,
+       "rr": 1,
+       "ap": 0.5314285714285714
+      }
+     },
+     "median_ms": 37.96510000000035
+    },
+    {
+     "query_id": "Q30",
+     "category": "related_concept",
+     "text": "command and control communication channels",
+     "ranked_keys": [
+      "R1920",
+      "R0498",
+      "R0001",
+      "R1034",
+      "R0025",
+      "R1963",
+      "R0398",
+      "R0597",
+      "R0917",
+      "R0744"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.3469990398372005,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.5,
+       "r": 0.20833333333333334,
+       "f1": 0.29411764705882354,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 34.699900000000525
+    },
+    {
+     "query_id": "Q31",
+     "category": "related_concept",
+     "text": "account takeover chain from stolen password to full control",
+     "ranked_keys": [
+      "R0799",
+      "R0922",
+      "R0384",
+      "R0429",
+      "R1278",
+      "R0721",
+      "R0247",
+      "R0398",
+      "R1253",
+      "R1152"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.6665600231082078,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.25,
+       "ap": 0.12648809523809523
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 1,
+       "r": 0.4166666666666667,
+       "f1": 0.5882352941176471,
+       "rr": 1,
+       "ap": 1
+      }
+     },
+     "median_ms": 33.839500000000044
+    },
+    {
+     "query_id": "Q32",
+     "category": "related_concept",
+     "text": "concealment of user activity",
+     "ranked_keys": [
+      "R1814",
+      "R0301",
+      "R1378",
+      "R0130",
+      "R0425",
+      "R1828",
+      "R1104",
+      "R0866",
+      "R1551",
+      "R0799"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8394966920355684,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.8206845238095237
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.7,
+       "r": 0.2916666666666667,
+       "f1": 0.4117647058823529,
+       "rr": 1,
+       "ap": 0.6565476190476189
+      }
+     },
+     "median_ms": 34.27050000000054
+    },
+    {
+     "query_id": "Q33",
+     "category": "related_concept",
+     "text": "data leaving the network",
+     "ranked_keys": [
+      "R1884",
+      "R1814",
+      "R0579",
+      "R0301",
+      "R0372",
+      "R0316",
+      "R1828",
+      "R0866",
+      "R1310",
+      "R0893"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.4525255020641447,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.1527777777777778
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.5,
+       "r": 0.20833333333333334,
+       "f1": 0.29411764705882354,
+       "rr": 1,
+       "ap": 0.3488888888888889
+      }
+     },
+     "median_ms": 33.69410000000062
+    },
+    {
+     "query_id": "Q34",
+     "category": "related_concept",
+     "text": "social engineering attack on staff",
+     "ranked_keys": [
+      "R0803",
+      "R1441",
+      "R1919",
+      "R1541",
+      "R0916",
+      "R0429",
+      "R0145",
+      "R1551",
+      "R1392",
+      "R0247"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5909172088229647,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.3388888888888889
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.6,
+       "r": 0.375,
+       "f1": 0.4615384615384615,
+       "rr": 1,
+       "ap": 0.40888888888888886
+      }
+     },
+     "median_ms": 36.33380000000034
+    },
+    {
+     "query_id": "Q35",
+     "category": "no_answer",
+     "text": "drone flight log altitude readings",
+     "ranked_keys": [
+      "R0919",
+      "R1688",
+      "R1307",
+      "R0800",
+      "R0851",
+      "R0652",
+      "R0129",
+      "R1680",
+      "R1262",
+      "R0780"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 34.88659999999982
+    },
+    {
+     "query_id": "Q36",
+     "category": "no_answer",
+     "text": "cryptocurrency wallet recovery phrase",
+     "ranked_keys": [
+      "R1928",
+      "R0630",
+      "R0223",
+      "R0287",
+      "R1278",
+      "R0384",
+      "R0953",
+      "R0721",
+      "R1655",
+      "R0198"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 35.390699999999924
+    },
+    {
+     "query_id": "Q37",
+     "category": "no_answer",
+     "text": "printer firmware update schedule",
+     "ranked_keys": [
+      "R1412",
+      "R0855",
+      "R0906",
+      "R1632",
+      "R0414",
+      "R1528",
+      "R1898",
+      "R1516",
+      "R1517",
+      "R1822"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 33.9380000000001
+    },
+    {
+     "query_id": "Q38",
+     "category": "no_answer",
+     "text": "wildlife camera trap images",
+     "ranked_keys": [
+      "R1911",
+      "R0975",
+      "R0330",
+      "R0427",
+      "R0036",
+      "R0763",
+      "R0805",
+      "R1315",
+      "R0131",
+      "R1119"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 33.55000000000018
+    },
+    {
+     "query_id": "Q39",
+     "category": "no_answer",
+     "text": "payroll tax filing for contractors",
+     "ranked_keys": [
+      "R1011",
+      "R1777",
+      "R0924",
+      "R1181",
+      "R1262",
+      "R0652",
+      "R0780",
+      "R1562",
+      "R0600",
+      "R1522"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 33.42370000000028
+    },
+    {
+     "query_id": "Q40",
+     "category": "no_answer",
+     "text": "satellite telemetry anomalies",
+     "ranked_keys": [
+      "R1110",
+      "R0059",
+      "R0909",
+      "R0953",
+      "R1034",
+      "R1211",
+      "R0025",
+      "R1545",
+      "R0132",
+      "R0524"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 35.30760000000009
+    }
+   ],
+   "quality": {
+    "overall": {
+     "queries": 34,
+     "ndcg": 0.6554186119227611,
+     "p": 0.4558823529411764,
+     "r": 0.5698529411764706,
+     "f1": 0.5065359477124182,
+     "rr": 0.8473389355742297,
+     "ap": 0.5149247198879552,
+     "lenient": {
+      "p": 0.5147058823529411,
+      "r": 0.5441176470588235,
+      "f1": 0.5110904090142843,
+      "rr": 0.9282212885154062,
+      "ap": 0.5598409780578898
+     }
+    },
+    "by_category": {
+     "exact_keyword": {
+      "queries": 8,
+      "ndcg": 0.593797829995677,
+      "p": 0.4,
+      "r": 0.5,
+      "f1": 0.4444444444444444,
+      "rr": 0.8928571428571428,
+      "ap": 0.45266617063492065,
+      "lenient": {
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444444,
+       "rr": 0.8928571428571428,
+       "ap": 0.45266617063492065
+      }
+     },
+     "partial_match": {
+      "queries": 8,
+      "ndcg": 0.7692731437208024,
+      "p": 0.5375,
+      "r": 0.671875,
+      "f1": 0.5972222222222223,
+      "rr": 1,
+      "ap": 0.6655815972222222,
+      "lenient": {
+       "p": 0.5375,
+       "r": 0.671875,
+       "f1": 0.5972222222222223,
+       "rr": 1,
+       "ap": 0.6655815972222222
+      }
+     },
+     "semantic": {
+      "queries": 10,
+      "ndcg": 0.7282588270722841,
+      "p": 0.57,
+      "r": 0.7125,
+      "f1": 0.6333333333333332,
+      "rr": 0.8416666666666668,
+      "ap": 0.6333333333333333,
+      "lenient": {
+       "p": 0.57,
+       "r": 0.7125,
+       "f1": 0.6333333333333332,
+       "rr": 0.8416666666666668,
+       "ap": 0.6333333333333333
+      }
+     },
+     "related_concept": {
+      "queries": 8,
+      "ndcg": 0.5121345931148998,
+      "p": 0.2875,
+      "r": 0.359375,
+      "f1": 0.3194444444444444,
+      "rr": 0.65625,
+      "ap": 0.278515625,
+      "lenient": {
+       "p": 0.5375,
+       "r": 0.25,
+       "f1": 0.3388009049773756,
+       "rr": 1,
+       "ap": 0.46940972222222216
+      }
+     }
+    },
+    "no_answer": {
+     "queries": 6,
+     "mean_results_returned": 10,
+     "queries_returning_any_result": 6
+    }
+   },
+   "latency": {
+    "first_call_in_process_ms": {
+     "ms": 1011.9908,
+     "query_id": "Q01"
+    },
+    "warm": {
+     "samples": 200,
+     "mean": 35.24873600000003,
+     "median": 34.50199999999995,
+     "p95": 42.11527999999862,
+     "min": 28.71140000000014,
+     "max": 67.9338000000007
+    },
+    "warm_per_query_median_mean_ms": 34.586472500000056,
+    "stages_mean_ms": {
+     "embed_ms": 10.416247500000008,
+     "qdrant_ms": 7.8036905000000205,
+     "mysql_ms": 16.50305299999997
+    }
+   },
+   "unstable_rankings_across_passes": 0
+  },
+  "hybrid": {
+   "per_query": [
+    {
+     "query_id": "Q01",
+     "category": "exact_keyword",
+     "text": "updater_setup.exe",
+     "ranked_keys": [
+      "R1270",
+      "R1204",
+      "R0109",
+      "R1422",
+      "R1971",
+      "R1345",
+      "R1110",
+      "R0826",
+      "R1523",
+      "R0560"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.6233173655322678,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.4464285714285714
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.4464285714285714
+      }
+     },
+     "median_ms": 46.12090000000171
+    },
+    {
+     "query_id": "Q02",
+     "category": "exact_keyword",
+     "text": "ransom note",
+     "ranked_keys": [
+      "R0287",
+      "R0630",
+      "R1928",
+      "R0223",
+      "R1102",
+      "R1519",
+      "R1726",
+      "R0953",
+      "R0008",
+      "R1551"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.800851000900496,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.653125
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.653125
+      }
+     },
+     "median_ms": 45.373600000002625
+    },
+    {
+     "query_id": "Q03",
+     "category": "exact_keyword",
+     "text": "volume shadow copies deleted",
+     "ranked_keys": [
+      "R0557",
+      "R0058",
+      "R0841",
+      "R1881",
+      "R1738",
+      "R1732",
+      "R1587",
+      "R0839",
+      "R0062",
+      "R0985"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.41253177989255346,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 1,
+       "ap": 0.25
+      }
+     },
+     "median_ms": 44.26390000000174
+    },
+    {
+     "query_id": "Q04",
+     "category": "exact_keyword",
+     "text": "USB mass storage",
+     "ranked_keys": [
+      "R1172",
+      "R0253",
+      "R0911",
+      "R0697",
+      "R1222",
+      "R1342",
+      "R1032",
+      "R1887",
+      "R1284",
+      "R0336"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.07979453856244817,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.125,
+       "ap": 0.015625
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.125,
+       "ap": 0.015625
+      }
+     },
+     "median_ms": 44.38160000000062
+    },
+    {
+     "query_id": "Q05",
+     "category": "exact_keyword",
+     "text": "password spraying",
+     "ranked_keys": [
+      "R0247",
+      "R1227",
+      "R0429",
+      "R1919",
+      "R0384",
+      "R1278",
+      "R1152",
+      "R0803",
+      "R0916",
+      "R1260"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 44.45179999999891
+    },
+    {
+     "query_id": "Q06",
+     "category": "exact_keyword",
+     "text": "DNS tunneling",
+     "ranked_keys": [
+      "R1063",
+      "R0868",
+      "R1571",
+      "R1097",
+      "R1034",
+      "R1545",
+      "R0109",
+      "R1074",
+      "R1110",
+      "R1628"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 46.037099999997736
+    },
+    {
+     "query_id": "Q07",
+     "category": "exact_keyword",
+     "text": "added to administrators group",
+     "ranked_keys": [
+      "R0057",
+      "R1541",
+      "R1441",
+      "R0145",
+      "R0451",
+      "R1170",
+      "R1844",
+      "R1253",
+      "R0482",
+      "R1323"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7277341624565861,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.578125
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.578125
+      }
+     },
+     "median_ms": 46.73919999999998
+    },
+    {
+     "query_id": "Q08",
+     "category": "exact_keyword",
+     "text": "scheduled task persistence",
+     "ranked_keys": [
+      "R1538",
+      "R1344",
+      "R1208",
+      "R1418",
+      "R1040",
+      "R0291",
+      "R1836",
+      "R1914",
+      "R1796",
+      "R1623"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.1932507268736416,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.25,
+       "ap": 0.06696428571428571
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.25,
+       "ap": 0.06696428571428571
+      }
+     },
+     "median_ms": 44.55630000000019
+    },
+    {
+     "query_id": "Q09",
+     "category": "partial_match",
+     "text": "cleared history",
+     "ranked_keys": [
+      "R1828",
+      "R0866",
+      "R1104",
+      "R0130",
+      "R0961",
+      "R0301",
+      "R1801",
+      "R0457",
+      "R0562",
+      "R1864"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8178341711089538,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6979166666666666
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6979166666666666
+      }
+     },
+     "median_ms": 46.368099999999686
+    },
+    {
+     "query_id": "Q10",
+     "category": "partial_match",
+     "text": "lookalike login",
+     "ranked_keys": [
+      "R0916",
+      "R0384",
+      "R1152",
+      "R1966",
+      "R1769",
+      "R0931",
+      "R0569",
+      "R1105",
+      "R0367",
+      "R0546"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5390031312763821,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.375
+      }
+     },
+     "median_ms": 47.75079999999798
+    },
+    {
+     "query_id": "Q11",
+     "category": "partial_match",
+     "text": "metadata backdated",
+     "ranked_keys": [
+      "R1971",
+      "R1712",
+      "R1523",
+      "R1422",
+      "R1928",
+      "R0725",
+      "R1633",
+      "R1732",
+      "R0062",
+      "R0839"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7380396325465056,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.6041666666666666
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.6041666666666666
+      }
+     },
+     "median_ms": 47.10679999999775
+    },
+    {
+     "query_id": "Q12",
+     "category": "partial_match",
+     "text": "archive uploaded cloud",
+     "ranked_keys": [
+      "R0294",
+      "R1509",
+      "R1435",
+      "R1507",
+      "R0484",
+      "R0850",
+      "R1488",
+      "R1202",
+      "R1703",
+      "R1700"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 46.677999999999884
+    },
+    {
+     "query_id": "Q13",
+     "category": "partial_match",
+     "text": "unattended remote access",
+     "ranked_keys": [
+      "R1685",
+      "R0206",
+      "R0135",
+      "R1423",
+      "R1921",
+      "R1845",
+      "R0969",
+      "R1972",
+      "R0726",
+      "R1521"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 52.727600000001985
+    },
+    {
+     "query_id": "Q14",
+     "category": "partial_match",
+     "text": "beacon intervals",
+     "ranked_keys": [
+      "R0109",
+      "R1110",
+      "R1270",
+      "R1204",
+      "R0059",
+      "R1623",
+      "R1208",
+      "R1538",
+      "R1517",
+      "R1412"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7457912185292983,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.5,
+       "r": 0.625,
+       "f1": 0.5555555555555556,
+       "rr": 1,
+       "ap": 0.625
+      }
+     },
+     "median_ms": 46.47780000000057
+    },
+    {
+     "query_id": "Q15",
+     "category": "partial_match",
+     "text": "encrypted .locked",
+     "ranked_keys": [
+      "R1928",
+      "R0223",
+      "R0287",
+      "R0630",
+      "R0408",
+      "R1132",
+      "R1416",
+      "R1664",
+      "R0611",
+      "R1081"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 47.00569999999789
+    },
+    {
+     "query_id": "Q16",
+     "category": "partial_match",
+     "text": "instruction to delete chat",
+     "ranked_keys": [
+      "R0117",
+      "R0917",
+      "R0403",
+      "R1374",
+      "R1721",
+      "R0058",
+      "R0557",
+      "R1864",
+      "R0636",
+      "R1645"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7971998030554314,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6444444444444444
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6444444444444444
+      }
+     },
+     "median_ms": 47.730799999997544
+    },
+    {
+     "query_id": "Q17",
+     "category": "semantic",
+     "text": "worker walked out with company files on a portable storage gadget before quitting",
+     "ranked_keys": [
+      "R1887",
+      "R1705",
+      "R0579",
+      "R1429",
+      "R0401",
+      "R1645",
+      "R0316",
+      "R0372",
+      "R0636",
+      "R1240"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.9098999913476323,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.8415178571428571
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.8415178571428571
+      }
+     },
+     "median_ms": 53.01540000000023
+    },
+    {
+     "query_id": "Q18",
+     "category": "semantic",
+     "text": "someone covered their tracks so nobody could see where a user had been online",
+     "ranked_keys": [
+      "R0301",
+      "R0457",
+      "R0498",
+      "R1884",
+      "R1919",
+      "R0803",
+      "R0909",
+      "R1552",
+      "R0398",
+      "R1814"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.4856486183364634,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.2875
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 1,
+       "ap": 0.2875
+      }
+     },
+     "median_ms": 48.6265999999996
+    },
+    {
+     "query_id": "Q19",
+     "category": "semantic",
+     "text": "attacker kept trying passwords until one finally worked",
+     "ranked_keys": [
+      "R1690",
+      "R0247",
+      "R1563",
+      "R0667",
+      "R1227",
+      "R0871",
+      "R0462",
+      "R0733",
+      "R0061",
+      "R1438"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 49.18050000000221
+    },
+    {
+     "query_id": "Q20",
+     "category": "semantic",
+     "text": "infected computer secretly talking to its operator on a fixed schedule",
+     "ranked_keys": [
+      "R0498",
+      "R1920",
+      "R0704",
+      "R0767",
+      "R1836",
+      "R0457",
+      "R0803",
+      "R0301",
+      "R0909",
+      "R0828"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.0761433407173835,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.1111111111111111,
+       "ap": 0.013888888888888888
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.1111111111111111,
+       "ap": 0.013888888888888888
+      }
+     },
+     "median_ms": 53.5708999999988
+    },
+    {
+     "query_id": "Q21",
+     "category": "semantic",
+     "text": "company data became inaccessible and the victim was told to pay for a way back in",
+     "ranked_keys": [
+      "R0432",
+      "R0953",
+      "R1211",
+      "R1551",
+      "R1876",
+      "R0767",
+      "R0372",
+      "R1378",
+      "R1814",
+      "R0803"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.647939623894138,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.5
+      }
+     },
+     "median_ms": 55.87329999999929
+    },
+    {
+     "query_id": "Q22",
+     "category": "semantic",
+     "text": "someone doctored a file so it seemed to have been written months before",
+     "ranked_keys": [
+      "R1777",
+      "R0924",
+      "R1429",
+      "R0725",
+      "R1011",
+      "R0372",
+      "R0401",
+      "R1733",
+      "R1211",
+      "R0301"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.6193198671454698,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.44375
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.44375
+      }
+     },
+     "median_ms": 51.47409999999945
+    },
+    {
+     "query_id": "Q23",
+     "category": "semantic",
+     "text": "staff member lured into handing over account details through a deceptive message",
+     "ranked_keys": [
+      "R0803",
+      "R1392",
+      "R1919",
+      "R0398",
+      "R1563",
+      "R0384",
+      "R1441",
+      "R0916",
+      "R0636",
+      "R1152"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8909510095528639,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.7854166666666667
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.7,
+       "r": 0.875,
+       "f1": 0.7777777777777777,
+       "rr": 1,
+       "ap": 0.7854166666666667
+      }
+     },
+     "median_ms": 55.17870000000039
+    },
+    {
+     "query_id": "Q24",
+     "category": "semantic",
+     "text": "huge quantity of confidential material sent to a public storage website late at night",
+     "ranked_keys": [
+      "R1884",
+      "R1310",
+      "R0316",
+      "R1509",
+      "R1552",
+      "R0682",
+      "R0294",
+      "R1172",
+      "R1705",
+      "R1733"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7937341100537233,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6550595238095237
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.6550595238095237
+      }
+     },
+     "median_ms": 50.924699999999575
+    },
+    {
+     "query_id": "Q25",
+     "category": "semantic",
+     "text": "intruder made their account more powerful than it should have been",
+     "ranked_keys": [
+      "R0301",
+      "R0425",
+      "R0803",
+      "R0922",
+      "R1919",
+      "R1348",
+      "R0990",
+      "R1814",
+      "R0398",
+      "R1392"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.1932507268736416,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.25,
+       "ap": 0.06696428571428571
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.2,
+       "r": 0.25,
+       "f1": 0.22222222222222224,
+       "rr": 0.25,
+       "ap": 0.06696428571428571
+      }
+     },
+     "median_ms": 48.57970000000205
+    },
+    {
+     "query_id": "Q26",
+     "category": "semantic",
+     "text": "supervisor asked the team to make evidence disappear before the auditors came",
+     "ranked_keys": [
+      "R1733",
+      "R1645",
+      "R0636",
+      "R0837",
+      "R1374",
+      "R0917",
+      "R1814",
+      "R0401",
+      "R1887",
+      "R0725"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.8358912271816661,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      },
+      "lenient": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.75
+      }
+     },
+     "median_ms": 51.52990000000136
+    },
+    {
+     "query_id": "Q27",
+     "category": "related_concept",
+     "text": "attacker preparing to make recovery impossible",
+     "ranked_keys": [
+      "R1690",
+      "R0047",
+      "R0803",
+      "R0667",
+      "R1919",
+      "R1576",
+      "R1876",
+      "R1645",
+      "R1928",
+      "R0145"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.3462354106770232,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.3,
+       "r": 0.375,
+       "f1": 0.33333333333333326,
+       "rr": 0.5,
+       "ap": 0.15773809523809523
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.4,
+       "r": 0.25,
+       "f1": 0.3076923076923077,
+       "rr": 0.5,
+       "ap": 0.17063492063492064
+      }
+     },
+     "median_ms": 45.59300000000076
+    },
+    {
+     "query_id": "Q28",
+     "category": "related_concept",
+     "text": "signs of an insider stealing intellectual property",
+     "ranked_keys": [
+      "R0372",
+      "R1551",
+      "R0287",
+      "R0223",
+      "R0803",
+      "R0953",
+      "R0725",
+      "R1392",
+      "R1211",
+      "R0924"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.23537653116186522,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 1,
+       "ap": 0.125
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.1,
+       "r": 0.0625,
+       "f1": 0.07692307692307693,
+       "rr": 1,
+       "ap": 0.1
+      }
+     },
+     "median_ms": 43.872699999999895
+    },
+    {
+     "query_id": "Q29",
+     "category": "related_concept",
+     "text": "how did the intruder keep access after a reboot",
+     "ranked_keys": [
+      "R0425",
+      "R1348",
+      "R1429",
+      "R1563",
+      "R0239",
+      "R0871",
+      "R0301",
+      "R0372",
+      "R1418",
+      "R1378"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.5457940559564808,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.4,
+       "r": 0.5,
+       "f1": 0.4444444444444445,
+       "rr": 1,
+       "ap": 0.38055555555555554
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.4,
+       "r": 0.16666666666666666,
+       "f1": 0.23529411764705882,
+       "rr": 1,
+       "ap": 0.3044444444444444
+      }
+     },
+     "median_ms": 50.71280000000115
+    },
+    {
+     "query_id": "Q30",
+     "category": "related_concept",
+     "text": "command and control communication channels",
+     "ranked_keys": [
+      "R1920",
+      "R0498",
+      "R0001",
+      "R0025",
+      "R1576",
+      "R0922",
+      "R1253",
+      "R0799",
+      "R0047",
+      "R1876"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.3014710039186524,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0,
+       "r": 0,
+       "f1": 0,
+       "rr": 0,
+       "ap": 0
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.4,
+       "r": 0.16666666666666666,
+       "f1": 0.23529411764705882,
+       "rr": 1,
+       "ap": 0.4
+      }
+     },
+     "median_ms": 49.9997000000003
+    },
+    {
+     "query_id": "Q31",
+     "category": "related_concept",
+     "text": "account takeover chain from stolen password to full control",
+     "ranked_keys": [
+      "R0922",
+      "R0799",
+      "R1253",
+      "R0990",
+      "R0247",
+      "R1919",
+      "R0398",
+      "R1945",
+      "R1316",
+      "R1896"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.4736779036542653,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.2,
+       "ap": 0.025
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.7,
+       "r": 0.2916666666666667,
+       "f1": 0.4117647058823529,
+       "rr": 1,
+       "ap": 0.7
+      }
+     },
+     "median_ms": 49.601699999999255
+    },
+    {
+     "query_id": "Q32",
+     "category": "related_concept",
+     "text": "concealment of user activity",
+     "ranked_keys": [
+      "R1814",
+      "R1378",
+      "R0301",
+      "R0130",
+      "R1104",
+      "R1211",
+      "R0425",
+      "R1253",
+      "R1828",
+      "R0121"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.7648534758294602,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.6,
+       "r": 0.75,
+       "f1": 0.6666666666666665,
+       "rr": 1,
+       "ap": 0.7083333333333334
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.6,
+       "r": 0.25,
+       "f1": 0.35294117647058826,
+       "rr": 1,
+       "ap": 0.5666666666666667
+      }
+     },
+     "median_ms": 47.40279999999984
+    },
+    {
+     "query_id": "Q33",
+     "category": "related_concept",
+     "text": "data leaving the network",
+     "ranked_keys": [
+      "R0301",
+      "R1814",
+      "R1876",
+      "R1378",
+      "R1884",
+      "R0457",
+      "R0767",
+      "R0953",
+      "R0130",
+      "R1675"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.12507560988690186,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 0.2,
+       "ap": 0.025
+      },
+      "lenient": {
+       "relevant_count": 24,
+       "p": 0.2,
+       "r": 0.08333333333333333,
+       "f1": 0.11764705882352941,
+       "rr": 0.2,
+       "ap": 0.04
+      }
+     },
+     "median_ms": 47.82999999999993
+    },
+    {
+     "query_id": "Q34",
+     "category": "related_concept",
+     "text": "social engineering attack on staff",
+     "ranked_keys": [
+      "R0803",
+      "R0367",
+      "R1966",
+      "R1247",
+      "R1411",
+      "R0450",
+      "R0931",
+      "R0321",
+      "R0401",
+      "R1441"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": 0.23537653116186522,
+      "strict": {
+       "relevant_count": 8,
+       "p": 0.1,
+       "r": 0.125,
+       "f1": 0.11111111111111112,
+       "rr": 1,
+       "ap": 0.125
+      },
+      "lenient": {
+       "relevant_count": 16,
+       "p": 0.1,
+       "r": 0.0625,
+       "f1": 0.07692307692307693,
+       "rr": 1,
+       "ap": 0.1
+      }
+     },
+     "median_ms": 50.39459999999963
+    },
+    {
+     "query_id": "Q35",
+     "category": "no_answer",
+     "text": "drone flight log altitude readings",
+     "ranked_keys": [
+      "R1688",
+      "R0129",
+      "R1562",
+      "R0780",
+      "R0644",
+      "R1522",
+      "R1262",
+      "R1181",
+      "R0174",
+      "R0347"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 52.63550000000032
+    },
+    {
+     "query_id": "Q36",
+     "category": "no_answer",
+     "text": "cryptocurrency wallet recovery phrase",
+     "ranked_keys": [
+      "R1928",
+      "R0287",
+      "R0630",
+      "R0223",
+      "R1841",
+      "R1655",
+      "R1081",
+      "R0198",
+      "R0047",
+      "R1664"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 49.64639999999781
+    },
+    {
+     "query_id": "Q37",
+     "category": "no_answer",
+     "text": "printer firmware update schedule",
+     "ranked_keys": [
+      "R0961",
+      "R1412",
+      "R1801",
+      "R0855",
+      "R0562",
+      "R0906",
+      "R0762",
+      "R1632",
+      "R1842",
+      "R0414"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 49.450700000001234
+    },
+    {
+     "query_id": "Q38",
+     "category": "no_answer",
+     "text": "wildlife camera trap images",
+     "ranked_keys": [
+      "R1911",
+      "R0975",
+      "R0330",
+      "R0427",
+      "R0036",
+      "R0763",
+      "R0805",
+      "R1315",
+      "R0131",
+      "R1119"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 42.569900000002235
+    },
+    {
+     "query_id": "Q39",
+     "category": "no_answer",
+     "text": "payroll tax filing for contractors",
+     "ranked_keys": [
+      "R1011",
+      "R1777",
+      "R0924",
+      "R1181",
+      "R1262",
+      "R0652",
+      "R0780",
+      "R1562",
+      "R0600",
+      "R1522"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 42.1352999999981
+    },
+    {
+     "query_id": "Q40",
+     "category": "no_answer",
+     "text": "satellite telemetry anomalies",
+     "ranked_keys": [
+      "R1521",
+      "R1110",
+      "R1921",
+      "R0059",
+      "R0002",
+      "R0909",
+      "R0842",
+      "R0953",
+      "R0882",
+      "R1034"
+     ],
+     "metrics": {
+      "returned": 10,
+      "ndcg": null,
+      "strict": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      },
+      "lenient": {
+       "relevant_count": 0,
+       "p": 0,
+       "r": null,
+       "f1": null,
+       "rr": null,
+       "ap": null
+      }
+     },
+     "median_ms": 46.7361000000019
+    }
+   ],
+   "quality": {
+    "overall": {
+     "queries": 34,
+     "ndcg": 0.5620762066295939,
+     "p": 0.37941176470588234,
+     "r": 0.4742647058823529,
+     "f1": 0.4215686274509803,
+     "rr": 0.8128267973856209,
+     "ap": 0.4183094070961718,
+     "lenient": {
+      "p": 0.4147058823529411,
+      "r": 0.4509803921568627,
+      "f1": 0.4193801200721615,
+      "rr": 0.8657679738562091,
+      "ap": 0.4428717320261437
+     }
+    },
+    "by_category": {
+     "exact_keyword": {
+      "queries": 8,
+      "ndcg": 0.5265467415845051,
+      "p": 0.36250000000000004,
+      "r": 0.453125,
+      "f1": 0.4027777777777778,
+      "rr": 0.796875,
+      "ap": 0.3919084821428571,
+      "lenient": {
+       "p": 0.36250000000000004,
+       "r": 0.453125,
+       "f1": 0.4027777777777778,
+       "rr": 0.796875,
+       "ap": 0.3919084821428571
+      }
+     },
+     "partial_match": {
+      "queries": 8,
+      "ndcg": 0.6977108535248732,
+      "p": 0.46249999999999997,
+      "r": 0.578125,
+      "f1": 0.5138888888888888,
+      "rr": 1,
+      "ap": 0.5558159722222222,
+      "lenient": {
+       "p": 0.46249999999999997,
+       "r": 0.578125,
+       "f1": 0.5138888888888888,
+       "rr": 1,
+       "ap": 0.5558159722222222
+      }
+     },
+     "semantic": {
+      "queries": 10,
+      "ndcg": 0.6288669742284647,
+      "p": 0.45999999999999996,
+      "r": 0.575,
+      "f1": 0.5111111111111111,
+      "rr": 0.836111111111111,
+      "ap": 0.5094097222222221,
+      "lenient": {
+       "p": 0.45999999999999996,
+       "r": 0.575,
+       "f1": 0.5111111111111111,
+       "rr": 0.836111111111111,
+       "ap": 0.5094097222222221
+      }
+     },
+     "related_concept": {
+      "queries": 8,
+      "ndcg": 0.37848256528081425,
+      "p": 0.21250000000000002,
+      "r": 0.265625,
+      "f1": 0.2361111111111111,
+      "rr": 0.6125,
+      "ap": 0.19332837301587302,
+      "lenient": {
+       "p": 0.36250000000000004,
+       "r": 0.16666666666666666,
+       "f1": 0.22680995475113122,
+       "rr": 0.8375,
+       "ap": 0.29771825396825397
+      }
+     }
+    },
+    "no_answer": {
+     "queries": 6,
+     "mean_results_returned": 10,
+     "queries_returning_any_result": 6
+    }
+   },
+   "latency": {
+    "first_call_in_process_ms": {
+     "ms": 73.82949999999983,
+     "query_id": "Q01"
+    },
+    "warm": {
+     "samples": 200,
+     "mean": 49.01210950000005,
+     "median": 47.806900000000496,
+     "p95": 59.751619999998546,
+     "min": 39.486000000000786,
+     "max": 71.33499999999913
+    },
+    "warm_per_query_median_mean_ms": 48.257625000000054,
+    "stages_mean_ms": {
+     "keyword_ms": 8.230617999999968,
+     "vector_ms": 40.31064650000002,
+     "fuse_ms": 0.43426650000003975,
+     "vector_embed_ms": 10.433540500000218,
+     "vector_qdrant_ms": 10.89326300000007,
+     "vector_mysql_ms": 17.512743000000047
+    }
+   },
+   "unstable_rankings_across_passes": 0
+  }
+ },
+ "comparisons": {
+  "hybrid_vs_keyword": {
+   "ndcg": {
+    "pairs": 34,
+    "mean_diff": 0.1438072944439858,
+    "ci_low": 0.08421320599642278,
+    "ci_high": 0.21234839130354966,
+    "share_resamples_above_zero": 1
+   },
+   "map": {
+    "pairs": 34,
+    "mean_diff": 0.1265683356676004,
+    "ci_low": 0.070187616713352,
+    "ci_high": 0.1942222878734827,
+    "share_resamples_above_zero": 1
+   },
+   "mrr": {
+    "pairs": 34,
+    "mean_diff": 0.16781045751633988,
+    "ci_low": 0.0709967320261438,
+    "ci_high": 0.2790053104575163,
+    "share_resamples_above_zero": 1
+   },
+   "p_at_k": {
+    "pairs": 34,
+    "mean_diff": 0.11176470588235295,
+    "ci_low": 0.06470588235294117,
+    "ci_high": 0.16470588235294117,
+    "share_resamples_above_zero": 1
+   },
+   "r_at_k": {
+    "pairs": 34,
+    "mean_diff": 0.13970588235294118,
+    "ci_low": 0.08088235294117647,
+    "ci_high": 0.20588235294117646,
+    "share_resamples_above_zero": 1
+   },
+   "f1_at_k": {
+    "pairs": 34,
+    "mean_diff": 0.12418300653594763,
+    "ci_low": 0.07189542483660127,
+    "ci_high": 0.18300653594771235,
+    "share_resamples_above_zero": 1
+   }
+  },
+  "hybrid_vs_vector": {
+   "ndcg": {
+    "pairs": 34,
+    "mean_diff": -0.09334240529316724,
+    "ci_low": -0.1411027905405063,
+    "ci_high": -0.05054339411761203,
+    "share_resamples_above_zero": 0
+   },
+   "map": {
+    "pairs": 34,
+    "mean_diff": -0.09661531279178337,
+    "ci_low": -0.1535813856792717,
+    "ci_high": -0.04829120710784323,
+    "share_resamples_above_zero": 0
+   },
+   "mrr": {
+    "pairs": 34,
+    "mean_diff": -0.03451213818860877,
+    "ci_low": -0.10971288515406162,
+    "ci_high": 0.0268925070028011,
+    "share_resamples_above_zero": 0.1561
+   },
+   "p_at_k": {
+    "pairs": 34,
+    "mean_diff": -0.07647058823529414,
+    "ci_low": -0.12352941176470592,
+    "ci_high": -0.032279411764706924,
+    "share_resamples_above_zero": 0.0004
+   },
+   "r_at_k": {
+    "pairs": 34,
+    "mean_diff": -0.09558823529411764,
+    "ci_low": -0.15441176470588236,
+    "ci_high": -0.040349264705883695,
+    "share_resamples_above_zero": 0.0004
+   },
+   "f1_at_k": {
+    "pairs": 34,
+    "mean_diff": -0.08496732026143794,
+    "ci_low": -0.13725490196078435,
+    "ci_high": -0.03586601307189659,
+    "share_resamples_above_zero": 0.0004
+   }
+  }
+ }
+}

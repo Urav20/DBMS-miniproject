@@ -1,0 +1,460 @@
+TAP version 13
+# Subtest: each sample is a separate spawn, interleaved by method, repeats times
+ok 1 - each sample is a separate spawn, interleaved by method, repeats times
+  ---
+  duration_ms: 18.6105
+  type: 'test'
+  ...
+# Subtest: a failing probe aborts with the child's message instead of inventing a number
+ok 2 - a failing probe aborts with the child's message instead of inventing a number
+  ---
+  duration_ms: 3.8363
+  type: 'test'
+  ...
+# Subtest: output without a result line is rejected
+ok 3 - output without a result line is rejected
+  ---
+  duration_ms: 0.6522
+  type: 'test'
+  ...
+# Subtest: summary uses the median of an even number of samples
+ok 4 - summary uses the median of an even number of samples
+  ---
+  duration_ms: 0.4717
+  type: 'test'
+  ...
+# Subtest: DB layer: exports and session-handle shape the evaluation relies on
+ok 5 - DB layer: exports and session-handle shape the evaluation relies on
+  ---
+  duration_ms: 9.4047
+  type: 'test'
+  ...
+# Subtest: DB name override reaches the MySQL pool: the development name is never used
+ok 6 - DB name override reaches the MySQL pool: the development name is never used
+  ---
+  duration_ms: 2.1302
+  type: 'test'
+  ...
+# Subtest: loader, admin lookup and id map work through the REAL db layer (statement-level fake of MySQL)
+ok 7 - loader, admin lookup and id map work through the REAL db layer (statement-level fake of MySQL)
+  ---
+  duration_ms: 113.3725
+  type: 'test'
+  ...
+# Subtest: Vector layer: config, store and embedder expose what the evaluation calls
+ok 8 - Vector layer: config, store and embedder expose what the evaluation calls
+  ---
+  duration_ms: 8.1829
+  type: 'test'
+  ...
+# Subtest: Retrieval layer: limits cover the evaluation, the validator accepts every request it sends
+ok 9 - Retrieval layer: limits cover the evaluation, the validator accepts every request it sends
+  ---
+  duration_ms: 5.0169
+  type: 'test'
+  ...
+# Subtest: REAL Phase 3 service + evaluation wrappers: empty scope path and result shape
+ok 10 - REAL Phase 3 service + evaluation wrappers: empty scope path and result shape
+  ---
+  duration_ms: 1.6043
+  type: 'test'
+  ...
+# Subtest: REAL Phase 3 service: ids come from results[].record_id and scores from similarity_score
+ok 11 - REAL Phase 3 service: ids come from results[].record_id and scores from similarity_score
+  ---
+  duration_ms: 1.6164
+  type: 'test'
+  ...
+# Subtest: Indexing layer: worker factory, session and drain contract
+ok 12 - Indexing layer: worker factory, session and drain contract
+  ---
+  duration_ms: 2.4652
+  type: 'test'
+  ...
+# Subtest: Keyword method binds the statement the real MySQL driver expects (query + 2 MATCH params + case ids)
+ok 13 - Keyword method binds the statement the real MySQL driver expects (query + 2 MATCH params + case ids)
+  ---
+  duration_ms: 2.2548
+  type: 'test'
+  ...
+# Subtest: generation is deterministic for a seed and differs for another
+ok 14 - generation is deterministic for a seed and differs for another
+  ---
+  duration_ms: 192.9587
+  type: 'test'
+  ...
+# Subtest: 2000 records; the 500 tier is an exact subset; cases are used evenly
+ok 15 - 2000 records; the 500 tier is an exact subset; cases are used evenly
+  ---
+  duration_ms: 2.3451
+  type: 'test'
+  ...
+# Subtest: no duplicate records, unique hashes, no unfilled slots
+ok 16 - no duplicate records, unique hashes, no unfilled slots
+  ---
+  duration_ms: 18.1173
+  type: 'test'
+  ...
+# Subtest: queries: 40, with the planned category mix
+ok 17 - queries: 40, with the planned category mix
+  ---
+  duration_ms: 2.8172
+  type: 'test'
+  ...
+# Subtest: labels come from group membership: grade 2 = target group, 1 = related groups, none for no-answer
+ok 18 - labels come from group membership: grade 2 = target group, 1 = related groups, none for no-answer
+  ---
+  duration_ms: 5.9687
+  type: 'test'
+  ...
+# Subtest: every relevant record is in the 500 tier, so both sizes share the same labels
+ok 19 - every relevant record is in the 500 tier, so both sizes share the same labels
+  ---
+  duration_ms: 1.5562
+  type: 'test'
+  ...
+# Subtest: each event group has canonical-wording and paraphrase records; traps exist for keyword confusion
+ok 20 - each event group has canonical-wording and paraphrase records; traps exist for keyword confusion
+  ---
+  duration_ms: 1.4964
+  type: 'test'
+  ...
+# Subtest: query audit: semantic queries share much less wording with their targets than keyword queries
+ok 21 - query audit: semantic queries share much less wording with their targets than keyword queries
+  ---
+  duration_ms: 12.5883
+  type: 'test'
+  ...
+# Subtest: committed data files match a fresh deterministic build
+ok 22 - committed data files match a fresh deterministic build
+  ---
+  duration_ms: 87.7992
+  type: 'test'
+  ...
+# Subtest: keyword SQL: parameterised, fulltext, scoped to cases, deterministic order, literal limit
+ok 23 - keyword SQL: parameterised, fulltext, scoped to cases, deterministic order, literal limit
+  ---
+  duration_ms: 3.9258
+  type: 'test'
+  ...
+# Subtest: keyword method passes the query twice then the case ids, and maps rows
+ok 24 - keyword method passes the query twice then the case ids, and maps rows
+  ---
+  duration_ms: 3.1817
+  type: 'test'
+  ...
+# Subtest: vector method uses the Phase 3 service and splits latency into stages
+ok 25 - vector method uses the Phase 3 service and splits latency into stages
+  ---
+  duration_ms: 2.3507
+  type: 'test'
+  ...
+# Subtest: vector method refuses a query Phase 3 validation rejects
+ok 26 - vector method refuses a query Phase 3 validation rejects
+  ---
+  duration_ms: 1.4901
+  type: 'test'
+  ...
+# Subtest: hybrid fuses the two lists and reports per-stage time
+ok 27 - hybrid fuses the two lists and reports per-stage time
+  ---
+  duration_ms: 100.5882
+  type: 'test'
+  ...
+# Subtest: runner: same queries and labels for every method; first-call vs warm separated; metrics correct
+ok 28 - runner: same queries and labels for every method; first-call vs warm separated; metrics correct
+  ---
+  duration_ms: 14.1292
+  type: 'test'
+  ...
+# Subtest: runner: a record outside the dataset aborts the run (isolation check)
+ok 29 - runner: a record outside the dataset aborts the run (isolation check)
+  ---
+  duration_ms: 5.9322
+  type: 'test'
+  ...
+# Subtest: runner: flags rankings that change between passes
+ok 30 - runner: flags rankings that change between passes
+  ---
+  duration_ms: 1.0003
+  type: 'test'
+  ...
+# Subtest: precision divides by K, recall by |R|
+ok 31 - precision divides by K, recall by |R|
+  ---
+  duration_ms: 3.7729
+  type: 'test'
+  ...
+# Subtest: F1 is the harmonic mean, 0 when both are 0
+ok 32 - F1 is the harmonic mean, 0 when both are 0
+  ---
+  duration_ms: 0.5564
+  type: 'test'
+  ...
+# Subtest: reciprocal rank honours the cut-off
+ok 33 - reciprocal rank honours the cut-off
+  ---
+  duration_ms: 0.5874
+  type: 'test'
+  ...
+# Subtest: AP@K hand-computed: hits at ranks 1 and 3, |R| = 3, K = 5
+ok 34 - AP@K hand-computed: hits at ranks 1 and 3, |R| = 3, K = 5
+  ---
+  duration_ms: 0.5098
+  type: 'test'
+  ...
+# Subtest: NDCG uses graded gain with log2(rank + 1) discount
+ok 35 - NDCG uses graded gain with log2(rank + 1) discount
+  ---
+  duration_ms: 0.676
+  type: 'test'
+  ...
+# Subtest: duplicates cannot inflate any metric
+ok 36 - duplicates cannot inflate any metric
+  ---
+  duration_ms: 2.9989
+  type: 'test'
+  ...
+# Subtest: strict view counts grade 2 only; lenient counts grade >= 1
+ok 37 - strict view counts grade 2 only; lenient counts grade >= 1
+  ---
+  duration_ms: 0.8207
+  type: 'test'
+  ...
+# Subtest: RRF: ranks only, deterministic ties, per-list duplicates ignored
+ok 38 - RRF: ranks only, deterministic ties, per-list duplicates ignored
+  ---
+  duration_ms: 74.7451
+  type: 'test'
+  ...
+# Subtest: percentile interpolates; mean skips nulls
+ok 39 - percentile interpolates; mean skips nulls
+  ---
+  duration_ms: 1.4832
+  type: 'test'
+  ...
+# Subtest: paired bootstrap is seeded and detects a consistent gain
+ok 40 - paired bootstrap is seeded and detects a consistent gain
+  ---
+  duration_ms: 52.0556
+  type: 'test'
+  ...
+# Subtest: aggregation: macro average over answerable queries; no-answer queries kept apart
+ok 41 - aggregation: macro average over answerable queries; no-answer queries kept apart
+  ---
+  duration_ms: 4.3223
+  type: 'test'
+  ...
+# Subtest: mock pipeline: runner -> JSON/CSV -> report, flagged as mock
+ok 42 - mock pipeline: runner -> JSON/CSV -> report, flagged as mock
+  ---
+  duration_ms: 586.739
+  type: 'test'
+  ...
+# Subtest: report refuses nothing silently: a live-flagged file carries no mock banner
+ok 43 - report refuses nothing silently: a live-flagged file carries no mock banner
+  ---
+  duration_ms: 3.2683
+  type: 'test'
+  ...
+# Subtest: report wording: in-process first call is never called a cold start; cold table only when probes exist
+ok 44 - report wording: in-process first call is never called a cold start; cold table only when probes exist
+  ---
+  duration_ms: 15.7643
+  type: 'test'
+  ...
+# Subtest: project file present: database/01_schema.sql
+ok 45 - project file present: database/01_schema.sql
+  ---
+  duration_ms: 4.4644
+  type: 'test'
+  ...
+# Subtest: project file present: database/02_access.sql
+ok 46 - project file present: database/02_access.sql
+  ---
+  duration_ms: 4.7042
+  type: 'test'
+  ...
+# Subtest: project file present: database/03_routines.sql
+ok 47 - project file present: database/03_routines.sql
+  ---
+  duration_ms: 0.8691
+  type: 'test'
+  ...
+# Subtest: only names starting with tracex_eval are accepted
+ok 48 - only names starting with tracex_eval are accepted
+  ---
+  duration_ms: 4.9975
+  type: 'test'
+  ...
+# Subtest: target names derive only from the two allowed sizes
+ok 49 - target names derive only from the two allowed sizes
+  ---
+  duration_ms: 0.8649
+  type: 'test'
+  ...
+# Subtest: applyEvalEnv overwrites the development names in this process only
+ok 50 - applyEvalEnv overwrites the development names in this process only
+  ---
+  duration_ms: 3.0402
+  type: 'test'
+  ...
+# Subtest: the connection is checked against what MySQL reports, not what we configured
+ok 51 - the connection is checked against what MySQL reports, not what we configured
+  ---
+  duration_ms: 2.6799
+  type: 'test'
+  ...
+# Subtest: collections are deleted only when the name is an evaluation collection
+ok 52 - collections are deleted only when the name is an evaluation collection
+  ---
+  duration_ms: 1.315
+  type: 'test'
+  ...
+# Subtest: generated setup SQL never mentions the development database
+ok 53 - generated setup SQL never mentions the development database
+  ---
+  duration_ms: 25.6846
+  type: 'test'
+  ...
+# Subtest: setup SQL for a non-evaluation database name is refused
+ok 54 - setup SQL for a non-evaluation database name is refused
+  ---
+  duration_ms: 1.4231
+  type: 'test'
+  ...
+# Subtest: the SQL verifier fails closed on leaks
+ok 55 - the SQL verifier fails closed on leaks
+  ---
+  duration_ms: 13.0889
+  type: 'test'
+  ...
+# Subtest: cleanup SQL drops only evaluation databases
+ok 56 - cleanup SQL drops only evaluation databases
+  ---
+  duration_ms: 0.8457
+  type: 'test'
+  ...
+# Subtest: sp_register_evidence: declared parameters match what the loader sends (12, in order, compatible types)
+ok 57 - sp_register_evidence: declared parameters match what the loader sends (12, in order, compatible types)
+  ---
+  duration_ms: 6.3732
+  type: 'test'
+  ...
+# Subtest: sp_create_case: 3 parameters; case numbers fit VARCHAR(30) and give distinct 3-character suffixes
+ok 58 - sp_create_case: 3 parameters; case numbers fit VARCHAR(30) and give distinct 3-character suffixes
+  ---
+  duration_ms: 1.5665
+  type: 'test'
+  ...
+# Subtest: evidence_no is built from RIGHT(case_number, 3) and a counter, as the loader assumes
+ok 59 - evidence_no is built from RIGHT(case_number, 3) and a counter, as the loader assumes
+  ---
+  duration_ms: 0.4426
+  type: 'test'
+  ...
+# Subtest: the admin role may execute both procedures the loader calls
+ok 60 - the admin role may execute both procedures the loader calls
+  ---
+  duration_ms: 0.8258
+  type: 'test'
+  ...
+# Subtest: record data fits the evidence columns and CHECK constraints
+ok 61 - record data fits the evidence columns and CHECK constraints
+  ---
+  duration_ms: 8.0968
+  type: 'test'
+  ...
+# Subtest: keyword SQL matches the real FULLTEXT index and column names
+ok 62 - keyword SQL matches the real FULLTEXT index and column names
+  ---
+  duration_ms: 1.2229
+  type: 'test'
+  ...
+# Subtest: evaluation seed supplies every required column of role, evidence_type and app_user
+ok 63 - evaluation seed supplies every required column of role, evidence_type and app_user
+  ---
+  duration_ms: 2.8042
+  type: 'test'
+  ...
+# Subtest: each registration queues exactly one upsert job (trigger), so pending jobs == records
+ok 64 - each registration queues exactly one upsert job (trigger), so pending jobs == records
+  ---
+  duration_ms: 1.1237
+  type: 'test'
+  ...
+# Subtest: evidence_no counter is LPAD(n, 2): one case can hold at most 99 records, and no case in either tier exceeds that
+ok 65 - evidence_no counter is LPAD(n, 2): one case can hold at most 99 records, and no case in either tier exceeds that
+  ---
+  duration_ms: 2.5063
+  type: 'test'
+  ...
+# Subtest: loader registers every tier record through the stored procedures, as the admin, into the evaluation cases
+ok 66 - loader registers every tier record through the stored procedures, as the admin, into the evaluation cases
+  ---
+  duration_ms: 21.6249
+  type: 'test'
+  ...
+# Subtest: loader refuses a database that is not an evaluation database
+ok 67 - loader refuses a database that is not an evaluation database
+  ---
+  duration_ms: 1.8065
+  type: 'test'
+  ...
+# Subtest: loader refuses a database that already holds data
+ok 68 - loader refuses a database that already holds data
+  ---
+  duration_ms: 1.1288
+  type: 'test'
+  ...
+# Subtest: evaluation admin must exist, be active and be an Administrator; the id is never assumed
+ok 69 - evaluation admin must exist, be active and be an Administrator; the id is never assumed
+  ---
+  duration_ms: 2.7305
+  type: 'test'
+  ...
+# Subtest: record map: exact match required; a foreign or missing record aborts
+ok 70 - record map: exact match required; a foreign or missing record aborts
+  ---
+  duration_ms: 5.0813
+  type: 'test'
+  ...
+# Subtest: indexer: happy path recreates only the evaluation collection and verifies counts
+ok 71 - indexer: happy path recreates only the evaluation collection and verifies counts
+  ---
+  duration_ms: 4.9269
+  type: 'test'
+  ...
+# Subtest: indexer: refuses a development collection before touching anything
+ok 72 - indexer: refuses a development collection before touching anything
+  ---
+  duration_ms: 0.9022
+  type: 'test'
+  ...
+# Subtest: indexer: the worker connection must also be on the evaluation database
+ok 73 - indexer: the worker connection must also be on the evaluation database
+  ---
+  duration_ms: 0.6193
+  type: 'test'
+  ...
+# Subtest: indexer: refuses when the queue is not exactly this dataset's jobs (e.g. wrong database)
+ok 74 - indexer: refuses when the queue is not exactly this dataset's jobs (e.g. wrong database)
+  ---
+  duration_ms: 1.3268
+  type: 'test'
+  ...
+# Subtest: indexer: fails loudly on worker failures or an incomplete index
+ok 75 - indexer: fails loudly on worker failures or an incomplete index
+  ---
+  duration_ms: 2.3035
+  type: 'test'
+  ...
+1..75
+# tests 75
+# suites 0
+# pass 75
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1779.7639
