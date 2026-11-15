@@ -1,6 +1,6 @@
 import { authorizeRequest, toDbSession, jsonResponse } from "@/lib/auth/access.js";
 import { callProcedure } from "@/lib/db/index.js";
-import { isSameOrigin, readJson, cleanText } from "@/lib/api/write-guards.js";
+import { isSameOrigin, readJson, cleanText, parsePositiveId } from "@/lib/api/write-guards.js";
 
 export const dynamic = "force-dynamic";
 
@@ -11,10 +11,10 @@ export async function POST(request) {
   const parsed = await readJson(request);
   if (!parsed.ok) return jsonResponse(400, { error: { message: "The request must contain valid JSON." } });
   const body = parsed.value ?? {};
-  const a = Number(body.evidence_a_id), b = Number(body.evidence_b_id);
+  const a = parsePositiveId(body.evidence_a_id), b = parsePositiveId(body.evidence_b_id);
   const type = cleanText(body.rel_type, 20, { required: true });
   const rationale = cleanText(body.rationale, 60000, { required: true });
-  if (!Number.isSafeInteger(a) || a < 1 || a > 4294967295 || !Number.isSafeInteger(b) || b < 1 || b > 4294967295 || a === b ||
+  if (!a || !b || a === b ||
       !["derived_from", "corroborates", "contradicts", "related_activity", "other"].includes(type) || !rationale) {
     return jsonResponse(400, { error: { message: "Choose two different evidence records, a valid relationship type and a written rationale." } });
   }
