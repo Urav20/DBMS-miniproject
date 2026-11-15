@@ -12,8 +12,12 @@ SELECT 'tables' AS check_name, COUNT(*) AS actual,
 FROM information_schema.TABLES
 WHERE TABLE_SCHEMA = DATABASE() AND TABLE_TYPE = 'BASE TABLE';
 
-SELECT 'foreign_keys' AS check_name, COUNT(*) AS actual,
-       25 AS expected, COUNT(*) = 25 AS passed
+-- Count FK constraints, not referenced columns. The same-case evidence/source
+-- relationship is composite (two column mappings but one FK constraint).
+SELECT 'foreign_key_constraints' AS check_name,
+       COUNT(DISTINCT TABLE_NAME, CONSTRAINT_NAME) AS actual,
+       25 AS expected,
+       COUNT(DISTINCT TABLE_NAME, CONSTRAINT_NAME) = 25 AS passed
 FROM information_schema.KEY_COLUMN_USAGE
 WHERE TABLE_SCHEMA = DATABASE()
   AND REFERENCED_TABLE_NAME IS NOT NULL;
@@ -23,10 +27,14 @@ SELECT 'views' AS check_name, COUNT(*) AS actual,
 FROM information_schema.VIEWS
 WHERE TABLE_SCHEMA = DATABASE();
 
-SELECT 'stored_procedures' AS check_name, COUNT(*) AS actual,
+-- Count the 15 TRACE-X procedures. The DML demo helper (demo_try) is
+-- deliberately not part of the application routine count.
+SELECT 'tracex_stored_procedures' AS check_name, COUNT(*) AS actual,
        15 AS expected, COUNT(*) = 15 AS passed
 FROM information_schema.ROUTINES
-WHERE ROUTINE_SCHEMA = DATABASE() AND ROUTINE_TYPE = 'PROCEDURE';
+WHERE ROUTINE_SCHEMA = DATABASE()
+  AND ROUTINE_TYPE = 'PROCEDURE'
+  AND LEFT(ROUTINE_NAME, 3) = 'sp_';
 
 SELECT 'stored_functions' AS check_name, COUNT(*) AS actual,
        7 AS expected, COUNT(*) = 7 AS passed
@@ -38,19 +46,37 @@ SELECT 'triggers' AS check_name, COUNT(*) AS actual,
 FROM information_schema.TRIGGERS
 WHERE TRIGGER_SCHEMA = DATABASE();
 
--- Expected demo seed counts. A mismatch is reported, not hidden.
+-- The seed-only baseline is 60 evidence / 50 analysis / 73 findings /
+-- 130 index jobs. database/04_dml.sql intentionally adds one evidence row,
+-- one analysis, one finding and five outbox jobs. Detect that completed demo
+-- record so the verifier accepts either supported state without hiding other
+-- count mismatches. The DML-added record is soft-withdrawn at the end.
+SET @dml_demo_completed = EXISTS (
+  SELECT 1
+  FROM evidence e
+  JOIN analysis a ON a.evidence_id = e.evidence_id
+  JOIN finding f ON f.analysis_id = a.analysis_id
+  WHERE e.evidence_no = 'EV-005-13'
+    AND e.status = 'withdrawn'
+    AND f.title = 'Statement payments match the supplier amounts'
+);
+
 SELECT 'app_user' AS table_name, COUNT(*) AS actual, 8 AS expected,
        COUNT(*) = 8 AS passed FROM app_user
 UNION ALL
 SELECT 'investigation_case', COUNT(*), 5, COUNT(*) = 5 FROM investigation_case
 UNION ALL
-SELECT 'evidence', COUNT(*), 60, COUNT(*) = 60 FROM evidence
+SELECT 'evidence', COUNT(*), IF(@dml_demo_completed, 61, 60),
+       COUNT(*) = IF(@dml_demo_completed, 61, 60) FROM evidence
 UNION ALL
-SELECT 'analysis', COUNT(*), 50, COUNT(*) = 50 FROM analysis
+SELECT 'analysis', COUNT(*), IF(@dml_demo_completed, 51, 50),
+       COUNT(*) = IF(@dml_demo_completed, 51, 50) FROM analysis
 UNION ALL
-SELECT 'finding', COUNT(*), 73, COUNT(*) = 73 FROM finding
+SELECT 'finding', COUNT(*), IF(@dml_demo_completed, 74, 73),
+       COUNT(*) = IF(@dml_demo_completed, 74, 73) FROM finding
 UNION ALL
-SELECT 'index_job', COUNT(*), 130, COUNT(*) = 130 FROM index_job;
+SELECT 'index_job', COUNT(*), IF(@dml_demo_completed, 135, 130),
+       COUNT(*) = IF(@dml_demo_completed, 135, 130) FROM index_job;
 
 -- Investigator-facing contract: the content versions required by stale
 -- vector verification must be exposed by both filtered views.
